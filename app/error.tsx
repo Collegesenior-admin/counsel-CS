@@ -21,7 +21,7 @@ export default function Error({
           <div className="mx-auto w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
             <AlertTriangle className="w-8 h-8 text-red-600" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-800 mb-2">Something went wrong!</h1>
+          <h1 className="text-2xl font-bold text-gray-800 mb-2">Something went wrong...!</h1>
           <p className="text-gray-600 mb-4">
             We encountered an unexpected error. Please try again.
           </p>
