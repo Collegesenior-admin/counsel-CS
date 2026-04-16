@@ -1,0 +1,208 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  
+ 
+}
+
+model colleges {
+  id               Int                       @id @default(autoincrement())
+  name             String
+  slug             String                    @unique
+  city             String
+  state            String
+  address          String?
+  ownership        String
+  nirf_ranking     Int?
+  naac_grade       String?
+  established      Int?
+  campus_size      String?
+  min_fees         Int?
+  max_fees         Int?
+  avg_package      String?
+  description      String
+  logo_url         String?
+  image_urls       Json?
+  website          String?
+  email            String?
+  phone            String?
+  latitude         Float?
+  longitude        Float?
+  created_at       DateTime                  @default(now())
+  updated_at       DateTime                  @updatedAt
+  structured_data  Json?
+  admissions       admission_details[]
+  content_sections college_content[]
+  course_offerings college_course_offering[]
+  cutoffs          cutoffs[]
+  scholarships     scholarships[]
+  facilities       facility[]
+  faqs             faqs[]
+  images           gallery[]
+  placements       placement_stats[]
+  rankings         rankings[]
+  news             news[]
+  seo              seo_meta?
+}
+
+model courses {
+  id                   Int                       @id @default(autoincrement())
+  name                 String
+  short_name           String?
+  slug                 String                    @unique
+  duration             String
+  stream               String
+  description          String
+  avg_fees             String?
+  avg_salary           String?
+  eligibility_criteria String?
+  entrance_exams       String[]
+  structured_data      Json?
+  level                String?
+  course_type          String?
+  created_at           DateTime                  @default(now())
+  updated_at           DateTime                  @updatedAt
+  offered_at_colleges  college_course_offering[]
+  cutoffs              cutoffs[]
+  seo                  seo_meta?
+}
+
+model college_course_offering {
+  id                  Int      @id @default(autoincrement())
+  college_id          Int
+  course_id           Int
+  total_fees          String?
+  eligibility         String?
+  structured_data     Json?    // Keep for backward compatibility
+  collegecourse_data  Json?    // NEW: College-specific course details
+  college             colleges @relation(fields: [college_id], references: [id], onDelete: Cascade)
+  course              courses  @relation(fields: [course_id], references: [id], onDelete: Cascade)
+
+  @@unique([college_id, course_id])
+  @@index([college_id])
+  @@index([course_id])
+}
+
+model admission_details {
+  id                Int      @id @default(autoincrement())
+  admission_data    Json?
+  college_id        Int
+  structured_data   Json?
+  admission_process Json?
+  college           colleges @relation(fields: [college_id], references: [id], onDelete: Cascade)
+}
+
+model cutoffs {
+  id              Int      @id @default(autoincrement())
+  college_id      Int
+  course_id       Int?
+  cutoff_data     Json?
+  structured_data Json?
+  college         colleges @relation(fields: [college_id], references: [id], onDelete: Cascade)
+  course          courses? @relation(fields: [course_id], references: [id])
+
+  @@index([college_id])
+}
+
+model placement_stats {
+  id              Int      @id @default(autoincrement())
+  top_recruiters  String[]
+  college_id      Int
+  structured_data Json?
+  placement_stats Json?
+  placement_data  Json?
+  college         colleges @relation(fields: [college_id], references: [id], onDelete: Cascade)
+}
+
+model scholarships {
+  id              Int         @id @default(autoincrement())
+  scholarship_data Json?
+  college_id      Int
+  college         colleges    @relation(fields: [college_id], references: [id])
+  structured_data Json?
+  created_at      DateTime    @default(now())
+  updated_at      DateTime    @updatedAt
+}
+
+model gallery {
+  id         Int      @id @default(autoincrement())
+  media_url  Json?
+  category   String
+  college_id Int
+  college    colleges @relation(fields: [college_id], references: [id], onDelete: Cascade)
+}
+
+model faqs {
+  id         Int      @id @default(autoincrement())
+  faq_data   Json?
+  college_id Int
+  college    colleges @relation(fields: [college_id], references: [id], onDelete: Cascade)
+}
+
+model facility {
+  id              Int      @id @default(autoincrement())
+  college_id      Int
+  structured_data Json?
+  all_facilities  Json?
+  college         colleges @relation(fields: [college_id], references: [id], onDelete: Cascade)
+}
+
+model news {
+  id             Int      @id @default(autoincrement())
+  category       String   // 'Exam', 'Admission', 'Campus'
+  published_date DateTime @default(now())
+  college_id     Int
+  college        colleges @relation(fields: [college_id], references: [id])
+  // This stores title, content, links, and image_url
+  news_data      Json     
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+}
+
+model rankings {
+  id              Int      @id @default(autoincrement())
+  rank_data       Json?
+  college_id      Int
+  structured_data Json?
+  college         colleges @relation(fields: [college_id], references: [id], onDelete: Cascade)
+}
+
+model seo_meta {
+  id               Int       @id @default(autoincrement())
+  meta_title       String
+  meta_description String
+  keywords         String?
+  schema_json      Json?
+  college_id       Int?      @unique
+  course_id        Int?      @unique
+  college          colleges? @relation(fields: [college_id], references: [id], onDelete: Cascade)
+  course           courses?  @relation(fields: [course_id], references: [id], onDelete: Cascade)
+}
+
+model college_content {
+  id              Int      @id @default(autoincrement())
+  college_id      Int
+  section         String
+  content         String
+  structured_data Json?
+  college         colleges @relation(fields: [college_id], references: [id], onDelete: Cascade)
+
+  @@unique([college_id, section])
+}
+
+model updates {
+  id               Int      @id @default(autoincrement())
+  slug             String   @unique
+  title            String
+  content          String
+  category         String
+  meta_title       String?
+  meta_description String?
+  created_at       DateTime @default(now())
+  updated_at       DateTime @default(now()) @updatedAt
+
+  @@index([slug])
+}

@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+/* Project Rules: Max 2 fonts, H1: 36-48px, Body: 16px, Line height: 1.5 body, 1.2 headings */
+
+:root {
+  --background: #f7f4f4;
+  --foreground: #171717;
+  --primary-blue: #0d68f2;
+  --accent-yellow: #FFD700;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Typography following project rules */
+h1 {
+  font-size: 32px;
+  font-weight: 700; /* Lighter weight for smaller screens */
+  line-height: 1.19;
+  margin-bottom: 1rem;
+  text-wrap: balance; /* Prevents awkward line breaks */
+}
+
+/* 2. FLUID: Viewports between 720px and 960px */
+@media screen and (min-width: 720px) {
+  h1 {
+    font-size: 32px; /* Fluidly scales with the width */
+    /* Gradually increase weight if using a Variable Font */
+    font-weight: 700; 
+    line-height: 1.3;
+  }
+}
+
+/* 3. DESKTOP: Viewports larger than 960px */
+@media screen and (min-width: 1100px) {
+  h1 {
+    font-size: 45px;
+    font-weight: 700; /* Full bold for large screens */
+    line-height: 1.2;
+  }
+}
+
+h2{
+  line-height: 1.5;
+}
+
+ h3, h4, h5, h6 {
+  line-height: 1.2;
+}
+
+/* Custom utility classes */
+.bg-primary {
+  background-color: var(--primary-blue);
+}
+
+.text-primary {
+  color: var(--primary-blue);
+}
+
+.bg-accent {
+  background-color: var(--accent-yellow);
+}
+
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.4s ease;
+}
