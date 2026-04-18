@@ -35,15 +35,15 @@ export default function FAQSection() {
   ];
 
   return (
-    <section className="bg-gray-100 p-6 md:p-20">
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-12 items-start">
+    <section className="bg-gray-100 p-5 md:p-20">
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-6 items-start">
         {/* Left Side */}
         <div className="lg:w-1/2">
-          <p className="text-gray-500 text-lg mb-2">
+          <p className="text-gray-500 text-md md:text-lg mb-2">
             Some of the questions answered
           </p>
 
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#1A2B49] mb-8">
+          <h2 className="text-xl md:text-2xl lg:text-4xl font-bold text-[#1A2B49] mb-3 md:mb-8">
             Frequently Asked Questions
           </h2>
 
@@ -54,7 +54,7 @@ export default function FAQSection() {
             </div>
           </div>
 
-          <p className="mt-8 text-gray-500 font-medium leading-relaxed text-lg  tracking-tight">
+          <p className="mt-8 text-gray-500 font-medium leading-relaxed text-md md:text-lg tracking-tight">
             Each student is initially examined, and they are then paired
             with mentors in their specific fields of interest. These
             mentors are knowledgeable and experienced in their
@@ -70,18 +70,18 @@ export default function FAQSection() {
             return (
               <div
                 key={index}
-                className="bg-blue-50 rounded-xl p-5 cursor-pointer"
+                className="bg-white p-2 rounded-xl cursor-pointer"
                 onClick={() =>
                   setActiveIndex(isActive ? -1 : index)
                 }
               >
                 <div className="flex justify-between items-center">
-                  <h3 className="text-[#1A2B49] font-bold text-lg pr-4">
+                  <h3 className="text-[#1A2B49] font-medium text-md md:text-lg pr-4">
                     {faq.question}
                   </h3>
 
                   <div
-                    className={`bg-white w-8 h-8 rounded-md flex items-center justify-center shadow-sm text-[#2D5BFF]
+                    className={`bg-white w-10 h-8 rounded-md flex items-center justify-center shadow-sm text-[#2D5BFF]
                       transition-transform duration-300
                       ${isActive ? 'rotate-180' : ''}
                     `}
@@ -97,7 +97,7 @@ export default function FAQSection() {
                     ${isActive ? 'max-h-40 pt-4' : 'max-h-0 pt-0'}
                   `}
                 >
-                  <p className="text-gray-500 leading-relaxed">
+                  <p className="text-sm md:text-md text-gray-500 leading-relaxed">
                     {faq.answer}
                   </p>
                 </div>
@@ -106,15 +106,15 @@ export default function FAQSection() {
           })}
 
           {/* CTA */}
-          <div className="bg-[#2D5BFF] rounded-xl p-6 text-left text-white mt-4 mb-4 md:mb-0 lg:mb-0 sm:mb-0">
-            <h2 className="text-3xl mb-1">Still have questions?</h2>
-            <p className="text-blue-100 mb-3">
+          <div className="bg-[#2D5BFF] rounded-xl p-3 md:p-6 text-left text-white mt-4 mb-4 md:mb-0 lg:mb-0 sm:mb-0">
+            <h2 className="text-lg md:text-3xl mb-1">Still have questions?</h2>
+            <p className="text-blue-100 mb-3 text-sm md:text-md">
               We start by understanding your interests, strengths, and future goals. Then we
               recommend the best-fit courses and colleges just for you.
             </p>
 
             <div className="text-right">
-              <button className="bg-[#FFD25D] text-black font-bold py-3 px-10 rounded-lg hover:bg-[#ffcb47] transition">
+              <button className="bg-[#FFD25D] text-black font-medium text-sm md:text-md px-6 py-2 md:py-3 md:px-10 rounded-lg hover:bg-[#ffcb47] transition">
                 Request for a Callback
               </button>
             </div>
