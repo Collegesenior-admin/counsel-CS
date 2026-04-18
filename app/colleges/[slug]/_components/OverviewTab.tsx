@@ -96,54 +96,54 @@ export const OverviewTab = ({ college, setActiveTab }: TabProps) => {
                     <h3 className="font-bold text-md lg:text-lg">{college.name} Courses, Fees</h3>
                     <div className='flex w-full overflow-x-scroll'>
 
-                    <table className="w-full border-collapse overflow-x-scroll text-sm lg:text-lg">
-                        <thead>
-                            <tr className=" text-left text-md font-bold border-b border-gray-300 bg-slate-50">
-                                <th className="p-3">Course
-                                    <p className="text-xs text-gray-400 font-medium flex items-center gap-2">
-                                        <span className="flex items-center gap-1">
-                                            Eligibility
-                                        </span>
-                                    </p>
-                                </th>
-                                <th className="p-3">Duration</th>
-                                <th className="p-3">Type</th>
-                                <th className="p-3 text-right">Avg Fees</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {college.course_offerings.slice(0, 10).map((offering: any) => (
-                                <tr
-                                    key={offering.id}
-                                    className="border-b border-gray-300 last:border-b-0 hover:bg-gray-50"
-                                >
-                                    <td className="p-3">
-                                        <p className="font-medium w-60 text-gray-800">
-                                            {offering.course.name}
-                                        </p>
-                                        <p className="text-xs text-gray-500 flex items-center gap-2">
-
+                        <table className="w-full border-collapse overflow-x-scroll text-sm lg:text-lg">
+                            <thead>
+                                <tr className=" text-left text-md font-bold border-b border-gray-300 bg-slate-50">
+                                    <th className="p-3">Course
+                                        <p className="text-xs text-gray-400 font-medium flex items-center gap-2">
                                             <span className="flex items-center gap-1">
-                                                <CheckCircle2 size={12} className="text-green-500" />
-                                                {offering.eligibility}
+                                                Eligibility
                                             </span>
                                         </p>
-                                    </td>
-                                    <td className="p-3">{offering.course.duration}</td>
-
-
-
-                                    <td className="p-3 text-sm text-gray-700">
-                                        {offering.course.course_type || "N/A"}
-                                    </td>
-
-                                    <td className="p-3 text-right font-bold text-blue-600">
-                                        {offering.course.avg_fees || "TBA"}
-                                    </td>
+                                    </th>
+                                    <th className="p-3">Duration</th>
+                                    <th className="p-3">Type</th>
+                                    <th className="p-3 text-right">Avg Fees</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {college.course_offerings.slice(0, 10).map((offering: any) => (
+                                    <tr
+                                        key={offering.id}
+                                        className="border-b border-gray-300 last:border-b-0 hover:bg-gray-50"
+                                    >
+                                        <td className="p-3">
+                                            <p className="font-medium w-60 text-gray-800">
+                                                {offering.course.name}
+                                            </p>
+                                            <p className="text-xs text-gray-500 flex items-center gap-2">
+
+                                                <span className="flex items-center gap-1">
+                                                    <CheckCircle2 size={12} className="text-green-500" />
+                                                    {offering.eligibility}
+                                                </span>
+                                            </p>
+                                        </td>
+                                        <td className="p-3">{offering.course.duration}</td>
+
+
+
+                                        <td className="p-3 text-sm text-gray-700">
+                                            {offering.course.course_type || "N/A"}
+                                        </td>
+
+                                        <td className="p-3 text-right font-bold text-blue-600">
+                                            {offering.course.avg_fees || "TBA"}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
 
                 </div>
@@ -250,7 +250,7 @@ export const OverviewTab = ({ college, setActiveTab }: TabProps) => {
                 <div className="mt-6">
                     <h3 className="font-bold text-gray-700 my-5">{college.name} Top Recruiters</h3>
                     <div className="flex flex-wrap gap-4">
-                    {college.placements && college.placements.length > 0 && college.placements[0]?.top_recruiters?.map((recruiter: string, index: number) => (
+                        {college.placements && college.placements.length > 0 && college.placements[0]?.top_recruiters?.map((recruiter: string, index: number) => (
                             <div key={index} className="px-2 py-1.5 lg:px-4 lg:py-2 bg-blue-100 border border-blue-300 rounded-bl rounded-full text-sm font-medium text-gray-700">
                                 {recruiter}
                             </div>
@@ -354,8 +354,11 @@ export const OverviewTab = ({ college, setActiveTab }: TabProps) => {
                         <tbody className="">
                             {college.scholarships && college.scholarships.length > 0 ? (
                                 college.scholarships.slice(0, 5).flatMap((sch) => {
-                                    const schDataArray = sch.scholarship_data as unknown as Array<{ type?: string; name?: string; eligibility?: string; amount?: string; amount_desc?: string; description?: string }>;
-                                    return schDataArray.slice(0, 5).map((schData, idx) => (
+                                    const schDataArray = Array.isArray(sch.scholarship_data)
+                                        ? sch.scholarship_data
+                                        : [];
+
+                                    return schDataArray.slice(0, 5).map((schData: any, idx: number) => (
                                         <tr key={`${sch.id}-${idx}`} className="hover:bg-gray-50 transition-colors border-b border-gray-300 last:border-b-0">
                                             <td className="px-4 py-3 border-r border-gray-300 ">
                                                 <p className="w-50 font-medium text-gray-800">{schData.name}</p>
@@ -403,8 +406,8 @@ export const OverviewTab = ({ college, setActiveTab }: TabProps) => {
                         const rankingData = (college.rankings?.[0]?.rank_data as unknown as Array<{ org: string; data: Array<{ year: number; rank: number | null; score?: string; stream: string; desc?: string }> }>) || [];
 
                         // Flatten all ranking data and get latest entries
-                        const allRankings = rankingData.flatMap(orgItem => 
-                            orgItem.data.map(dataItem => ({
+                        const allRankings = rankingData.flatMap(orgItem =>
+                            (orgItem.data || []).map(dataItem => ({
                                 org: orgItem.org,
                                 ...dataItem
                             }))
@@ -606,7 +609,7 @@ export const OverviewTab = ({ college, setActiveTab }: TabProps) => {
                     ) : (
                         <div className="py-10 text-center border-2 border-dashed border-slate-50 rounded-2xl">
                             <p className="text-slate-400 text-sm italic">No recent updates available for this college.</p>
-                        </div> )}
+                        </div>)}
                 </div>
             </section>
 
@@ -636,7 +639,7 @@ export const OverviewTab = ({ college, setActiveTab }: TabProps) => {
                                 </details>
                             ))
                         ) : (
-                            <p className="text-gray-400 italic text-center py-4">No FAQs available.</p> )}
+                            <p className="text-gray-400 italic text-center py-4">No FAQs available.</p>)}
                     </div>
                 </div>
             </section>
