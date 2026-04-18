@@ -84,11 +84,11 @@ export default function FeaturedColleges() {
               {[1, 2, 3].map((item) => (
                 <div
                   key={item}
-                  className="snap-start min-w-70 md:min-w-[320px] lg:min-w-75 bg-white rounded-lg p-3 shadow-sm border border-gray-100 shrink-0"
+                  className="snap-start min-w-78 md:min-w-[320px] lg:min-w-75 bg-white rounded-lg p-3 shadow-sm border border-gray-100 shrink-0"
                 >
                   <div className="rounded-lg overflow-hidden mb-1">
-                    <div className="w-full h-90 md:h-90 lg:h-90 bg-gray-300 flex items-center justify-center text-gray-600 text-sm md:text-base">
-                      College Banner
+                    <div className="w-full h-full md:h-90 lg:h-90 flex items-center justify-center text-gray-600 text-sm md:text-base">
+                      <img src="clgbanner.webp" alt="College-Banner" className='w-full h-full'/>
                     </div>
                   </div>
 
