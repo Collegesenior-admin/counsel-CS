@@ -4,7 +4,7 @@ import React from 'react';
 
 export default function TopPerformingColleges() {
   return (
-    <section className="bg-gray-100 p-4 md:p-4">
+    <section className="bg-gray-100 md:p-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-center mb-4 gap-4">
@@ -30,7 +30,7 @@ export default function TopPerformingColleges() {
         <div className="flex flex-col-reverse lg:flex-row gap-6 sm:bg-white bg-white md:bg-white lg:bg-transparent rounded-2xl p-4 md:p-4">
 
           {/* Main Card (Content) */}
-          <div className="flex-1 bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100">
+          <div className="flex-1 bg-white rounded-2xl p-3 md:p-8 shadow-sm border border-gray-100">
             {/* Logo and Tags - Hidden tags on very small mobile to match your HTML version */}
             <div className="flex justify-between items-center gap-3 mb-4">
               <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border shadow-sm bg-gray-200 flex items-center justify-center text-[10px] md:text-xs">
@@ -154,11 +154,11 @@ export default function TopPerformingColleges() {
         </div>
 
         {/* Carousel Navigation */}
-        <div className="flex justify-end gap-3 mt-6">
-          <button className="w-12 h-10 flex items-center justify-center border-2 border-blue-500 rounded text-blue-500 hover:bg-blue-500 hover:text-white transition-all">
+        <div className="flex justify-end gap-3 my-3 mr-3">
+          <button className="w-18 h-10 flex items-center justify-center border-2 border-blue-500 rounded text-blue-500 hover:bg-blue-500 hover:text-white transition-all">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="15,18 9,12 15,6" /></svg>
           </button>
-          <button className="w-12 h-10 flex items-center justify-center border-2 border-blue-500 rounded text-blue-500 hover:bg-blue-500 hover:text-white transition-all">
+          <button className="w-18 h-10 flex items-center justify-center border-2 border-blue-500 rounded text-blue-500 hover:bg-blue-500 hover:text-white transition-all">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6" /></svg>
           </button>
         </div>
