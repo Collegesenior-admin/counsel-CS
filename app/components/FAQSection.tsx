@@ -52,7 +52,7 @@ export default function FAQSection() {
           {/* Image */}
           <div className="h-auto rounded-2xl overflow-hidden">
             <div className="w-full h-full flex items-center justify-center text-gray-600">
-              <img src="/aq.webp" alt="FAQ Image" />
+              <img src="/faq.webp" alt="FAQ Image" />
             </div>
           </div>
 
