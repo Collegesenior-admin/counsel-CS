@@ -20,7 +20,7 @@ export default function FeaturedColleges() {
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 items-center">
 
           {/* LEFT CONTENT */}
-          <div className="w-full lg:w-1/3 pt-4 lg:pt-10">
+          <div className="w-full lg:w-1/3 lg:pt-10">
             <h2 className="text-2xl md:text-4xl font-medium mb-2">
               Featured College
             </h2>
