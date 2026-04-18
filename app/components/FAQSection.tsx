@@ -1,9 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+import { ChevronDown } from 'lucide-react';
 
 export default function FAQSection() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
 
   const faqs = [
     {
@@ -35,26 +37,26 @@ export default function FAQSection() {
   ];
 
   return (
-    <section className="bg-gray-100 p-5 md:p-20">
+    <section className="bg-gray-100 p-4 md:p-20">
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-6 items-start">
         {/* Left Side */}
         <div className="lg:w-1/2">
-          <p className="text-gray-500 text-md md:text-lg mb-2">
+          <p className="text-gray-500 text-center font-medium text-sm md:text-lg mb-2 tracking-tight">
             Some of the questions answered
           </p>
 
-          <h2 className="text-xl md:text-2xl lg:text-4xl font-bold text-[#1A2B49] mb-3 md:mb-8">
+          <h2 className="text-center text-4xl font-semibold text-[#1A2B49] mb-3 md:mb-8">
             Frequently Asked Questions
           </h2>
 
           {/* Image */}
-          <div className="h-96 rounded-2xl overflow-hidden shadow-md">
-            <div className="w-full h-full bg-gray-300 flex items-center justify-center text-gray-600">
-              Student Counseling Image
+          <div className="h-auto rounded-2xl overflow-hidden">
+            <div className="w-full h-full flex items-center justify-center text-gray-600">
+              <img src="/aq.webp" alt="FAQ Image" />
             </div>
           </div>
 
-          <p className="mt-8 text-gray-500 font-medium leading-relaxed text-md md:text-lg tracking-tight">
+          <p className="mt-8 text-gray-500 font-medium text-center leading-relaxed text-md md:text-lg tracking-tight">
             Each student is initially examined, and they are then paired
             with mentors in their specific fields of interest. These
             mentors are knowledgeable and experienced in their
@@ -70,25 +72,24 @@ export default function FAQSection() {
             return (
               <div
                 key={index}
-                className="bg-white p-2 rounded-xl cursor-pointer"
+                className="bg-blue-50 p-2 rounded-xl cursor-pointer"
                 onClick={() =>
                   setActiveIndex(isActive ? -1 : index)
                 }
               >
                 <div className="flex justify-between items-center">
-                  <h3 className="text-[#1A2B49] font-medium text-md md:text-lg pr-4">
+                  <h3 className="text-[#1A2B49] w-[80%] font-medium text-md md:text-lg">
                     {faq.question}
                   </h3>
 
                   <div
-                    className={`bg-white w-10 h-8 rounded-md flex items-center justify-center shadow-sm text-[#2D5BFF]
+                    className={` w-10 h-8 rounded-md flex items-center justify-center text-[#2D5BFF]
                       transition-transform duration-300
-                      ${isActive ? 'rotate-180' : ''}
+                      ${activeIndex ? 'rotate-0' : 'rotate-180'}
                     `}
                   >
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                    </svg>
+                   
+                    <ChevronDown size={18} />
                   </div>
                 </div>
 
