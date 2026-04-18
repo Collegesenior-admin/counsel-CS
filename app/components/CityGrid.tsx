@@ -26,7 +26,7 @@ const TOP_CITIES = [
 
 export default function CityGrid() {
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-8 bg-gray-50">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex justify-between items-end mb-10">
           <div>
