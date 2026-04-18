@@ -84,13 +84,13 @@ export default async function HomePage() {
 
 
       {/* CTA Section */}
-      <section className="max-w-387 mx-auto relative flex flex-col w-full bg-[#ffd14b] py-3 px-6 items-center text-center ">
+      <section className="max-w-387 mx-auto relative flex flex-col w-full lg:bg-[#ffd14b] md:bg-[#ffd14b] bg-linear-to-b from-[#ffd14b] py-3 px-6 items-center text-center ">
 
-        <div className="relative z-10 max-w-4xl md:justify-end md:text-center">
-          <span className="text-gray-600 font-bold text-sm md:text-base block">
+        <div className="relative z-10 max-w-4xl px-2 md:justify-end md:text-center">
+          <span className="text-stone-600 font-semibold my-2 text-sm md:text-base block tracking-wider">
             Start your admission journey with confidence.
           </span>
-          <h2 className="text-xl md:text-[16px] lg:text-xl font-bold mb-2 tracking-widest">
+          <h2 className="text-md md:text-[16px] lg:text-xl font-bold mb-2 tracking-widest">
             Tamil Nadu&apos;s Most Trusted Unified College Application Platform
           </h2>
         </div>
@@ -106,10 +106,10 @@ export default async function HomePage() {
         </div>
 
         <div className="relative z-10 max-w-md">
-          <p className="text-lg md:text-lg text-gray-500 font-medium">
+          <p className="text-md md:text-lg text-neutral-600 mt-5 font-semibold">
             Apply to multiple TN colleges with just one simple form.
           </p>
-          <button data-application-button className="bg-[#0d68f2] text-white px-5 py-2.5 md:px-15 md:my-2 rounded-lg text-lg font-medium hover:bg-blue-700 transition w-full md:w-auto">
+          <button data-application-button className="bg-[#0d68f2] text-white my-3 px-5 py-2 md:px-15 md:my-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition md:w-auto">
             Start your Application
           </button>
         </div>
@@ -117,22 +117,22 @@ export default async function HomePage() {
       </section>
 
       {/* Process Section */}
-      <section className="max-w-387 mx-auto p-2 mt-2">
+      <section className="max-w-387 mx-auto">
 
 
         <Steps />
 
       </section>
 
-      <div className="flex flex-row md:flex-row items-center justify-center space-x-3 sm:space-x-3 md:space-y-0 md:space-x-9 mt-3">
-        <span className="bg-blue-200 text-primary p-3 rounded-lg font-bold text-sm md:text-md">TNEA 2026</span>
-        <span className="bg-gray-200 p-3 rounded-lg font-bold text-sm md:text-md">Admission</span>
+      <div className="flex flex-row md:flex-row items-center justify-center space-x-3 sm:space-x-3 md:space-y-0 md:space-x-9 my-3">
+        <span className="bg-blue-200 text-primary p-2 md:p-3 rounded-lg font-semibold text-sm md:text-md">TNEA 2026</span>
+        <span className="bg-gray-200 p-2 md:p-3 rounded-lg font-semibold text-sm md:text-md">Admission</span>
       </div>
 
       {/* TNEA Calculator */}
       <section className="py-2 md:py-4 px-4 md:px-12 bg-gray-100 text-center">
-        <h2 className="text-2xl md:text-3xl font-bold tracking-widest capitalize mb-2">TNEA Cutoff Calculator</h2>
-        <p className="text-gray-500 mb-6 md:mb-8 text-sm font-bold md:text-base">
+        <h2 className="text-xl md:text-3xl font-bold tracking-wider capitalize mb-2">TNEA Cutoff Calculator</h2>
+        <p className="text-gray-500 mb-6 md:mb-8 text-sm font-semibold md:text-base">
           Calculate your TNEA cutoff marks and estimate your <br /> rank for engineering admissions in Tamil Nadu.
         </p>
         <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-lg border border-gray-100 overflow-hidden">
@@ -202,7 +202,7 @@ export default async function HomePage() {
       <StreamsCard />
 
       {/* why choose college senior */}
-      <section className="max-w-7xl mx-auto m-6 text-center">
+      <section className="max-w-7xl mx-auto text-center">
         <p className="text-sm text-primary">The CollegeSenior’s Advantage</p>
         <h2 className="text-3xl">Why choose CollegeSenior?</h2>
         <p className="text-sm text-gray-500 m-4">
@@ -211,12 +211,12 @@ export default async function HomePage() {
           journey with expert guidance, personal attention, and reliable support.
         </p>
 
-        <div className="my-7 p-4 text-left">
+        <div className="text-left">
           <div className="relative flex gap-6 p-4 overflow-x-auto lg:flex lg:grid-cols-4 lg:overflow-x-scroll scrollbar-hide"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
 
             {/* Card 1 */}
-            <div className="h-80 w-72 sm:w-80 md:w-80 lg:w-80 shrink-0 sm:shrink-0 md:shrink-0 lg:shrink-0 rounded-lg shadow-md bg-gray-50">
+            <div className="relative h-80 w-72 sm:w-80 md:w-80 lg:w-80 shrink-0 sm:shrink-0 md:shrink-0 lg:shrink-0 rounded-lg shadow-md bg-gray-50">
               <svg className="w-10 h-10 text-gray-500 m-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
@@ -225,7 +225,7 @@ export default async function HomePage() {
                 You get honest, unbiased advice with no charges or pressure—
                 just the help you need to make the right choice.
               </p>
-              <p className="text-primary font-medium text-2xl p-5">
+              <p className="text-primary font-medium text-2xl p-3">
                 Free Counseling, Always
               </p>
             </div>
@@ -240,7 +240,7 @@ export default async function HomePage() {
                 You get honest, unbiased advice with no charges or pressure—
                 just the help you need to make the right choice.
               </p>
-              <p className="text-primary font-medium text-2xl p-5">
+              <p className="text-primary font-medium text-2xl p-3">
                 Free Counseling, Always
               </p>
             </div>
@@ -255,7 +255,7 @@ export default async function HomePage() {
                 You get honest, unbiased advice with no charges or pressure—
                 just the help you need to make the right choice.
               </p>
-              <p className="text-primary font-medium text-2xl p-5">
+              <p className="text-primary font-medium text-2xl p-3">
                 Free Counseling, Always
               </p>
             </div>
@@ -270,7 +270,7 @@ export default async function HomePage() {
                 You get honest, unbiased advice with no charges or pressure—
                 just the help you need to make the right choice.
               </p>
-              <p className="text-primary font-medium text-2xl p-5">
+              <p className="text-primary font-medium text-2xl p-3">
                 Free Counseling, Always
               </p>
             </div>
