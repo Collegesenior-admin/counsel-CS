@@ -21,13 +21,13 @@ export default function StepWidget() {
   }, []);
 
   return (
-    <div className="max-w-[1100px] mx-auto py-5 px-5 text-center">
+    <div className="max-w-275 mx-auto p-3 lg:py-5 lg:px-5 text-center">
       {/* Header Section */}
       <div className="mb-10">
-        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-2">
+        <h2 className="text-lg md:text-2xl lg:text-2xl font-bold text-gray-800 mb-2">
           Choosing The Right College Can Be Confusing
         </h2>
-        <p className="text-gray-500 text-base md:text-lg">
+        <p className="text-gray-500 text-sm md:text-lg">
           We&apos;re here to guide you at every step of your college journey.
         </p>
       </div>
@@ -52,7 +52,7 @@ export default function StepWidget() {
                 {/* Step Card */}
                 <div
                   className={`
-                    relative z-10 flex items-center gap-3 px-5 py-4 rounded-xl border transition-all duration-500 w-[70%] sm:w-full
+                    relative z-10 flex items-center gap-3 p-2 md:px-5 md:py-4 rounded-lg border transition-all duration-500 w-[70%] sm:w-full
                     ${isActive
                       ? 'bg-blue-100 border-blue-200'
                       : 'bg-white border-blue-100 opacity-90'}
@@ -62,7 +62,7 @@ export default function StepWidget() {
                     size={22}
                     className={`transition-colors duration-500 ${isActive ? 'text-[#0d6efd]' : 'text-blue-300'}`}
                   />
-                  <span className={`text-md font-bold transition-colors duration-500 ${isActive ? 'text-[#0d6efd]' : 'text-blue-300'}`}>
+                  <span className={`text-sm font-bold transition-colors duration-500 ${isActive ? 'text-[#0d6efd]' : 'text-blue-300'}`}>
                     {step.name}
                   </span>
                 </div>
