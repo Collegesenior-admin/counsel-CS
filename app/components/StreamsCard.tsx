@@ -39,7 +39,7 @@ export default function StreamSection() {
   };
 
   return (
-    <section className="relative max-w-365 mx-auto h-auto p-8 m-5 bg-primary rounded-lg text-center text-white overflow-hidden">
+    <section className="relative max-w-365 mx-auto h-auto p-3 md:p-8 m-5 bg-primary md:rounded-lg text-center text-white overflow-hidden">
       
       {/* Background Decal Image */}
       <div className="z-0">
@@ -54,34 +54,34 @@ export default function StreamSection() {
 
       <div className="relative z-10">
         {/* Header */}
-       <p className=" md:text-md mt-4 tracking-wider font-medium">Top courses for better future</p>
+       <p className="text-sm md:text-md mb-2 mt-4 tracking-wider">Top courses for better future</p>
 
-        <h2 className="text-2xl font-medium md:text-4xl tracking-wide">Explore Courses By Stream</h2>
+        <h2 className="text-xl font-semibold md:text-4xl mb-2 tracking-wider">Explore Courses By Stream</h2>
 
-        <p className="text-md font-medium tracking-wider m-4 leading-5">
+        <p className="text-xs m-2 mb-5 md:m-4">
           Here’s why thousands of students and parents trust CollegeSenior for a
           stress-free admission <br />
           journey with expert guidance, personal attention, and reliable support.
         </p>
 
         {/* Search Bar */}
-        <div className="mt-10 max-w-4xl mx-auto relative">
-          <div className="flex items-center bg-white rounded-xl px-5 py-4">
-            <Search className="text-[#0B69F2] w-6 h-6 mr-3" />
+        <div className="mt-3 md:mt-10 max-w-4xl mx-auto relative">
+          <div className="flex items-center bg-white rounded-lg p-2.5 md:px-5 md:py-4">
+            <Search className="text-[#0B69F2] w-6 h-6 mr-2" />
             <input 
               type="text" 
               placeholder="Search for courses, colleges, or exams"
-              className="w-full bg-transparent outline-none text-gray-500 placeholder:text-[#0B69F2]/60 font-medium"
+              className="w-full bg-transparent outline-none text-gray-500 placeholder:text-sm placeholder:text-[#0B69F2]/80 font-medium"
             />
           </div>
         </div>
 
-        <div className="mt-12 mb-6 text-left">
-           <p className="text-lg font-semibold pl-3">Few Popular Streams</p>
+        <div className="mt-4 md:mt-12 mb-6 text-left">
+           <p className="text-md md:text-lg font-semibold ">Few Popular Streams</p>
         </div>
 
         {/* Carousel Container */}
-        <div className="flex flex-col lg:flex-row items-end gap-6 mx-7 my-7">
+        <div className="flex flex-col lg:flex-row items-end md:gap-6 m-3 md:m-7">
           
           {/* Scrollable Track */}
           <div 
@@ -92,20 +92,22 @@ export default function StreamSection() {
             {streams.map((item) => (
               <div 
                 key={item.id}
-                className="min-w-70 md:min-w-[320px] max-h-55 flex flex-col justify-between p-1 rounded-xl transition-all group snap-start"
+                className="min-w-70 md:min-w-[320px] max-h-55 flex flex-col justify-between rounded-xl transition-all group snap-start"
               >
+                <div className='flex justify-between border-b border-white/50 px-1.5 pb-1.5 mb-2.5'>
+
+                <p className="text-sm md:text-md">{item.id}</p>
+              <p className="text-sm font-medium">{item.count}</p>
+                </div>
                 
-                <p className="border-b pb-1 px-2 text-left">{item.id}</p>
-              <p className="text-right text-sm font-medium p-2">{item.count}</p>
-                
-                <div className="p-1 text-center">
-                  <h3 className="text-lg font-semibold transition-colors">
+                <div className="text-center">
+                  <h3 className="text-md md:text-lg transition-colors">
                     {item.title}
                   </h3>
-                  <p className="text-sm mx-2 my-3">
+                  <p className="text-xs md:text-sm my-3">
                     {item.description}
                   </p>
-                  <Link href={`/courses?stream=${item.stream}`} className="inline-block text-xs font-bold text-yellow-400 tracking-tighter hover:underline">
+                  <Link href={`/courses?stream=${item.stream}`} className="inline-block text-xs font-medium text-yellow-300/90 tracking-wide hover:underline">
                     View More &gt;
                   </Link>
                 </div>
@@ -117,13 +119,13 @@ export default function StreamSection() {
           <div className="flex lg:flex-row gap-3 w-20% md:w-20% lg:w-[18%] justify-center md:justify-end lg:justify-end p-2">
             <button 
               onClick={() => scroll('left')}
-              className="flex-1 flex items-center min-w-20 justify-center h-13 lg:h-14 border-2 border-white rounded-lg hover:bg-white hover:text-[#0B69F2] transition-all active:scale-95"
+              className="flex-1 flex items-center md:min-w-20 justify-center w-18 h-11 lg:h-14 border-2 border-white rounded-sm hover:bg-white hover:text-[#0B69F2] transition-all active:scale-95"
             >
               <ChevronLeft size={28} />
             </button>
             <button 
               onClick={() => scroll('right')}
-              className="flex-1 flex items-center min-w-20 justify-center h-13 lg:h-14 border-2 border-white rounded-lg hover:bg-white hover:text-[#0B69F2] transition-all active:scale-95"
+              className="flex-1 flex items-center md:min-w-20 justify-center w-18 h-11 lg:h-14 border-2 border-white rounded-sm hover:bg-white hover:text-[#0B69F2] transition-all active:scale-95"
             >
               <ChevronRight size={28} />
             </button>
