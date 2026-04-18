@@ -280,7 +280,7 @@ export default function CollegeClientView({ college, similarColleges }: { colleg
                             </div>
                             <div className="w-15 h-15 md:w-24 md:h-24 p-2 bg-white rounded-full shrink-0 shadow-sm">
                                 <Image
-                                    src={college.logo_url || "/avit.png"}
+                                    src={college.logo_url}
                                     alt="Logo"
                                     width={100}
                                     height={100}
@@ -315,7 +315,7 @@ export default function CollegeClientView({ college, similarColleges }: { colleg
                     {/* RIGHT SIDE (IMAGE) */}
                     <div className="w-full lg:w-2/5 bg-gray-50 lg:m-3 flex items-center justify-center overflow-hidden">
                         <Image
-                            src={college.banner_url || "/avit.png"}
+                            src={college.banner_url}
                             alt="Campus"
                             width={1000} height={600}
                             className="w-full h-55 md:h-75 lg:h-full object-cover rounded-lg"
@@ -673,6 +673,12 @@ export default function CollegeClientView({ college, similarColleges }: { colleg
                                     </div>
                                 );
                             })}
+                            <div id="top-courses-offered-at">
+                                <TopCoursesSection courses={college.course_offerings} collegeName={college.name} />
+                            </div>
+                            <div id="more-colleges-in">
+                                <SimilarCollegesSection colleges={similarColleges} currentCity={college.city} />
+                            </div>
                         </div>
                     )}
 
