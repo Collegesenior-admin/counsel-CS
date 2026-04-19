@@ -96,7 +96,7 @@ export const OverviewTab = ({ college, setActiveTab }: TabProps) => {
                     <h3 className="font-bold text-md lg:text-lg">{college.name} Courses, Fees</h3>
                     <div className='flex w-full overflow-x-scroll'>
 
-                        <table className="w-full border-collapse overflow-x-scroll text-sm lg:text-lg">
+                        <table className="w-full border-collapse overflow-x-scroll text-sm lg:text-md">
                             <thead>
                                 <tr className=" text-left text-md font-bold border-b border-gray-300 bg-slate-50">
                                     <th className="p-3">Course
