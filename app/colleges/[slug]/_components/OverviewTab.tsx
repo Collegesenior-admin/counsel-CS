@@ -118,7 +118,7 @@ export const OverviewTab = ({ college, setActiveTab }: TabProps) => {
                                         className="border-b border-gray-300 last:border-b-0 hover:bg-gray-50"
                                     >
                                         <td className="p-3">
-                                            <p className="font-medium w-60 text-gray-800">
+                                            <p className="font-medium w-60 md:w-90 text-gray-800">
                                                 {offering.course.name}
                                             </p>
                                             <p className="text-xs text-gray-500 flex items-center gap-2">
