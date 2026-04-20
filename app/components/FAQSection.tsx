@@ -41,22 +41,22 @@ export default function FAQSection() {
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-6 items-start">
         {/* Left Side */}
         <div className="lg:w-1/2">
-          <p className="text-gray-500 text-center font-medium text-sm md:text-lg mb-2 tracking-tight">
+          <p className="text-gray-500 text-center md:text-left font-medium text-sm md:text-lg mb-2 tracking-tight">
             Some of the questions answered
           </p>
 
-          <h2 className="text-center text-4xl font-semibold text-[#1A2B49] mb-3 md:mb-8">
+          <h2 className="text-center md:text-left text-4xl font-semibold text-[#1A2B49] mb-3 md:mb-8">
             Frequently Asked Questions
           </h2>
 
           {/* Image */}
-          <div className="h-auto rounded-2xl overflow-hidden">
-            <div className="w-full h-full flex items-center justify-center text-gray-600">
-              <img src="/faq.webp" alt="FAQ Image" />
+          <div className="relative rounded-2xl overflow-hidden flex justify-center items-center">
+            <div className="md:w-110 h-full text-gray-600">
+              <img src="/faq.webp" alt="FAQ Image" className='object-fit' />
             </div>
           </div>
 
-          <p className="mt-8 text-gray-500 font-medium text-center leading-relaxed text-md md:text-lg tracking-tight">
+          <p className="mt-8 text-gray-500 font-medium leading-relaxed text-md md:text-lg tracking-tight">
             Each student is initially examined, and they are then paired
             with mentors in their specific fields of interest. These
             mentors are knowledgeable and experienced in their
@@ -65,14 +65,14 @@ export default function FAQSection() {
         </div>
 
         {/* Right Side (FAQs) */}
-        <div className="lg:w-1/2 space-y-4">
+        <div className="lg:w-1/2 space-y-6">
           {faqs.map((faq, index) => {
             const isActive = activeIndex === index;
 
             return (
               <div
                 key={index}
-                className="bg-blue-50 p-2 rounded-xl cursor-pointer"
+                className="bg-blue-50 p-4 rounded-xl cursor-pointer"
                 onClick={() =>
                   setActiveIndex(isActive ? -1 : index)
                 }
@@ -83,12 +83,10 @@ export default function FAQSection() {
                   </h3>
 
                   <div
-                    className={` w-10 h-8 rounded-md flex items-center justify-center text-[#2D5BFF]
-                      transition-transform duration-300
-                      ${activeIndex ? 'rotate-0' : 'rotate-180'}
-                    `}
-                  >
-                   
+                    className={`w-10 h-8 rounded-md flex items-center justify-center text-[#2D5BFF]
+                                transition-transform duration-300
+                                ${isActive ? 'rotate-180' : 'rotate-0'}
+                              `}>
                     <ChevronDown size={18} />
                   </div>
                 </div>
