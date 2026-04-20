@@ -11,6 +11,7 @@ import CityGrid from './components/CityGrid';
 import FAQSection from './components/FAQSection'
 import Footer from './components/Footer'
 import HomePageClient from './HomePageClient'
+import { prisma } from '@/lib/prisma'
 
 // Type definitions
 
@@ -26,295 +27,376 @@ export const metadata: Metadata = {
 }
 
 export default async function HomePage() {
+  // Fetch top performing colleges based on NIRF ranking
+  const topColleges = await prisma.colleges.findMany({
+    where: {
+      nirf_ranking: {
+        not: null,
+        gt: 0
+      }
+    },
+    orderBy: {
+      nirf_ranking: 'asc' // Lower rank number = better ranking
+    },
+    take: 10, // Get top 10 colleges
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+      city: true,
+      state: true,
+      ownership: true,
+      naac_grade: true,
+      nirf_ranking: true,
+      established: true,
+      website: true,
+      email: true,
+      logo_url: true,
+      image_urls: true,
+      description: true
+    }
+  });
 
   return (
     <HomePageClient>
-    <div className="min-h-screen w-full md:w-full">
+      <div className="min-h-screen w-full md:w-full">
 
-      {/* Header */}
-      <Header />
-      {/* Hero Section */}
-      <section className="max-w-387 mx-auto relative bg-[#0d68f2] text-white flex flex-col md:flex-row md:items-center overflow-hidden">
-        <div className="relative md:w-1/2 p-4 pb-0 sm:p-4 sm:pb-0 md:pl-10 md:p-1">
-          <div className="relative z-10">
-            <span className="text-white font-medium px-4 md:px-4  py-2 md:py-2 rounded-3xl bg-blue-500 tracking-widest text-xs sm:text-xs md:text-xs inline-block min-[1400px]:mt-4">
-              Think, plan, and track all in one place </span>
+        {/* Header */}
+        <Header />
+        {/* Hero Section */}
+        <section className="max-w-387 mx-auto relative bg-[#0d68f2] text-white flex flex-col md:flex-row md:items-center overflow-hidden">
+          <div className="relative md:w-1/2 p-4 pb-0 sm:p-4 sm:pb-0 md:pl-10 md:p-1">
+            <div className="relative z-10">
+              <span className="text-white font-medium px-4 md:px-4  py-2 md:py-2 rounded-3xl bg-blue-500 tracking-widest text-xs sm:text-xs md:text-xs inline-block min-[1400px]:mt-4">
+                Think, plan, and track all in one place </span>
 
-            <h1 className='mt-4 md:mt-2'>
-              Expert Guidance for a Smooth and Stress-Free College Admissions. </h1>
-            <p className="mt-4 md:mt-2 text-base md:text-sm  max-[780px]:hidden min-[1140px]:mt-7">
-              Sharpen your path to college with expert advice and tailored insights. Enjoy a hassle-free admissions process and expert career guidance, unique to College Senior. </p>
-            <p className="mt-4 md:mt-0 text-base md:text-sm min-[780px]:hidden">Enhance your college journey with professional
-              guidance and customized insights.</p>
-            <div className="mt-3 flex bg-white  rounded-xl shadow-lg text-gray-800 min-[1140px]:my-8">
-              <button className="p-3 text-gray-500 hover:text-blue-600 transition">
-                <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <h1 className='mt-4 md:mt-2'>
+                Expert Guidance for a Smooth and Stress-Free College Admissions. </h1>
+              <p className="mt-4 md:mt-2 text-base md:text-sm  max-[780px]:hidden min-[1140px]:mt-7">
+                Sharpen your path to college with expert advice and tailored insights. Enjoy a hassle-free admissions process and expert career guidance, unique to College Senior. </p>
+              <p className="mt-4 md:mt-0 text-base md:text-sm min-[780px]:hidden">Enhance your college journey with professional
+                guidance and customized insights.</p>
+              <div className="mt-3 flex bg-white  rounded-xl shadow-lg text-gray-800 min-[1140px]:my-8">
+                <button className="p-3 text-gray-500 hover:text-blue-600 transition">
+                  <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </button>
+                <input type="text" placeholder="Search for colleges or courses..." className="grow p-3 outline-none placeholder-blue-600" />
+              </div>
+              <div className="mt-6 md:mt-10 flex-col md:flex-row items-start md:items-center space-y-2 md:space-y-0 md:space-x-6 grayscale opacity-70 max-[770px]:hidden min-[1400px]:mt-10 ">
+                <span className="text-sm md:text-base">Recognitions:</span>
+                <div className="flex flex-wrap space-x-2 md:space-x-4 font-bold italic text-sm md:text-xl">
+                  <Image src="/Recognition.svg"
+                    alt="Hero corner image"
+                    width={620}
+                    height={600}
+                    className="" />
+                </div>
+              </div>
+            </div>
+            <Image src="/hero-corner.svg"
+              alt="Hero corner image"
+              width={600}
+              height={600}
+              className="absolute top-55 -left-45 border md:w-120 max-[765px]:hidden" />
+          </div>
+          <div className="md:w-1/2 3xl:justify-end flex tablet:justify-bottom md:content-end relative md:p-0">
+            <Image src="/Hero.webp"
+              alt="hero image"
+              width={1000}
+              height={200}
+              className="min-w-lg w-full h-full object-bottom-right" />
+          </div>
+        </section>
+
+
+
+
+        {/* CTA Section */}
+        <section className="max-w-387 mx-auto relative flex flex-col w-full lg:bg-[#ffd14b] md:bg-[#ffd14b] bg-linear-to-b from-[#ffd14b] py-3 px-6 items-center text-center ">
+
+          <div className="relative z-10 max-w-4xl px-2 md:justify-end md:text-center">
+            <span className="text-stone-600 font-semibold my-2 text-sm md:text-base block tracking-wider">
+              Start your admission journey with confidence.
+            </span>
+            <h2 className="text-md md:text-[16px] lg:text-xl font-bold mb-2 tracking-widest">
+              Tamil Nadu&apos;s Most Trusted Unified College Application Platform
+            </h2>
+          </div>
+
+          <div className="relative md:absolute md:-top-9 md:-left-3 flex justify-center">
+            <Image
+              src="/map.svg"
+              alt="Tamil Nadu Map"
+              width={670}
+              height={650}
+              className="w-64 h-64 sm:w-70 sm:h-70 md:w-65 md:h-65 lg:w-70 lg:h-70"
+            />
+          </div>
+
+          <div className="relative z-10 max-w-md">
+            <p className="text-md md:text-lg text-neutral-600 mt-5 font-semibold">
+              Apply to multiple TN colleges with just one simple form.
+            </p>
+            <button data-application-button className="bg-[#0d68f2] text-white my-3 px-5 py-3 md:px-15 md:my-3 rounded-lg text-sm md:text-md font-medium hover:bg-blue-700 transition md:w-auto">
+              Start your Application
+            </button>
+          </div>
+
+        </section>
+
+        {/* Process Section */}
+        <section className="max-w-387 mx-auto">
+
+
+          <Steps />
+
+        </section>
+
+        <div className="flex flex-row md:flex-row items-center justify-center space-x-3 sm:space-x-3 md:space-y-0 md:space-x-9 my-3">
+          <span className="bg-blue-200 text-primary p-2 md:p-3 rounded-lg font-semibold text-sm md:text-md">TNEA 2026</span>
+          <span className="bg-gray-200 p-2 md:p-3 rounded-lg font-semibold text-sm md:text-md">Admission</span>
+        </div>
+
+        {/* TNEA Calculator */}
+        <section className="max-w-7xl mx-auto px-3 py-8 grid md:grid-cols-2 gap-12 items-center">
+
+          {/* LEFT SIDE */}
+          <div>
+            <h1 className="text-4xl font-bold mb-3">
+              TNEA Cutoff Calculator
+            </h1>
+
+            <p className="text-gray-500 mb-6">
+              Calculate Your TNEA Cutoff Marks And Estimate Your Rank For
+              Engineering Admissions In Tamil Nadu.
+            </p>
+
+            <div className="space-y-5">
+
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+
+                  <label className="block mb-1 font-medium text-blue-600">
+                    Mathematics Score (out of 100)
+                  </label>
+                  <input
+                    type="number"
+                    placeholder="e.g. 90"
+                    id="math"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  />
+                </div>
+
+
+
+                <div>
+                  <label className="block mb-1 font-medium text-blue-600">
+                    Physics Score (out of 100)
+                  </label>
+                  <input
+                    type="number"
+                    placeholder="e.g. 90"
+                    id="physics"
+                    className="w-full p-3 border border-gray-300 rounded-lg"
+                  />
+                </div>
+
+                <div>
+                  <label className="block mb-1 font-medium text-blue-600">
+                    Chemistry Score (out of 100)
+                  </label>
+                  <input
+                    type="number"
+                    placeholder="e.g. 90"
+                    id="chemistry"
+                    className="w-full p-3 border border-gray-300 rounded-lg"
+                  />
+                </div>
+
+                <div className='flex justify-center items-end'>
+
+                  <button
+
+                    className="bg-[#0B1A33] text-white w-full px-6 py-3.5 rounded-lg hover:opacity-90 transition"
+                  >
+                    Calculate Cutoff
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          {/* RIGHT SIDE */}
+          <div className="w-full">
+            <div className="w-full max-w-200 h-80 bg-linear-to-br from-gray-700 to-zinc-800 text-white rounded-2xl p-8 shadow-xl">
+
+              <h3 className="text-lg font-semibold">
+                Your Projected Cutoff
+              </h3>
+
+              <p className="text-sm text-gray-400 mb-4">
+                Based On 2025 Academic Parameters
+              </p>
+              <div className='flex justify-between items-center'>
+
+                <h1
+                  id="cutoff"
+                  className="text-sm font-bold mb-4 text-gray-300 line-through"
+                >
+                  198.50
+                </h1>
+
+                <h4 className="text-3xl font-semibold mb-4">
+                  Know Your Exact Cutoff
+                </h4>
+              </div>
+
+              <div className="mb-4">
+                <p className="text-sm ">
+                  College Tier
+                </p>
+                <p className="font-medium text-gray-400">
+                  Top Government Colleges (E.G., CEG, MIT, PSG)
+                </p>
+              </div>
+
+              <div className='flex justify-between items-center'>
+                <p className="text-sm">
+                  Estimated Rank Range
+                </p>
+                <p className="text-4xl font-medium text-gray-400 line-through">
+                  
+                    3001-8000
+                
+                </p>
+              </div>
+
+            </div>
+          </div>
+
+        </section>
+
+        {/* Stream Section */}
+        <StreamsCard />
+
+        {/* why choose college senior */}
+        <section className="max-w-7xl mx-auto text-center">
+          <p className="text-sm text-primary">The CollegeSenior’s Advantage</p>
+          <h2 className="text-3xl">Why choose CollegeSenior?</h2>
+          <p className="text-sm text-gray-500 m-4">
+            Here’s why thousands of students and parents trust CollegeSenior for a
+            stress-free admission <br />
+            journey with expert guidance, personal attention, and reliable support.
+          </p>
+
+          <div className="text-left">
+            <div className="relative flex gap-6 p-4 overflow-x-auto lg:flex lg:grid-cols-4 lg:overflow-x-scroll scrollbar-hide"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+
+              {/* Card 1 */}
+              <div className="relative h-80 w-72 sm:w-80 md:w-80 lg:w-80 shrink-0 sm:shrink-0 md:shrink-0 lg:shrink-0 rounded-lg shadow-md bg-gray-50">
+                <svg className="w-10 h-10 text-gray-500 m-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
-              </button>
-              <input type="text" placeholder="Search for colleges or courses..." className="grow p-3 outline-none placeholder-blue-600" />
-            </div>
-            <div className="mt-6 md:mt-10 flex-col md:flex-row items-start md:items-center space-y-2 md:space-y-0 md:space-x-6 grayscale opacity-70 max-[770px]:hidden min-[1400px]:mt-10 ">
-              <span className="text-sm md:text-base">Recognitions:</span>
-              <div className="flex flex-wrap space-x-2 md:space-x-4 font-bold italic text-sm md:text-xl">
-                <Image src="/Recognition.svg"
-                  alt="Hero corner image"
-                  width={620}
-                  height={600}
-                  className="" />
+                <p className="p-5 text-gray-500 m-1 border-b border-gray-400 text-sm">
+                  Our guidance is completely free for students and parents.
+                  You get honest, unbiased advice with no charges or pressure—
+                  just the help you need to make the right choice.
+                </p>
+                <p className="text-primary font-medium text-2xl p-3">
+                  Free Counseling, Always
+                </p>
+              </div>
+
+              {/* Card 2 */}
+              <div className="h-80 w-72 mt-16 sm:w-80 shrink-0 sm:shrink-0 md:shrink-0 lg:shrink-0 rounded-lg shadow-md bg-gray-50 lg:mt-16">
+                <svg className="w-10 h-10 text-gray-500 m-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <p className="p-5 text-gray-500 m-1 border-b border-gray-400 text-sm">
+                  Our guidance is completely free for students and parents.
+                  You get honest, unbiased advice with no charges or pressure—
+                  just the help you need to make the right choice.
+                </p>
+                <p className="text-primary font-medium text-2xl p-3">
+                  Free Counseling, Always
+                </p>
+              </div>
+
+              {/* Card 3 */}
+              <div className="h-80 w-72 sm:w-80 shrink-0 sm:shrink-0 md:shrink-0 lg:shrink-0 rounded-lg shadow-md bg-gray-50">
+                <svg className="w-10 h-10 text-gray-500 m-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <p className="p-5 text-gray-500 m-1 border-b border-gray-400 text-sm">
+                  Our guidance is completely free for students and parents.
+                  You get honest, unbiased advice with no charges or pressure—
+                  just the help you need to make the right choice.
+                </p>
+                <p className="text-primary font-medium text-2xl p-3">
+                  Free Counseling, Always
+                </p>
+              </div>
+
+              {/* Card 4 */}
+              <div className="h-80 w-72 mt-16 sm:w-80 shrink-0 sm:shrink-0 md:shrink-0 lg:shrink-0 rounded-lg shadow-md bg-gray-50 lg:mt-16">
+                <svg className="w-10 h-10 text-gray-500 m-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <p className="p-5 text-gray-500 m-1 border-b border-gray-400 text-sm">
+                  Our guidance is completely free for students and parents.
+                  You get honest, unbiased advice with no charges or pressure—
+                  just the help you need to make the right choice.
+                </p>
+                <p className="text-primary font-medium text-2xl p-3">
+                  Free Counseling, Always
+                </p>
               </div>
             </div>
           </div>
-          <Image src="/hero-corner.svg"
-            alt="Hero corner image"
-            width={600}
-            height={600}
-            className="absolute top-55 -left-45 border md:w-120 max-[765px]:hidden" />
-        </div>
-        <div className="md:w-1/2 3xl:justify-end flex tablet:justify-bottom md:content-end relative md:p-0">
-          <Image src="/Hero.webp"
-            alt="hero image"
-            width={1000}
-            height={200}
-            className="min-w-lg w-full h-full object-bottom-right" />
-        </div>
-      </section>
+        </section>
+
+        {/* Featured colleges */}
+        <FeaturesColleges />
+
+        {/* Top Performing Colleges */}
+        <TopPerformingColleges colleges={topColleges} />
+
+        <CityGrid />
 
 
+        {/* Frequently Asked Questions */}
+        <FAQSection />
 
+        {/* Contact Form */}
+        {/* Footer */}
+        <Footer />
 
-      {/* CTA Section */}
-      <section className="max-w-387 mx-auto relative flex flex-col w-full lg:bg-[#ffd14b] md:bg-[#ffd14b] bg-linear-to-b from-[#ffd14b] py-3 px-6 items-center text-center ">
-
-        <div className="relative z-10 max-w-4xl px-2 md:justify-end md:text-center">
-          <span className="text-stone-600 font-semibold my-2 text-sm md:text-base block tracking-wider">
-            Start your admission journey with confidence.
-          </span>
-          <h2 className="text-md md:text-[16px] lg:text-xl font-bold mb-2 tracking-widest">
-            Tamil Nadu&apos;s Most Trusted Unified College Application Platform
-          </h2>
-        </div>
-
-        <div className="relative md:absolute md:-top-9 md:-left-3 flex justify-center">
-          <Image
-            src="/map.svg"
-            alt="Tamil Nadu Map"
-            width={670}
-            height={650}
-            className="w-64 h-64 sm:w-70 sm:h-70 md:w-65 md:h-65 lg:w-70 lg:h-70"
-          />
-        </div>
-
-        <div className="relative z-10 max-w-md">
-          <p className="text-md md:text-lg text-neutral-600 mt-5 font-semibold">
-            Apply to multiple TN colleges with just one simple form.
-          </p>
-          <button data-application-button className="bg-[#0d68f2] text-white my-3 px-5 py-2 md:px-15 md:my-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition md:w-auto">
-            Start your Application
-          </button>
-        </div>
-
-      </section>
-
-      {/* Process Section */}
-      <section className="max-w-387 mx-auto">
-
-
-        <Steps />
-
-      </section>
-
-      <div className="flex flex-row md:flex-row items-center justify-center space-x-3 sm:space-x-3 md:space-y-0 md:space-x-9 my-3">
-        <span className="bg-blue-200 text-primary p-2 md:p-3 rounded-lg font-semibold text-sm md:text-md">TNEA 2026</span>
-        <span className="bg-gray-200 p-2 md:p-3 rounded-lg font-semibold text-sm md:text-md">Admission</span>
+        {/* Structured Data for SEO */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "EducationalOrganization",
+              "name": "CollegeSenior",
+              "description": "Tamil Nadu's most trusted college application platform providing expert guidance for TNEA admissions and college counseling.",
+              "url": "https://collegesenior.com",
+              "serviceType": "College Admission Counseling",
+              "areaServed": "Tamil Nadu, India",
+              "offers": {
+                "@type": "Service",
+                "name": "College Admission Guidance",
+                "description": "Expert counseling for engineering college admissions in Tamil Nadu"
+              }
+            })
+          }}
+        />
       </div>
-
-      {/* TNEA Calculator */}
-      <section className="py-2 md:py-4 px-4 md:px-12 bg-gray-100 text-center">
-        <h2 className="text-xl md:text-3xl font-bold tracking-wider capitalize mb-2">TNEA Cutoff Calculator</h2>
-        <p className="text-gray-500 mb-6 md:mb-8 text-sm font-semibold md:text-base">
-          Calculate your TNEA cutoff marks and estimate your <br /> rank for engineering admissions in Tamil Nadu.
-        </p>
-        <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-lg border border-gray-100 overflow-hidden">
-          <div className="flex flex-col lg:flex-row">
-            <div className="flex-1 md:p-4 justify-end ">
-              <div className="flex flex-col md:flex-row justify-between mb-6">
-                <div className="my-4 md:mb-0">
-                  <p className="text-[#0d68f2] text-sm md:text-left font-semibold">Step 1/3</p>
-                  <h3 className="text-[#0d68f2] text-sm font-semibold">Enter Your Marks</h3>
-                </div>
-                <Link href="/calculator" className="text-blue-600 text-sm px-4 py-2 rounded-lg hover:underline">
-                  Take me to the Calculator
-                </Link>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 m-6 md:mb-8">
-                <div>
-                  <label className="block text-gray-700 font-semibold mb-4 text-sm md:text-left">Mathematics (out of 100)</label>
-                  <input
-                    type="number"
-                    placeholder="e.g. 90"
-                    className="w-full border-b-2 border-blue-600 pb-2 outline-none text-gray-600"
-                  />
-                </div>
-                <div>
-                  <label className="block text-gray-700 font-semibold mb-4 text-sm md:text-left">Physics (out of 100)</label>
-                  <input
-                    type="number"
-                    placeholder="e.g. 90"
-                    className="w-full border-b-2 border-gray-200 pb-2 outline-none text-gray-600"
-                  />
-                </div>
-                <div>
-                  <label className="block text-gray-700 font-semibold mb-4 text-sm md:text-left">Chemistry (out of 100)</label>
-                  <input
-                    type="number"
-                    placeholder="e.g. 90"
-                    className="w-full border-b-2 border-gray-200 pb-2 outline-none text-gray-600"
-                  />
-                </div>
-              </div>
-              <button className="bg-blue-600 text-white font-bold py-3 m-4 sm:m-4 px-12 md:px-24 rounded-lg hover:bg-blue-700 transition text-sm md:text-base">
-                Calculate Cutoff
-              </button>
-            </div>
-            <div className="w-auto m-3 lg:w-95 p-6 md:p-8 bg-[#FFD54F] bg-linear-to-b rounded-lg flex flex-col space-y-2">
-              <div>
-                <h3 className="text-gray-800 font-bold text-left text-lg mb-2">Your Cutoff</h3>
-                <div className="border-t border-dashed p-5 border-gray-600 pt-2">
-                </div>
-              </div>
-              <div>
-                <h3 className="text-gray-800 font-bold text-left text-md mb-2">Estimated Rank Range</h3>
-                <div className="border-t border-dashed p-5 border-gray-600 pt-2">
-                </div>
-              </div>
-              <div>
-                <h3 className="text-gray-800 font-bold text-left text-md mb-2">College Tier</h3>
-                <div className="border-t border-dashed p-5 border-gray-600 pt-2">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stream Section */}
-      <StreamsCard />
-
-      {/* why choose college senior */}
-      <section className="max-w-7xl mx-auto text-center">
-        <p className="text-sm text-primary">The CollegeSenior’s Advantage</p>
-        <h2 className="text-3xl">Why choose CollegeSenior?</h2>
-        <p className="text-sm text-gray-500 m-4">
-          Here’s why thousands of students and parents trust CollegeSenior for a
-          stress-free admission <br />
-          journey with expert guidance, personal attention, and reliable support.
-        </p>
-
-        <div className="text-left">
-          <div className="relative flex gap-6 p-4 overflow-x-auto lg:flex lg:grid-cols-4 lg:overflow-x-scroll scrollbar-hide"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-
-            {/* Card 1 */}
-            <div className="relative h-80 w-72 sm:w-80 md:w-80 lg:w-80 shrink-0 sm:shrink-0 md:shrink-0 lg:shrink-0 rounded-lg shadow-md bg-gray-50">
-              <svg className="w-10 h-10 text-gray-500 m-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-              <p className="p-5 text-gray-500 m-1 border-b border-gray-400 text-sm">
-                Our guidance is completely free for students and parents.
-                You get honest, unbiased advice with no charges or pressure—
-                just the help you need to make the right choice.
-              </p>
-              <p className="text-primary font-medium text-2xl p-3">
-                Free Counseling, Always
-              </p>
-            </div>
-
-            {/* Card 2 */}
-            <div className="h-80 w-72 mt-16 sm:w-80 shrink-0 sm:shrink-0 md:shrink-0 lg:shrink-0 rounded-lg shadow-md bg-gray-50 lg:mt-16">
-              <svg className="w-10 h-10 text-gray-500 m-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-              <p className="p-5 text-gray-500 m-1 border-b border-gray-400 text-sm">
-                Our guidance is completely free for students and parents.
-                You get honest, unbiased advice with no charges or pressure—
-                just the help you need to make the right choice.
-              </p>
-              <p className="text-primary font-medium text-2xl p-3">
-                Free Counseling, Always
-              </p>
-            </div>
-
-            {/* Card 3 */}
-            <div className="h-80 w-72 sm:w-80 shrink-0 sm:shrink-0 md:shrink-0 lg:shrink-0 rounded-lg shadow-md bg-gray-50">
-              <svg className="w-10 h-10 text-gray-500 m-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-              <p className="p-5 text-gray-500 m-1 border-b border-gray-400 text-sm">
-                Our guidance is completely free for students and parents.
-                You get honest, unbiased advice with no charges or pressure—
-                just the help you need to make the right choice.
-              </p>
-              <p className="text-primary font-medium text-2xl p-3">
-                Free Counseling, Always
-              </p>
-            </div>
-
-            {/* Card 4 */}
-            <div className="h-80 w-72 mt-16 sm:w-80 shrink-0 sm:shrink-0 md:shrink-0 lg:shrink-0 rounded-lg shadow-md bg-gray-50 lg:mt-16">
-              <svg className="w-10 h-10 text-gray-500 m-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-              <p className="p-5 text-gray-500 m-1 border-b border-gray-400 text-sm">
-                Our guidance is completely free for students and parents.
-                You get honest, unbiased advice with no charges or pressure—
-                just the help you need to make the right choice.
-              </p>
-              <p className="text-primary font-medium text-2xl p-3">
-                Free Counseling, Always
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Featured colleges */}
-      <FeaturesColleges />
-
-      {/* Top Performing Colleges */}
-      <TopPerformingColleges />
-
-      <CityGrid />
-
-
-      {/* Frequently Asked Questions */}
-      <FAQSection />
-
-      {/* Contact Form */}
-      {/* Footer */}
-      <Footer />
-
-      {/* Structured Data for SEO */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "EducationalOrganization",
-            "name": "CollegeSenior",
-            "description": "Tamil Nadu's most trusted college application platform providing expert guidance for TNEA admissions and college counseling.",
-            "url": "https://collegesenior.com",
-            "serviceType": "College Admission Counseling",
-            "areaServed": "Tamil Nadu, India",
-            "offers": {
-              "@type": "Service",
-              "name": "College Admission Guidance",
-              "description": "Expert counseling for engineering college admissions in Tamil Nadu"
-            }
-          })
-        }}
-      />
-    </div>
     </HomePageClient>
   )
 }
