@@ -1,8 +1,96 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { ChevronLeft, ChevronRight, MapPin, Mail, Globe } from 'lucide-react';
 
-export default function TopPerformingColleges() {
+type CollegeType = {
+  id: number;
+  name: string;
+  slug: string;
+  city: string;
+  state: string;
+  ownership: string;
+  naac_grade: string | null;
+  nirf_ranking: number | null;
+  established: number;
+  website: string;
+  email: string;
+  logo_url: string;
+  image_urls: any;
+  description: string;
+};
+
+interface TopPerformingCollegesProps {
+  colleges: CollegeType[];
+}
+
+export default function TopPerformingColleges({ colleges }: TopPerformingCollegesProps) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Safe image extractor
+  const extractImagesFromJsonb = (images: any): string[] => {
+    try {
+      if (!images) return [];
+      
+      if (Array.isArray(images) && images.every(item => typeof item === 'string')) {
+        return images;
+      }
+      
+      if (Array.isArray(images)) {
+        return images.map((item: any) => {
+          if (typeof item === 'string') return item;
+          if (typeof item === 'object' && item !== null) {
+            const key = Object.keys(item)[0];
+            return item[key];
+          }
+          return '';
+        }).filter(Boolean);
+      }
+      
+      if (typeof images === 'string') {
+        const parsed = JSON.parse(images);
+        return extractImagesFromJsonb(parsed);
+      }
+      
+      return [];
+    } catch (error) {
+      console.error('Error extracting images:', error);
+      return [];
+    }
+  };
+
+  const getMainImage = (images: string[]) => {
+    return images && images.length > 0 ? images[0] : "https://via.placeholder.com/400x300";
+  };
+
+  const getThumbnailImages = (images: string[], count: number) => {
+    if (!images || images.length <= 1) return [];
+    return images.slice(1, count + 1);
+  };
+
+  const nextCollege = () => {
+    setCurrentIndex((prev) => (prev + 1) % colleges.length);
+  };
+
+  const prevCollege = () => {
+    setCurrentIndex((prev) => (prev - 1 + colleges.length) % colleges.length);
+  };
+
+  if (!colleges || colleges.length === 0) {
+    return (
+      <section className="bg-gray-100 md:p-4">
+        <div className="max-w-7xl mx-auto text-center py-20">
+          <p className="text-gray-500">No top performing colleges available at the moment.</p>
+        </div>
+      </section>
+    );
+  }
+
+  const currentCollege = colleges[currentIndex];
+  const validImages = extractImagesFromJsonb(currentCollege.image_urls);
+
   return (
     <section className="bg-gray-100 md:p-4">
       <div className="max-w-7xl mx-auto">
@@ -19,27 +107,65 @@ export default function TopPerformingColleges() {
 
           <div className="md:w-3/5">
             <p className="text-gray-500 text-center sm:text-center md:text-left lg:text-left text-sm leading-relaxed">
-              Our counselors, with years of experience in education and admissions,
-              have helped hundreds of students secure seats in top colleges.
-              Personalized guidance you can trust.
+              Discover the highest-ranked colleges in Tamil Nadu based on NIRF rankings.
+              These institutions offer excellent academic programs and outstanding placement records.
             </p>
           </div>
         </div>
 
-        {/* Main Content Wrapper - Changed to flex-col-reverse for mobile */}
-        <div className="flex flex-col-reverse lg:flex-row gap-6 sm:bg-white bg-white md:bg-white lg:bg-transparent rounded-2xl p-4 md:p-4">
+        {/* Main Content - Using College Listing Card Structure */}
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-3 md:p-4 mb-3 flex flex-col md:flex-row lg:flex-row gap-2 md:gap-6">
+          {/* Left Side: Image Gallery Section */}
+          <div className="relative mx-auto w-full sm:w-[60%] md:w-75 lg:w-75 shrink-0">
+            <div className="relative h-64 min-h-[80%] flex items-center rounded-xl overflow-hidden mb-3 bg-gray-200">
+              <img
+                src={getMainImage(validImages)}
+                className="w-full h-full object-cover"
+                alt={currentCollege.name}
+              />
+              <div className="absolute bottom-0 left-0 right-0 p-4 bg-linear-to-t from-black/60 to-transparent">
+                <h4 className="text-white font-bold text-sm leading-tight">
+                  {currentCollege.name}
+                </h4>
+              </div>
+            </div>
 
-          {/* Main Card (Content) */}
-          <div className="flex-1 bg-white rounded-2xl p-3 md:p-8 shadow-sm border border-gray-100">
-            {/* Logo and Tags - Hidden tags on very small mobile to match your HTML version */}
-            <div className="flex justify-between items-center gap-3 mb-4">
-              <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border shadow-sm bg-gray-200 flex items-center justify-center text-[10px] md:text-xs">
-                Logo
+            {/* Thumbnails */}
+            <div className="grid grid-cols-4 gap-2 min-h-[20%]">
+              {getThumbnailImages(validImages, 3).map((imageUrl: string, i: number) => (
+                <div key={i} className="h-15 rounded-lg overflow-hidden">
+                  <img src={imageUrl} className="w-full h-full object-cover opacity-80" alt={`thumb-${i}`} />
+                </div>
+              ))}
+              {/* Fill remaining slots with placeholder if needed */}
+              {Array.from({ length: Math.max(0, 2 - getThumbnailImages(validImages, 3).length) }).map((_, i) => (
+                <div key={`placeholder-${i}`} className="h-15 rounded-lg overflow-hidden bg-gray-200">
+                  <img src="https://via.placeholder.com/400x300" className="w-full h-full object-cover opacity-80" alt="placeholder" />
+                </div>
+              ))}
+              <div className="h-15 rounded-lg bg-gray-200 flex items-center justify-center text-gray-600 text-xs font-bold">
+                +more
+              </div>
+            </div>
+          </div>
+
+          {/* Right Side: Content Section */}
+          <div className="relative flex-1 bg-white rounded-2xl p-0 md:p-0">
+            {/* Logo and Tags */}
+            <div className="flex justify-between items-center gap-3 mb-2">
+              <div className="relative w-10 h-10 md:w-15 md:h-15 rounded-full shadow-sm bg-gray-200 flex items-center justify-center text-[10px] md:text-xs">
+                <Image 
+                  src={currentCollege.logo_url || "/placeholder-logo.svg"} 
+                  width={60} 
+                  height={60} 
+                  alt="Logo" 
+                  className='rounded-full' 
+                />
               </div>
 
               <div className="hidden sm:flex gap-2">
                 <span className="bg-[#FFF3EC] text-[#D97706] px-2 md:px-3 py-1 rounded-md text-[10px] md:text-xs font-bold uppercase">
-                  Deemed To Be A University
+                  {currentCollege.ownership || 'Private'}
                 </span>
                 <span className="bg-[#E8F5E9] text-[#2E7D32] px-2 md:px-3 py-1 rounded-md text-[10px] md:text-xs font-bold uppercase">
                   Multiple Programs Offered
@@ -48,13 +174,13 @@ export default function TopPerformingColleges() {
             </div>
 
             {/* Title */}
-            <h3 className="text-xl md:text-3xl font-bold text-[#0F172A] mb-1">
-              Sri Muthukumaran Institute of Technology
+            <h3 className="flex-1 text-lg md:text-2xl font-medium text-[#0F172A] mb-1">
+              {currentCollege.name}
             </h3>
 
-            <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 md:mb-6 gap-2">
+            <div className="flex flex-col md:flex-row md:items-center justify-between mb-1 md:mb-3 gap-2">
               <p className="text-gray-500 font-medium text-sm md:text-base">
-                Maduravoyal, Chennai
+                {currentCollege.city}
               </p>
 
               <div className="flex items-center gap-1">
@@ -65,39 +191,36 @@ export default function TopPerformingColleges() {
             </div>
 
             {/* Badges */}
-            <div className="flex flex-wrap gap-2 md:gap-3 mb-4 md:mb-6">
-              <span className="bg-[#E8EFFF] text-[#2D5BFF] px-3 md:px-4 py-1 md:py-1.5 rounded-full text-xs md:text-sm font-bold border border-[#2D5BFF]/10">
-                NAAC A++
+            <div className="flex gap-2 md:gap-3 mb-2 md:mb-2">
+              <span className="bg-[#E8EFFF] text-[#2D5BFF] px-3 md:px-3 py-1 md:py-1.5 rounded-full text-xs md:text-xs font-medium border border-[#2D5BFF]/10">
+                NAAC {currentCollege.naac_grade || 'A++'}
               </span>
-              <span className="bg-[#E7F9EE] text-[#059669] px-3 md:px-4 py-1 md:py-1.5 rounded-full text-xs md:text-sm font-bold border border-[#059669]/10">
-                #1 NIRF 2023
-              </span>
+              {currentCollege.nirf_ranking && (
+                <span className="bg-[#E7F9EE] text-[#059669] px-3 md:px-4 py-1 md:py-1.5 rounded-full text-xs md:text-xs font-medium border border-[#059669]/10">
+                  #{currentCollege.nirf_ranking} NIRF 2024
+                </span>
+              )}
             </div>
 
             {/* Info Grid */}
-            <div className="flex flex-wrap gap-4 md:gap-6 mb-4 md:mb-6">
+            <div className="flex flex-wrap gap-1 md:gap-3 mb-4 md:mb-3">
               <div className="flex items-center gap-2 text-gray-500">
-                <svg className="w-4 h-4 text-[#2D5BFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><polyline points="12,6 12,12 16,14" /></svg>
-                <span className="text-xs md:text-sm font-medium">4 years</span>
+                <MapPin className='w-4 h-4 text-blue-300' />
+                <span className="text-xs md:text-sm md:font-medium">{currentCollege.city || 'Tamil Nadu'}</span>
               </div>
               <div className="flex items-center gap-2 text-gray-500">
-                <svg className="w-4 h-4 text-[#2D5BFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 13L2 9l4-6z" /></svg>
-                <span className="text-xs md:text-sm font-medium">6.5 L (Avg)</span>
+                <Globe className='w-4 h-4 text-blue-300' />
+                <span className="text-xs md:text-sm md:font-medium">{currentCollege.website}</span>
               </div>
               <div className="flex items-center gap-2 text-gray-500">
-                <svg className="w-4 h-4 text-[#2D5BFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2" /><line x1="12" y1="17" x2="12" y2="21" /></svg>
-                <span className="text-xs md:text-sm font-medium">8 LPA (Avg Salary)</span>
+                <Mail className='w-4 h-4 text-blue-300' />
+                <span className="text-xs md:text-sm md:font-medium">{currentCollege.email || currentCollege.slug}</span>
               </div>
             </div>
 
             {/* Description */}
-            <p className="text-gray-600 text-xs md:text-sm leading-relaxed mb-4 md:mb-6">
-              An MBA in Marketing is a postgraduate degree focusing on marketing strategies, brand management, and
-              consumer behavior, equipping students with skills for roles like Brand Manager, Sales Manager, or Market
-              Research Analyst...
-              <span className="text-[#2D5BFF] font-bold cursor-pointer">
-                Read more
-              </span>
+            <p className="max-h-30 text-gray-600 text-xs md:text-sm mb-4 md:mb-3 overflow-y-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+              {currentCollege.description || "This top-performing college offers excellent academic programs with outstanding faculty and modern infrastructure, providing students with comprehensive education and excellent placement opportunities."}
             </p>
             <hr className="mb-4 md:mb-6 opacity-50" />
             <p className="text-[10px] md:text-xs text-gray-400 mb-4 font-medium">
@@ -123,44 +246,50 @@ export default function TopPerformingColleges() {
                 <button className="flex-1 sm:flex-none border-2 border-[#2D5BFF] text-[#2D5BFF] font-bold px-4 md:px-6 py-2 rounded-lg hover:bg-blue-50 transition-colors text-xs md:text-sm">
                   Apply now
                 </button>
-                <button className="flex-1 sm:flex-none bg-[#4F46E5] text-white font-bold px-4 md:px-6 py-2 rounded-lg shadow-md hover:bg-[#4338CA] transition-colors text-xs md:text-sm">
-                  View More
-                </button>
+                <Link href={`/colleges/${currentCollege.slug}`} className="flex-1 sm:flex-none">
+                  <button className="w-full bg-[#4F46E5] text-white font-bold px-4 md:px-6 py-2 rounded-lg shadow-md hover:bg-[#4338CA] transition-colors text-xs md:text-sm">
+                    View More
+                  </button>
+                </Link>
               </div>
-            </div>
-          </div>
-
-          {/* Right Gallery Section (Appears TOP on mobile due to flex-col-reverse) */}
-          <div className="w-full lg:w-96 flex flex-col gap-4">
-            <div className="relative h-70 md:h-100 lg:h-100 rounded-2xl overflow-hidden shadow-lg group">
-              <div className="w-full h-full bg-gray-300 flex items-center justify-center text-gray-600">
-                Campus Image
-              </div>
-              <div className="absolute bottom-0 left-0 right-0 p-4 bg-linear-to-t from-black/80 to-transparent">
-                <h4 className="text-white font-bold text-center text-sm md:text-base">
-                  Sri Muthukumaran Institute of Technology
-                </h4>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-4 gap-2">
-              {[1, 2, 3, 4].map(i => (
-                <div key={i} className="h-14 md:h-20 bg-gray-200 rounded-lg cursor-pointer hover:border-blue-500 border-2 border-transparent transition-all flex items-center justify-center text-[10px] text-gray-500">
-                  Img {i}
-                </div>
-              ))}
             </div>
           </div>
         </div>
 
         {/* Carousel Navigation */}
-        <div className="flex justify-end gap-3 my-3 mr-3">
-          <button className="w-18 h-10 flex items-center justify-center border-2 border-blue-500 rounded text-blue-500 hover:bg-blue-500 hover:text-white transition-all">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="15,18 9,12 15,6" /></svg>
-          </button>
-          <button className="w-18 h-10 flex items-center justify-center border-2 border-blue-500 rounded text-blue-500 hover:bg-blue-500 hover:text-white transition-all">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6" /></svg>
-          </button>
+        <div className="flex justify-between items-center my-4">
+          <div className="text-sm text-gray-500">
+            Showing {currentIndex + 1} of {colleges.length} top colleges
+          </div>
+          <div className="flex gap-3">
+            <button 
+              onClick={prevCollege}
+              className="w-12 h-10 flex items-center justify-center border-2 border-blue-500 rounded text-blue-500 hover:bg-blue-500 hover:text-white transition-all disabled:opacity-50"
+              disabled={colleges.length <= 1}
+            >
+              <ChevronLeft size={20} />
+            </button>
+            <button 
+              onClick={nextCollege}
+              className="w-12 h-10 flex items-center justify-center border-2 border-blue-500 rounded text-blue-500 hover:bg-blue-500 hover:text-white transition-all disabled:opacity-50"
+              disabled={colleges.length <= 1}
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
+        </div>
+
+        {/* Dots Indicator */}
+        <div className="flex justify-center gap-2 mt-4">
+          {colleges.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentIndex(index)}
+              className={`w-3 h-3 rounded-full transition-all ${
+                index === currentIndex ? 'bg-blue-500' : 'bg-gray-300 hover:bg-gray-400'
+              }`}
+            />
+          ))}
         </div>
       </div>
     </section>
