@@ -112,7 +112,7 @@ export default function TopPerformingColleges({ colleges }: TopPerformingCollege
   const validImages = extractImagesFromJsonb(currentCollege.image_urls);
 
   return (
-    <section className="bg-gray-100 md:p-4">
+    <section className="bg-gray-100 my-6 md:p-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between mb-4 gap-4">
@@ -120,12 +120,12 @@ export default function TopPerformingColleges({ colleges }: TopPerformingCollege
             <p className="text-gray-400 font-semibold text-sm md:text-lg text-center sm:text-center md:text-left lg:text-left tracking-widest">
               Best Colleges in town
             </p>
-            <h2 className="text-center sm:text-center md:text-left lg:text-left text-2xl md:text-4xl font-medium text-[#2D5BFF]">
+            <h2 className="text-center sm:text-center md:text-left lg:text-left text-2xl md:text-4xl  tracking-wider font-medium text-[#2D5BFF]">
               Top Performing Colleges
             </h2>
           </div>
 
-          <div className="md:w-3/5 ml-4">
+          <div className="md:w-3/5 mx-4 md:ml-4">
             <p className="text-gray-500 text-center sm:text-center md:text-left lg:text-left text-sm leading-relaxed">
               Discover the highest-ranked colleges in Tamil Nadu based on NIRF rankings.
               These institutions offer excellent academic programs and outstanding placement records.
@@ -134,7 +134,7 @@ export default function TopPerformingColleges({ colleges }: TopPerformingCollege
         </div>
 
         {/* Main Content - Using College Listing Card Structure */}
-        <div className='h-205 md:h-133 lg:h-115 my-auto'>
+        <div className='h-180 md:h-133 lg:h-115 my-auto'>
           <div className="sm:w-[80%] sm:mx-auto sm:my-auto md:w-full lg:w-full bg-white rounded-2xl shadow-sm border border-gray-100 p-3 md:p-4 mb-3 flex flex-col md:flex-row lg:flex-row gap-2 md:gap-6">
             {/* Left Side: Image Gallery Section */}
             <div className="relative mx-auto w-full md:w-75 lg:w-75 shrink-0">
@@ -255,7 +255,7 @@ export default function TopPerformingColleges({ colleges }: TopPerformingCollege
                 {currentCollege.name}
               </h3>
 
-              <div className="flex flex-col md:flex-row md:items-center justify-between mb-1 md:mb-3 gap-2">
+              <div className="flex flex-row md:flex-row md:items-center justify-between mb-1 md:mb-3 gap-2">
                 <p className="text-gray-500 font-medium text-sm md:text-base">
                   {currentCollege.city}
                 </p>
@@ -309,7 +309,7 @@ export default function TopPerformingColleges({ colleges }: TopPerformingCollege
 
               {/* Footer Buttons */}
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                <div>
+                <div className='hidden md:block'>
                   <p className="text-xs font-bold text-[#2D5BFF] mb-2 uppercase">Top Courses</p>
                   <div className="flex -space-x-2">
                     <div className="w-8 h-8 rounded-full border-2 border-white bg-red-400"></div>
@@ -320,11 +320,11 @@ export default function TopPerformingColleges({ colleges }: TopPerformingCollege
                 </div>
 
                 <div className="flex gap-2 w-full sm:w-auto">
-                  <button className="flex-1 sm:flex-none border-2 border-[#2D5BFF] text-[#2D5BFF] font-bold px-4 md:px-6 py-2 rounded-lg hover:bg-blue-50 transition-colors text-xs md:text-sm">
+                  <button className="flex-1 sm:flex-none border-2 border-[#2D5BFF] text-[#2D5BFF] font-bold px-4 md:px-6 py-2 rounded-lg hover:bg-blue-50 transition-colors text-sm h-10 md:text-sm">
                     Apply now
                   </button>
                   <Link href={`/colleges/${currentCollege.slug}`} className="flex-1 sm:flex-none">
-                    <button className="w-full bg-[#4F46E5] text-white font-bold px-4 md:px-6 py-2 rounded-lg shadow-md hover:bg-[#4338CA] transition-colors text-xs md:text-sm">
+                    <button className="w-full bg-[#4F46E5] text-white font-semibold px-4 md:px-6 py-2 rounded-lg shadow-md hover:bg-[#4338CA] transition-colors text-sm h-10 md:text-sm">
                       View More
                     </button>
                   </Link>
