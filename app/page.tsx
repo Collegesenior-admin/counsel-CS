@@ -147,7 +147,7 @@ export default async function HomePage() {
         </section>
 
         {/* Process Section */}
-        <section className="max-w-387 mx-auto my-6 bg-[#f3f8ff]">
+        <section className="max-w-387 mx-auto py-10 bg-[#f3f8ff]">
 
 
           <Steps />
