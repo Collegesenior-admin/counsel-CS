@@ -147,41 +147,30 @@ export default async function HomePage() {
         </section>
 
         {/* Process Section */}
-        <section className="max-w-387 mx-auto">
+        <section className="max-w-387 mx-auto bg-[#f3f8ff]">
 
 
           <Steps />
 
         </section>
 
-        <div className="flex flex-row md:flex-row items-center justify-center space-x-3 sm:space-x-3 md:space-y-0 md:space-x-9 my-3">
-          <span className="bg-blue-200 text-primary p-2 md:p-3 rounded-lg font-semibold text-sm md:text-md">TNEA 2026</span>
-          <span className="bg-gray-200 p-2 md:p-3 rounded-lg font-semibold text-sm md:text-md">Admission</span>
-        </div>
+       
 
         {/* TNEA Calculator */}
-        <section className="max-w-7xl mx-auto px-3 py-8 grid md:grid-cols-2 gap-12 items-center">
+        <section className="max-w-7xl mx-auto px-5 py-8 grid md:grid-cols-2 gap-6 items-center">
 
           {/* LEFT SIDE */}
           <div>
-            <h1 className="text-4xl font-bold mb-3">
-              TNEA Cutoff Calculator
-            </h1>
-
-            <p className="text-gray-500 mb-6">
+            <h1 className="text-4xl text-center md:text-left font-bold mb-3">
+              TNEA Cutoff Calculator</h1>
+            <p className="text-gray-500 text-center md:text-left mb-6">
               Calculate Your TNEA Cutoff Marks And Estimate Your Rank For
-              Engineering Admissions In Tamil Nadu.
-            </p>
-
+              Engineering Admissions In Tamil Nadu.</p>
             <div className="space-y-5">
-
-
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-
-                  <label className="block mb-1 font-medium text-blue-600">
-                    Mathematics Score (out of 100)
-                  </label>
+                  <label className="block mb-1 font-medium">
+                    Mathematics Score (out of 100)</label>
                   <input
                     type="number"
                     placeholder="e.g. 90"
@@ -189,11 +178,8 @@ export default async function HomePage() {
                     className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
                   />
                 </div>
-
-
-
                 <div>
-                  <label className="block mb-1 font-medium text-blue-600">
+                  <label className="block mb-1 font-medium ">
                     Physics Score (out of 100)
                   </label>
                   <input
@@ -205,7 +191,7 @@ export default async function HomePage() {
                 </div>
 
                 <div>
-                  <label className="block mb-1 font-medium text-blue-600">
+                  <label className="block mb-1 font-medium">
                     Chemistry Score (out of 100)
                   </label>
                   <input
@@ -232,43 +218,31 @@ export default async function HomePage() {
 
           {/* RIGHT SIDE */}
           <div className="w-full">
-            <div className="w-full max-w-200 h-80 bg-linear-to-br from-gray-700 to-zinc-800 text-white rounded-2xl p-8 shadow-xl">
-
-              <h3 className="text-lg font-semibold">
+            <div className="w-full max-w-200 h-auto bg-linear-to-b from-amber-300/90 to-amber-500/90 text-black rounded-2xl p-4 md:p-5 shadow-xl">
+              <p className="text-lg font-semibold tracking-wide mb-1">
                 Your Projected Cutoff
-              </h3>
-
-              <p className="text-sm text-gray-400 mb-4">
-                Based On 2025 Academic Parameters
               </p>
-              <div className='flex justify-between items-center'>
-
-                <h1
+              <p className="text-sm mb-4">Based On 2025 Academic Parameters</p>
+              <div className='md:flex justify-evenly items-center gap-5'>
+                <h3
                   id="cutoff"
-                  className="text-sm font-bold mb-4 text-gray-300 line-through"
-                >
-                  198.50
-                </h1>
-
-                <h4 className="text-3xl font-semibold mb-4">
-                  Know Your Exact Cutoff
-                </h4>
+                  className="text-6xl font-bold md:mb-4 text-white line-through shrink-0"
+                >198.50</h3>
+                <p className="text-xl md:text-lg lg:text-2xl font-semibold mb-4">
+                  Know Your Exact Cutoff</p>
               </div>
-
               <div className="mb-4">
-                <p className="text-sm ">
-                  College Tier
-                </p>
-                <p className="font-medium text-gray-400">
+                <p className="text-sm font-medium">College Tier</p>
+                <p className="font-medium text-white">
                   Top Government Colleges (E.G., CEG, MIT, PSG)
                 </p>
               </div>
 
-              <div className='flex justify-between items-center'>
-                <p className="text-sm">
+              <div className='md:flex justify-between items-center bg-yellow-200/60 p-3 rounded-xl'>
+                <p className="text-sm font-medium">
                   Estimated Rank Range
                 </p>
-                <p className="text-4xl font-medium text-gray-400 line-through">
+                <p className="text-4xl font-medium text-white line-through shrink-0">
                   
                     3001-8000
                 
