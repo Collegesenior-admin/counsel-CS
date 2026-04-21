@@ -21,10 +21,10 @@ export default function StepWidget() {
   }, []);
 
   return (
-    <div className="max-w-325 mx-auto p-3 lg:py-5 lg:px-5 text-center">
+    <div className="max-w-325 mx-auto p-3 lg:py-8 lg:px-5 text-center">
       {/* Header Section */}
       <div className="mb-10">
-        <h2 className="text-lg md:text-2xl lg:text-2xl font-bold text-gray-800 mb-2">
+        <h2 className="text-lg md:text-2xl lg:text-4xl font-bold text-gray-800 mb-2">
           Choosing The Right College Can Be Confusing
         </h2>
         <p className="text-gray-500 text-sm md:text-lg">
