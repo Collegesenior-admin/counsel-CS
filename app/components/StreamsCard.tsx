@@ -39,7 +39,7 @@ export default function StreamSection() {
   };
 
   return (
-    <section className="relative max-w-365 mx-auto h-auto p-3 md:p-8 m-5 bg-primary lg:rounded-lg text-center text-white overflow-hidden">
+    <section className="relative max-w-365 mx-auto h-auto p-3 py-6 md:p-8 m-5 bg-primary lg:rounded-lg text-center text-white overflow-hidden">
       
       {/* Background Decal Image */}
       <div className="z-0">
@@ -58,14 +58,14 @@ export default function StreamSection() {
 
         <h2 className="text-xl font-semibold md:text-4xl mb-2 tracking-wider">Explore Courses By Stream</h2>
 
-        <p className="text-xs m-2 mb-5 md:m-4">
+        <p className="text-xs m-3 mb-5 md:m-4">
           Here’s why thousands of students and parents trust CollegeSenior for a
           stress-free admission <br />
           journey with expert guidance, personal attention, and reliable support.
         </p>
 
         {/* Search Bar */}
-        <div className="mt-3 md:mt-10 max-w-4xl mx-auto relative">
+        <div className="mt-3 mb-6 md:mt-10 max-w-4xl mx-auto relative">
           <div className="flex items-center bg-white rounded-lg p-2.5 md:px-5 md:py-4">
             <Search className="text-[#0B69F2] w-6 h-6 mr-2" />
             <input 
@@ -92,7 +92,7 @@ export default function StreamSection() {
             {streams.map((item) => (
               <div 
                 key={item.id}
-                className="min-w-70 md:min-w-[320px] max-h-55 flex flex-col justify-between rounded-xl transition-all group snap-start"
+                className="min-w-70 md:min-w-[320px] max-h-55 my-3 flex flex-col justify-between rounded-xl transition-all group snap-start"
               >
                 <div className='flex justify-between border-b border-white/50 px-1.5 pb-1.5 mb-2.5'>
 
