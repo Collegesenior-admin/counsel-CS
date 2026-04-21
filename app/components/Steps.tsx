@@ -21,7 +21,7 @@ export default function StepWidget() {
   }, []);
 
   return (
-    <div className="max-w-315 mx-auto p-3 lg:py-5 lg:px-5 text-center">
+    <div className="max-w-325 mx-auto p-3 lg:py-5 lg:px-5 text-center">
       {/* Header Section */}
       <div className="mb-10">
         <h2 className="text-lg md:text-2xl lg:text-2xl font-bold text-gray-800 mb-2">
