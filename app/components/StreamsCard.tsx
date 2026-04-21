@@ -39,7 +39,7 @@ export default function StreamSection() {
   };
 
   return (
-    <section className="relative max-w-365 mx-auto h-auto p-3 md:p-8 m-5 bg-primary md:rounded-lg text-center text-white overflow-hidden">
+    <section className="relative max-w-365 mx-auto h-auto p-3 md:p-8 m-5 bg-primary lg:rounded-lg text-center text-white overflow-hidden">
       
       {/* Background Decal Image */}
       <div className="z-0">
