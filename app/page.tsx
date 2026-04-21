@@ -147,7 +147,7 @@ export default async function HomePage() {
         </section>
 
         {/* Process Section */}
-        <section className="max-w-387 mx-auto bg-[#f3f8ff]">
+        <section className="max-w-387 mx-auto my-6 bg-[#f3f8ff]">
 
 
           <Steps />
@@ -157,7 +157,7 @@ export default async function HomePage() {
        
 
         {/* TNEA Calculator */}
-        <section className="max-w-7xl mx-auto px-5 py-8 grid md:grid-cols-2 gap-6 items-center">
+        <section className="max-w-7xl mx-auto my-6 px-5 py-8 grid md:grid-cols-2 gap-6 items-center">
 
           {/* LEFT SIDE */}
           <div>
@@ -218,37 +218,46 @@ export default async function HomePage() {
 
           {/* RIGHT SIDE */}
           <div className="w-full">
-            <div className="w-full max-w-200 h-auto bg-linear-to-b from-amber-300/90 to-amber-500/90 text-black rounded-2xl p-4 md:p-5 shadow-xl">
-              <p className="text-lg font-semibold tracking-wide mb-1">
-                Your Projected Cutoff
-              </p>
-              <p className="text-sm mb-4">Based On 2025 Academic Parameters</p>
-              <div className='md:flex justify-evenly items-center gap-5'>
-                <h3
-                  id="cutoff"
-                  className="text-6xl font-bold md:mb-4 text-white line-through shrink-0"
-                >198.50</h3>
-                <p className="text-xl md:text-lg lg:text-2xl font-semibold mb-4">
-                  Know Your Exact Cutoff</p>
-              </div>
-              <div className="mb-4">
-                <p className="text-sm font-medium">College Tier</p>
-                <p className="font-medium text-white">
-                  Top Government Colleges (E.G., CEG, MIT, PSG)
+            <div className="w-full max-w-200 h-auto bg-[#FFD14B] text-black rounded-2xl p-4 md:p-5 shadow-xl relative overflow-hidden">
+              {/* Background Image */}
+                <Image 
+                  src="/calculator.svg" 
+                  alt="Calculator background" 
+                  fill 
+                  className="object-cover rounded-2xl"
+                />
+              {/* Content */}
+              <div className="relative z-10">
+                <p className="text-lg font-semibold tracking-wide mb-1">
+                  Your Projected Cutoff
                 </p>
-              </div>
+                <p className="text-sm mb-4">Based On 2025 Academic Parameters</p>
+                <div className='md:flex justify-evenly items-center gap-5'>
+                  <h3
+                    id="cutoff"
+                    className="text-6xl font-bold md:mb-4 text-white line-through shrink-0"
+                  >198.50</h3>
+                  <p className="text-xl md:text-lg lg:text-2xl font-semibold mb-4">
+                    Know Your Exact Cutoff</p>
+                </div>
+                <div className="mb-4">
+                  <p className="text-sm font-medium">College Tier</p>
+                  <p className="font-medium text-white">
+                    Top Government Colleges (E.G., CEG, MIT, PSG)
+                  </p>
+                </div>
 
-              <div className='md:flex justify-between items-center bg-yellow-200/60 p-3 rounded-xl'>
-                <p className="text-sm font-medium">
-                  Estimated Rank Range
-                </p>
-                <p className="text-4xl font-medium text-white line-through shrink-0">
+                <div className='md:flex justify-between items-center bg-yellow-200/60 p-3 rounded-xl'>
+                  <p className="text-sm font-medium">
+                    Estimated Rank Range
+                  </p>
+                  <p className="text-4xl font-medium text-white line-through shrink-0">
+                    
+                      3001-8000
                   
-                    3001-8000
-                
-                </p>
+                  </p>
+                </div>
               </div>
-
             </div>
           </div>
 
@@ -258,7 +267,7 @@ export default async function HomePage() {
         <StreamsCard />
 
         {/* why choose college senior */}
-        <section className="max-w-7xl mx-auto text-center">
+        <section className="max-w-7xl mx-auto mt-9 text-center">
           <p className="text-sm text-primary">The CollegeSenior’s Advantage</p>
           <h2 className="text-3xl">Why choose CollegeSenior?</h2>
           <p className="text-sm text-gray-500 m-4">
