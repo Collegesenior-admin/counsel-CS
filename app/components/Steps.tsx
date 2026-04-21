@@ -5,9 +5,9 @@ import { CheckCircle2 } from 'lucide-react';
 
 const steps = [
   { name: 'Apply Online' },
-  { name: 'Counseling' },
-  { name: 'Shortlisting' },
-  { name: 'Admission' },
+  { name: 'Personal Counseling' },
+  { name: 'Shortlisting & Applications' },
+  { name: 'Admission Completion' },
 ];
 
 export default function StepWidget() {
@@ -21,7 +21,7 @@ export default function StepWidget() {
   }, []);
 
   return (
-    <div className="max-w-275 mx-auto p-3 lg:py-5 lg:px-5 text-center">
+    <div className="max-w-315 mx-auto p-3 lg:py-5 lg:px-5 text-center">
       {/* Header Section */}
       <div className="mb-10">
         <h2 className="text-lg md:text-2xl lg:text-2xl font-bold text-gray-800 mb-2">
@@ -52,7 +52,7 @@ export default function StepWidget() {
                 {/* Step Card */}
                 <div
                   className={`
-                    relative z-10 flex items-center gap-3 p-2 md:px-5 md:py-4 rounded-lg border transition-all duration-500 w-[70%] sm:w-full
+                    relative z-10 flex items-center gap-3 p-2 md:px-5 md:py-4 rounded-lg border transition-all duration-500 w-[80%] sm:w-full md:w-90
                     ${isActive
                       ? 'bg-blue-100 border-blue-200'
                       : 'bg-white border-blue-100 opacity-90'}
@@ -75,7 +75,7 @@ export default function StepWidget() {
                 {/* --- TABLET CONNECTORS (2x2 Grid) --- */}
                 {/* Horizontal line between 1->2 and 3->4 */}
                 {(index === 0 || index === 2) && (
-                  <div className="hidden sm:block lg:hidden absolute -right-7 top-1/2 w-8 border-t-2 border-dotted border-blue-300 transform -translate-y-1/2" />
+                  <div className="hidden sm:block lg:hidden absolute -right-20 top-1/2 w-35 border-t-2 border-dotted border-blue-300 transform -translate-y-1/2" />
                 )}
 
                 {/* Vertical line between Row 1 and Row 2 (Card 2) */}
