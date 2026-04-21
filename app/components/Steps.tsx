@@ -37,7 +37,7 @@ export default function StepWidget() {
         {/* Mobile Central Line (Only visible on small screens) */}
         <div className="absolute left-1/2 top-10 bottom-10 w-0 border-l-2 border-dotted border-blue-300 opacity-80 transform -translate-x-1/2 md:hidden sm:hidden z-10" />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-6 lg:gap-8 relative">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-6 lg:gap-8 relative">
           {steps.map((step, index) => {
             const isActive = index <= activeStep;
 
@@ -52,17 +52,17 @@ export default function StepWidget() {
                 {/* Step Card */}
                 <div
                   className={`
-                    relative z-10 flex items-center gap-3 p-2 md:px-5 md:py-4 rounded-lg border transition-all duration-500 w-[80%] sm:w-full md:w-90
+                    relative z-10 flex items-center gap-3 p-2 py-3 md:px-5 md:py-4 rounded-lg border transition-all duration-500 w-[86%] sm:w-full md:w-90
                     ${isActive
                       ? 'bg-blue-100 border-blue-200'
                       : 'bg-white border-blue-100 opacity-90'}
                   `}
                 >
                   <CheckCircle2
-                    size={22}
+                    size={24}
                     className={`transition-colors duration-500 ${isActive ? 'text-[#0d6efd]' : 'text-blue-300'}`}
                   />
-                  <span className={`text-sm font-bold transition-colors duration-500 ${isActive ? 'text-[#0d6efd]' : 'text-blue-300'}`}>
+                  <span className={`text-md font-bold transition-colors duration-500 ${isActive ? 'text-[#0d6efd]' : 'text-blue-300'}`}>
                     {step.name}
                   </span>
                 </div>
