@@ -23,7 +23,7 @@ export default function EnquiryFormModal({ isOpen, onClose, sourcePage = 'Genera
   const [isVisible, setIsVisible] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  
+
   // Lock scroll when modal is open
   useScrollLock(isOpen);
 
@@ -133,26 +133,37 @@ export default function EnquiryFormModal({ isOpen, onClose, sourcePage = 'Genera
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center p-3 bg-black/50 backdrop-blur-xs transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'
+      className={`fixed sm:bottom-0 inset-0 z-50 flex items-center justify-center p-3 bg-black/50 backdrop-blur-xs transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'
         }`}
       onClick={handleClose}
     >
       <div
-        className={`bg-white rounded-2xl shadow-2xl max-w-sm w-full max-h-[85vh] overflow-y-auto transition-all duration-300 transform ${isVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
+        className={`bg-white rounded-2xl shadow-2xl  px-3 max-w-sm w-full max-h-[85vh] overflow-y-auto transition-all duration-300 transform ${isVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
           }`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="sticky top-0 bg-blue-600 text-white px-4 py-4 rounded-t-2xl flex justify-between items-center z-10">
-          <div>
-            <h2 className="text-xl font-bold">Get Expert Guidance</h2>
-            <p className="text-blue-100 text-sm mt-1">Fill the form and we&apos;ll call you back</p>
-          </div>
-          <button onClick={handleClose} className="p-2 hover:bg-blue-700 rounded-full transition">
-            <X size={20} />
-          </button>
-        </div>
+        {/* <div className="sticky top-0 bg-blue-600 text-white px-4 py-4 rounded-t-2xl flex justify-between items-center z-10">
+          </div> */}
 
         <form onSubmit={handleSubmit} className="p-4 space-y-4">
+          <div className='flex justify-center items-center'>
+            <div className='sm:block lg:hidden bg-gray-200 w-15 h-1 rounded-full  text-center'></div>
+          </div>
+
+          <div className='flex items-start'>
+
+
+            <div className='w-[80%}'>
+              <h2 className="text-xl font-semibold">Enquiry Now</h2>
+              <p className="text-gray-500 text-xs mt-1">Fill in your details and our team will get back to you shortly</p>
+            </div>
+            <div className='w-[20%] flex justify-end'>
+              <button onClick={handleClose} className=" bg-gray-200 p-1.5 -m-3 rounded-full hover:bg-gray-300  transition">
+                <X size={18} />
+              </button>
+            </div>
+          </div>
+
           {/* Hidden Fields */}
           <input type="hidden" name="sourcePage" value={sourcePage} />
           {Object.entries(hiddenFields).map(([key, value]) => (
@@ -160,22 +171,21 @@ export default function EnquiryFormModal({ isOpen, onClose, sourcePage = 'Genera
           ))}
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Name *</label>
+            {/* <label className="block text-sm font-medium text-gray-700 mb-2">Name *</label> */}
             <input
               type="text"
               required
               value={formData.name}
               onChange={(e) => handleInputChange('name', e.target.value)}
-              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition placeholder:text-sm ${
-                errors.name ? 'border-red-500 focus:ring-red-500' : 'border-gray-300'
-              }`}
-              placeholder="Enter your full name"
+              className={`w-full px-3 py-2 border rounded-lg focus:ring-1 focus:ring-blue-500 outline-none transition placeholder:text-sm ${errors.name ? 'border-red-500 focus:ring-red-500' : 'border-gray-300'
+                }`}
+              placeholder="Enter Name"
             />
             {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label>
+            {/* <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label> */}
             <input
               type="tel"
               required
@@ -185,42 +195,39 @@ export default function EnquiryFormModal({ isOpen, onClose, sourcePage = 'Genera
                 const value = e.target.value.replace(/[^0-9\s\-\(\)\+]/g, '');
                 handleInputChange('phone', value);
               }}
-              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition placeholder:text-sm ${
-                errors.phone ? 'border-red-500 focus:ring-red-500' : 'border-gray-300'
-              }`}
-              placeholder="Enter 10-digit mobile number"
+              className={`w-full px-3 py-2 border rounded-lg focus:ring-1 focus:ring-blue-500 outline-none transition placeholder:text-sm ${errors.phone ? 'border-red-500 focus:ring-red-500' : 'border-gray-300'
+                }`}
+              placeholder="Enter Phone Number"
               maxLength={15}
             />
             {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+            {/* <label className="block text-sm font-medium text-gray-700 mb-2">Email *</label> */}
             <input
               type="email"
               required
               value={formData.email}
               onChange={(e) => handleInputChange('email', e.target.value.toLowerCase())}
-              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition placeholder:text-sm ${
-                errors.email ? 'border-red-500 focus:ring-red-500' : 'border-gray-300'
-              }`}
-              placeholder="your@email.com"
+              className={`w-full px-3 py-2 border rounded-lg focus:ring-1 focus:ring-blue-500 outline-none transition placeholder:text-sm ${errors.email ? 'border-red-500 focus:ring-red-500' : 'border-gray-300'
+                }`}
+              placeholder="Enter Email"
             />
             {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Study Level *</label>
+          <div className=''>
+            {/* <label className="block text-sm font-medium text-gray-700 mb-2">Study Level *</label> */}
             <select
               required
               value={formData.studyLevel}
               onChange={(e) => handleInputChange('studyLevel', e.target.value)}
-              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition text-sm ${
-                errors.studyLevel ? 'border-red-500 focus:ring-red-500' : 'border-gray-300'
-              } ${formData.studyLevel === "" ? "text-gray-400" : "text-gray-900"}`}
+              className={`w-full px-3 py-2 border rounded-lg focus:ring-1 focus:ring-blue-500 outline-none transition text-sm ${errors.studyLevel ? 'border-red-500 focus:ring-red-500' : 'border-gray-300'
+                } ${formData.studyLevel === "" ? "text-gray-400" : "text-gray-900"}`}
             >
               <option value="" disabled>
-                Select your study level
+                Select Study Level
               </option>
               <option value="UG">Undergraduate (UG)</option>
               <option value="PG">Postgraduate (PG)</option>
@@ -231,17 +238,16 @@ export default function EnquiryFormModal({ isOpen, onClose, sourcePage = 'Genera
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Interested Field *</label>
+            {/* <label className="block text-sm font-medium text-gray-700 mb-2">Interested Field *</label> */}
             <select
               required
               value={formData.interestedField}
               onChange={(e) => handleInputChange('interestedField', e.target.value)}
-              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition text-sm ${
-                errors.interestedField ? 'border-red-500 focus:ring-red-500' : 'border-gray-300'
-              } ${formData.interestedField === "" ? "text-gray-400" : "text-gray-900"}`}
+              className={`w-full px-3 py-2 border rounded-lg focus:ring-1 focus:ring-blue-500 outline-none transition text-sm ${errors.interestedField ? 'border-red-500 focus:ring-red-500' : 'border-gray-300'
+                } ${formData.interestedField === "" ? "text-gray-400" : "text-gray-900"}`}
             >
               <option value="" disabled>
-                Select your field of interest
+                Select Field of Interest
               </option>
               <option value="Engineering">Engineering</option>
               <option value="Management">Management</option>
@@ -257,15 +263,14 @@ export default function EnquiryFormModal({ isOpen, onClose, sourcePage = 'Genera
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">City/State *</label>
+            {/* <label className="block text-sm font-medium text-gray-700 mb-2">City/State *</label> */}
             <input
               type="text"
               required
               value={formData.cityState}
               onChange={(e) => handleInputChange('cityState', e.target.value)}
-              className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition placeholder:text-sm ${
-                errors.cityState ? 'border-red-500 focus:ring-red-500' : 'border-gray-300'
-              }`}
+              className={`w-full px-3 py-2 border rounded-lg focus:ring-1 focus:ring-blue-500 outline-none transition placeholder:text-sm ${errors.cityState ? 'border-red-500 focus:ring-red-500' : 'border-gray-300'
+                }`}
               placeholder="e.g., Chennai, Tamil Nadu"
             />
             {errors.cityState && <p className="text-red-500 text-xs mt-1">{errors.cityState}</p>}
@@ -278,6 +283,9 @@ export default function EnquiryFormModal({ isOpen, onClose, sourcePage = 'Genera
           >
             {isSubmitting ? 'Submitting...' : 'Submit'}
           </button>
+          <div>
+            <p className='text-[10px] text-gray-500 text-center -mt-1'>By Submitting, I accept the <span className='underline'>T&C </span>and <span className='underline'>Privacy Policy</span></p>
+          </div>
         </form>
       </div>
     </div>
