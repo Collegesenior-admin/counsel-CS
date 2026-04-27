@@ -117,10 +117,10 @@ export default async function HomePage() {
         <section className="max-w-387 mx-auto relative flex flex-col w-full lg:bg-[#ffd14b] md:bg-[#ffd14b] bg-linear-to-b from-[#ffd14b] py-3 px-6 items-center text-center ">
 
           <div className="relative z-10 max-w-4xl px-2 md:justify-end md:text-center">
-            <span className="text-stone-600 font-semibold my-2 text-sm md:text-base block tracking-wider">
+            <span className="text-stone-600 font-semibold my-2 text-xs md:text-base block tracking-wider">
               Start your admission journey with confidence.
             </span>
-            <h2 className="text-md md:text-[16px] lg:text-xl font-bold mb-2 tracking-widest">
+            <h2 className="text-md md:text-[16px] lg:text-xl font-bold tracking-[1.5px]">
               Tamil Nadu&apos;s Most Trusted Unified College Application Platform
             </h2>
           </div>
@@ -135,8 +135,8 @@ export default async function HomePage() {
             />
           </div>
 
-          <div className="relative z-10 max-w-md">
-            <p className="text-md md:text-lg text-neutral-600 mt-5 font-semibold">
+          <div className="relative z-10">
+            <p className="text-md md:text-lg text-neutral-600 mt-2 mb-4 font-semibold">
               Apply to multiple TN colleges with just one simple form.
             </p>
             <button data-application-button className="bg-[#0d68f2] text-white my-3 px-5 py-3 md:px-15 md:my-3 rounded-lg text-sm md:text-md font-medium hover:bg-blue-700 transition md:w-auto">
@@ -154,108 +154,110 @@ export default async function HomePage() {
 
         </section>
 
-       
+
 
         {/* TNEA Calculator */}
-        <section className="max-w-7xl mx-auto my-6 px-5 py-8 grid md:grid-cols-2 gap-6 items-center">
+        <section className="max-w-387 mx-auto bg-white">
+          <div className='max-w-7xl mx-auto px-5 py-8 grid md:grid-cols-2 gap-6 items-center'>
 
-          {/* LEFT SIDE */}
-          <div>
-            <h1 className="text-4xl text-center md:text-left font-bold mb-3">
-              TNEA Cutoff Calculator</h1>
-            <p className="text-gray-500 text-center md:text-left mb-6">
-              Calculate Your TNEA Cutoff Marks And Estimate Your Rank For
-              Engineering Admissions In Tamil Nadu.</p>
-            <div className="space-y-5">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block mb-1 font-medium">
-                    Mathematics Score (out of 100)</label>
-                  <input
-                    type="number"
-                    placeholder="e.g. 90"
-                    id="math"
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
-                  />
+            {/* LEFT SIDE */}
+            <div>
+              <h2 className="text-[25px] lg:text-center font-medium md:text-left mb-3">
+                TNEA Cutoff Calculator</h2>
+              <p className="text-gray-500 text-sm lg:text-center md:text-left mb-6">
+                Calculate Your TNEA Cutoff Marks And Estimate Your Rank For
+                Engineering Admissions In Tamil Nadu.</p>
+              <div className="space-y-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block mb-1 ">
+                      Mathematics Score (out of 100)</label>
+                    <input
+                      type="number"
+                      placeholder="e.g. 90"
+                      id="math"
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block mb-1 ">
+                      Physics Score (out of 100)
+                    </label>
+                    <input
+                      type="number"
+                      placeholder="e.g. 90"
+                      id="physics"
+                      className="w-full p-3 border border-gray-300 rounded-lg"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block mb-1 ">
+                      Chemistry Score (out of 100)
+                    </label>
+                    <input
+                      type="number"
+                      placeholder="e.g. 90"
+                      id="chemistry"
+                      className="w-full p-3 border border-gray-300 rounded-lg"
+                    />
+                  </div>
+
+                  <div className='flex justify-center items-end'>
+
+                    <button
+
+                      className="bg-[#0B1A33] text-white w-full px-6 py-3.5 rounded-lg hover:opacity-90 transition"
+                    >
+                      Calculate Cutoff
+                    </button>
+                  </div>
                 </div>
-                <div>
-                  <label className="block mb-1 font-medium ">
-                    Physics Score (out of 100)
-                  </label>
-                  <input
-                    type="number"
-                    placeholder="e.g. 90"
-                    id="physics"
-                    className="w-full p-3 border border-gray-300 rounded-lg"
-                  />
-                </div>
 
-                <div>
-                  <label className="block mb-1 font-medium">
-                    Chemistry Score (out of 100)
-                  </label>
-                  <input
-                    type="number"
-                    placeholder="e.g. 90"
-                    id="chemistry"
-                    className="w-full p-3 border border-gray-300 rounded-lg"
-                  />
-                </div>
-
-                <div className='flex justify-center items-end'>
-
-                  <button
-
-                    className="bg-[#0B1A33] text-white w-full px-6 py-3.5 rounded-lg hover:opacity-90 transition"
-                  >
-                    Calculate Cutoff
-                  </button>
-                </div>
               </div>
-
             </div>
-          </div>
 
-          {/* RIGHT SIDE */}
-          <div className="w-full">
-            <div className="w-full max-w-200 h-auto bg-[#FFD14B] text-black rounded-2xl p-4 md:p-5 shadow-xl relative overflow-hidden">
-              {/* Background Image */}
-                <Image 
-                  src="/calculator.svg" 
-                  alt="Calculator background" 
-                  fill 
+            {/* RIGHT SIDE */}
+            <div className="w-full">
+              <div className="w-full max-w-130 mx-auto h-auto bg-[#FFD14B] text-black rounded-2xl p-4 md:p-5 shadow-xl relative overflow-hidden">
+                {/* Background Image */}
+                <Image
+                  src="/calculator.svg"
+                  alt="Calculator background"
+                  fill
                   className="object-cover rounded-2xl"
                 />
-              {/* Content */}
-              <div className="relative z-10">
-                <p className="text-lg font-semibold tracking-wide mb-1">
-                  Your Projected Cutoff
-                </p>
-                <p className="text-sm mb-4">Based On 2025 Academic Parameters</p>
-                <div className='md:flex justify-evenly items-center gap-5'>
-                  <h3
-                    id="cutoff"
-                    className="text-6xl font-bold md:mb-4 text-white line-through shrink-0"
-                  >198.50</h3>
-                  <p className="text-xl md:text-lg lg:text-2xl font-semibold mb-4">
-                    Know Your Exact Cutoff</p>
-                </div>
-                <div className="mb-4">
-                  <p className="text-sm font-medium">College Tier</p>
-                  <p className="font-medium text-white">
-                    Top Government Colleges (E.G., CEG, MIT, PSG)
+                {/* Content */}
+                <div className="relative z-10">
+                  <p className="text-lg font-semibold tracking-wide mb-1">
+                    Your Projected Cutoff
                   </p>
-                </div>
+                  <p className="text-sm mb-4">Based On 2025 Academic Parameters</p>
+                  <div className='md:flex justify-evenly items-center gap-5'>
+                    <h3
+                      id="cutoff"
+                      className="text-6xl font-bold md:mb-4 text-white line-through shrink-0"
+                    >198.50</h3>
+                    <p className="text-xl md:text-lg lg:text-2xl font-semibold mb-4">
+                      Know Your Exact Cutoff</p>
+                  </div>
+                  <div className="mb-4">
+                    <p className="text-sm font-medium">College Tier</p>
+                    <p className="font-medium text-white">
+                      Top Government Colleges (E.G., CEG, MIT, PSG)
+                    </p>
+                  </div>
 
-                <div className='md:flex justify-between items-center bg-yellow-200/60 p-3 rounded-xl'>
-                  <p className="text-sm font-medium">
-                    Estimated Rank Range
-                  </p>
-                  <p className="text-4xl font-medium text-white line-through shrink-0">
-                    
+                  <div className='md:flex justify-between items-center bg-yellow-200/60 p-3 rounded-xl'>
+                    <p className="text-sm font-medium">
+                      Estimated Rank Range
+                    </p>
+                    <p className="text-4xl font-medium text-white line-through shrink-0">
+
                       3001-8000
-                  
-                  </p>
+
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -348,6 +350,54 @@ export default async function HomePage() {
 
         {/* Top Performing Colleges */}
         <TopPerformingColleges colleges={topColleges} />
+
+        <section className="max-w-337 mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative bg-primary rounded-3xl overflow-hidden">
+
+            <div className="flex flex-col lg:flex-row items-center justify-between px-18">
+
+              {/* LEFT CONTENT */}
+              <div className="max-w-3xl text-center lg:text-left">
+                <p className="text-white text-xs font-medium sm:text-base flex items-center leading-5.5 mb-6">
+                  Apply to your preferred colleges across Tamil Nadu with just one application.
+                  Our trusted unified platform lets you connect to multiple institutions quickly
+                  and effortlessly via a single simple form, helping you confidently secure
+                  the right college.
+                </p>
+
+                <button className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-medium px-6 py-3 rounded-lg transition duration-200">
+                  Request for a Callback
+                </button>
+              </div>
+
+              {/* RIGHT ILLUSTRATION */}
+              <div className="relative w-auto max-w-sm sm:max-w-lg flex justify-end lg:justify-end">
+
+                {/* Glow Circle */}
+                <div className="absolute w-84 h-84 sm:w-82 sm:h-82 bg-white/40 rounded-full blur-3xl"></div>
+
+                {/* Papers Container */}
+                <div className="relative w-74 sm:w-82 h-40 sm:h-58">
+
+                  {/* Back Paper */}
+                  <img
+                    src="/paperbg.svg"
+                    alt="background paper"
+                    className="absolute top-4 left-6 bottom-0 w-full h-full object-contain opacity-90"
+                  />
+
+                  {/* Front Paper */}
+                  <img
+                    src="/paper.png"
+                    alt="main paper"
+                    className="absolute top-0 left-0 w-full h-full object-contain"
+                  />
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <CityGrid />
 
