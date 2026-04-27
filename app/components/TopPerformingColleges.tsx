@@ -134,7 +134,7 @@ export default function TopPerformingColleges({ colleges }: TopPerformingCollege
         </div>
 
         {/* Main Content - Using College Listing Card Structure */}
-        <div className='h-180 md:h-133 lg:h-115 my-auto'>
+        {/* <div className='h-180 md:h-133 lg:h-115 my-auto'> */}
           <div className="sm:w-[80%] sm:mx-auto sm:my-auto md:w-full lg:w-full bg-white rounded-2xl shadow-sm border border-gray-100 p-3 md:p-4 mb-3 flex flex-col md:flex-row lg:flex-row gap-2 md:gap-6">
             {/* Left Side: Image Gallery Section */}
             <div className="relative mx-auto w-full md:w-75 lg:w-75 shrink-0">
@@ -332,7 +332,7 @@ export default function TopPerformingColleges({ colleges }: TopPerformingCollege
               </div>
             </div>
           </div>
-        </div>
+        {/* </div> */}
 
         {/* Carousel Navigation */}
         <div className="flex justify-between items-center my-4 mx-3">
