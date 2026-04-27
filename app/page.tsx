@@ -365,7 +365,7 @@ export default async function HomePage() {
                   the right college.
                 </p>
 
-                <button className="bg-[#FFD700] hover:bg-yellow-400 text-gray-900 font-medium px-6 py-3 rounded-lg transition duration-200">
+                <button className="bg-white text-gray-900 text-sm tracking-wide font-medium px-6 py-3 rounded-lg transition duration-200">
                   Request for a Callback
                 </button>
               </div>
