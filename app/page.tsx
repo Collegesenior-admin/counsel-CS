@@ -354,10 +354,10 @@ export default async function HomePage() {
         <section className="max-w-337 mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative bg-primary rounded-3xl overflow-hidden">
 
-            <div className="flex flex-col lg:flex-row items-center justify-between px-18">
+            <div className="flex flex-col lg:flex-row items-center justify-between px-5 md:px-18">
 
               {/* LEFT CONTENT */}
-              <div className="max-w-3xl text-center lg:text-left">
+              <div className="max-w-3xl text-left pt-5">
                 <p className="text-white text-xs font-medium sm:text-base flex items-center leading-5.5 mb-6">
                   Apply to your preferred colleges across Tamil Nadu with just one application.
                   Our trusted unified platform lets you connect to multiple institutions quickly
@@ -365,7 +365,7 @@ export default async function HomePage() {
                   the right college.
                 </p>
 
-                <button className="bg-white text-gray-900 text-sm tracking-wide font-medium px-6 py-3 rounded-lg transition duration-200">
+                <button className="bg-white text-gray-900 text-sm tracking-wide font-medium px-3 md:px-6 py-1.5 md:py-3 rounded-lg transition duration-200">
                   Request for a Callback
                 </button>
               </div>
