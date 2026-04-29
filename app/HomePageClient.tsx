@@ -12,6 +12,7 @@ export default function HomePageClient({ children }: { children: React.ReactNode
       setIsModalOpen(true);
     }
   }, [isTriggered, hasSubmitted]);
+  
 
   useEffect(() => {
     const handleButtonClick = () => setIsModalOpen(true);
