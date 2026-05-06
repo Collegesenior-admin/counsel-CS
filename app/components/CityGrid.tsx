@@ -26,11 +26,11 @@ const TOP_CITIES = [
 
 export default function CityGrid() {
   return (
-    <section className="py-8 bg-gray-50">
+    <section className="max-w-387 mx-auto py-8 bg-gray-50">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex justify-between items-end mb-10">
           <div>
-            <h2 className="text-3xl font-extrabold text-[#001B44]">Explore Top Cities</h2>
+            <h2 className="sm:text-3xl md:text-[32px] lg:text-[40px] font-medium text-gray-800 mb-2 tracking-wide">Explore Top Cities</h2>
             <p className="text-gray-500 mt-2">Find the best institutions in your preferred location</p>
           </div>
           <Link href="/colleges" className="text-indigo-600 font-bold hover:underline hidden md:block">
