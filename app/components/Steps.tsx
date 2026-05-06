@@ -21,10 +21,10 @@ export default function StepWidget() {
   }, []);
 
   return (
-    <div className="max-w-325 mx-auto p-3 lg:py-8 lg:px-5 text-center">
+    <div className="max-w-325 mx-auto p-3 lg:py-5 lg:px-5 text-center">
       {/* Header Section */}
       <div className="mb-10">
-        <h2 className="text-[22px] md:text-[32px] lg:text-[40px] font-bold text-gray-800 mb-2">
+        <h2 className="sm:text-3xl md:text-[32px] lg:text-[40px] font-medium text-gray-800 mb-2 tracking-wide">
           Choosing The Right College Can Be Confusing
         </h2>
         <p className="text-gray-500 text-sm md:text-lg">
@@ -52,7 +52,7 @@ export default function StepWidget() {
                 {/* Step Card */}
                 <div
                   className={`
-                    relative z-10 flex items-center gap-3 p-2 py-3 md:px-5 md:py-4 rounded-lg border transition-all duration-500 w-[86%] sm:w-full md:w-90
+                    relative z-10 flex items-center gap-3 p-2 py-3 md:px-4 md:py-4 rounded-lg border transition-all duration-500 w-[86%] sm:w-full md:w-90
                     ${isActive
                       ? 'bg-blue-100 border-blue-200'
                       : 'bg-white border-blue-100 opacity-90'}
