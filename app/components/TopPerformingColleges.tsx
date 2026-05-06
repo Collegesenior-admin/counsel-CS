@@ -115,17 +115,17 @@ export default function TopPerformingColleges({ colleges }: TopPerformingCollege
     <section className="bg-gray-100 my-6 md:p-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between mb-4 gap-4">
-          <div className='md:w-2/5 text-center'>
+        <div className="flex flex-col md:flex-row justify-between mb-4 gap-2">
+          <div className='md:w-2/4 text-center'>
             <p className="text-gray-400 font-semibold text-sm md:text-lg text-center sm:text-center md:text-left lg:text-left tracking-widest">
               Best Colleges in town
             </p>
-            <h2 className="text-center sm:text-center md:text-left lg:text-left text-2xl md:text-4xl  tracking-wider font-medium text-[#2D5BFF]">
+            <h2 className="text-center sm:text-center md:text-left lg:text-left sm:text-3xl md:text-[32px] lg:text-[40px] font-medium tracking-wide text-[#2D5BFF]">
               Top Performing Colleges
             </h2>
           </div>
 
-          <div className="md:w-3/5 mx-4 md:ml-4">
+          <div className="md:w-2/4 mx-4 md:ml-4">
             <p className="text-gray-500 text-center sm:text-center md:text-left lg:text-left text-sm leading-relaxed">
               Discover the highest-ranked colleges in Tamil Nadu based on NIRF rankings.
               These institutions offer excellent academic programs and outstanding placement records.
