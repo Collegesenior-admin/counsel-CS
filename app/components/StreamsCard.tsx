@@ -56,7 +56,7 @@ export default function StreamSection() {
         {/* Header */}
        <p className="text-sm md:text-md mb-2 mt-4 tracking-wider">Top courses for better future</p>
 
-        <h2 className="text-xl font-semibold md:text-4xl mb-2 tracking-wider">Explore Courses By Stream</h2>
+        <h2 className="sm:text-3xl md:text-[32px] lg:text-[40px] font-medium text-white mb-2 tracking-wide">Explore Courses By Stream</h2>
 
         <p className="text-xs m-3 mb-5 md:m-4">
           Here’s why thousands of students and parents trust CollegeSenior for a
