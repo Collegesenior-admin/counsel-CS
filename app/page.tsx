@@ -114,15 +114,15 @@ export default async function HomePage() {
 
 
         {/* CTA Section */}
-        <section className="max-w-387 mx-auto relative flex flex-col w-full lg:bg-[#ffd14b] md:bg-[#ffd14b] bg-linear-to-b from-[#ffd14b] py-3 px-6 items-center text-center ">
+        <section className="max-w-387 mx-auto relative flex flex-col w-full lg:bg-[#ffd14b] md:bg-[#ffd14b] bg-linear-to-b from-[#ffd14b] p-3 md:py-3 md:px-6 items-center text-center ">
 
           <div className="relative z-10 max-w-4xl px-2 md:justify-end md:text-center">
             <span className="text-stone-600 font-semibold my-2 text-xs md:text-base block tracking-wider">
               Start your admission journey with confidence.
             </span>
-            <h2 className="text-md md:text-[16px] lg:text-xl font-bold tracking-[1.5px]">
+            <h3 className="text-lg md:text-[16px] lg:text-xl font-semibold mb-3 tracking-[1.5px]">
               Tamil Nadu&apos;s Most Trusted Unified College Application Platform
-            </h2>
+            </h3>
           </div>
 
           <div className="relative md:absolute md:-top-9 md:-left-3 flex justify-center">
@@ -148,13 +148,8 @@ export default async function HomePage() {
 
         {/* Process Section */}
         <section className="max-w-387 mx-auto py-10 bg-[#f3f8ff]">
-
-
           <Steps />
-
         </section>
-
-
 
         {/* TNEA Calculator */}
         <section className="max-w-387 mx-auto bg-white">
@@ -351,14 +346,15 @@ export default async function HomePage() {
         {/* Top Performing Colleges */}
         <TopPerformingColleges colleges={topColleges} />
 
+        {/* Paper  */}
         <section className="max-w-337 mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative bg-primary rounded-3xl overflow-hidden">
 
-            <div className="flex flex-col lg:flex-row items-center justify-between px-5 md:px-18">
+            <div className="flex flex-col lg:flex-row items-center justify-between px-7 md:px-18">
 
               {/* LEFT CONTENT */}
-              <div className="max-w-3xl text-left pt-5">
-                <p className="text-white text-xs font-medium sm:text-base flex items-center leading-5.5 mb-6">
+              <div className="max-w-3xl text-left pt-7 mb-4">
+                <p className="text-white text-sm font-medium sm:text-base flex items-center leading-5.5 mb-6">
                   Apply to your preferred colleges across Tamil Nadu with just one application.
                   Our trusted unified platform lets you connect to multiple institutions quickly
                   and effortlessly via a single simple form, helping you confidently secure
