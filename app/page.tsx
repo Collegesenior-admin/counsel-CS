@@ -5,6 +5,7 @@ import type { Metadata } from 'next'
 import Header from './components/Header'
 import Steps from './components/Steps'
 import StreamsCard from './components/StreamsCard'
+import WhyChooseUs from './components/whychoose'
 import FeaturesColleges from './components/FeaturesColleges'
 import TopPerformingColleges from './components/TopPerformingColleges'
 import CityGrid from './components/CityGrid';
@@ -163,7 +164,7 @@ export default async function HomePage() {
                 Calculate Your TNEA Cutoff Marks And Estimate Your Rank For
                 Engineering Admissions In Tamil Nadu.</p>
               <div className="space-y-5">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block mb-1 ">
                       Mathematics Score (out of 100)</label>
@@ -264,81 +265,8 @@ export default async function HomePage() {
         <StreamsCard />
 
         {/* why choose college senior */}
-        <section className="max-w-7xl mx-auto mt-9 text-center">
-          <p className="text-sm text-primary">The CollegeSenior’s Advantage</p>
-          <h2 className="text-3xl">Why choose CollegeSenior?</h2>
-          <p className="text-sm text-gray-500 m-4">
-            Here’s why thousands of students and parents trust CollegeSenior for a
-            stress-free admission <br />
-            journey with expert guidance, personal attention, and reliable support.
-          </p>
-
-          <div className="text-left">
-            <div className="relative flex gap-6 p-4 overflow-x-auto lg:flex lg:grid-cols-4 lg:overflow-x-scroll scrollbar-hide"
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-
-              {/* Card 1 */}
-              <div className="relative h-80 w-72 sm:w-80 md:w-80 lg:w-80 shrink-0 sm:shrink-0 md:shrink-0 lg:shrink-0 rounded-lg shadow-md bg-gray-50">
-                <svg className="w-10 h-10 text-gray-500 m-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-                <p className="p-5 text-gray-500 m-1 border-b border-gray-400 text-sm">
-                  Our guidance is completely free for students and parents.
-                  You get honest, unbiased advice with no charges or pressure—
-                  just the help you need to make the right choice.
-                </p>
-                <p className="text-primary font-medium text-2xl p-3">
-                  Free Counseling, Always
-                </p>
-              </div>
-
-              {/* Card 2 */}
-              <div className="h-80 w-72 mt-16 sm:w-80 shrink-0 sm:shrink-0 md:shrink-0 lg:shrink-0 rounded-lg shadow-md bg-gray-50 lg:mt-16">
-                <svg className="w-10 h-10 text-gray-500 m-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-                <p className="p-5 text-gray-500 m-1 border-b border-gray-400 text-sm">
-                  Our guidance is completely free for students and parents.
-                  You get honest, unbiased advice with no charges or pressure—
-                  just the help you need to make the right choice.
-                </p>
-                <p className="text-primary font-medium text-2xl p-3">
-                  Free Counseling, Always
-                </p>
-              </div>
-
-              {/* Card 3 */}
-              <div className="h-80 w-72 sm:w-80 shrink-0 sm:shrink-0 md:shrink-0 lg:shrink-0 rounded-lg shadow-md bg-gray-50">
-                <svg className="w-10 h-10 text-gray-500 m-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-                <p className="p-5 text-gray-500 m-1 border-b border-gray-400 text-sm">
-                  Our guidance is completely free for students and parents.
-                  You get honest, unbiased advice with no charges or pressure—
-                  just the help you need to make the right choice.
-                </p>
-                <p className="text-primary font-medium text-2xl p-3">
-                  Free Counseling, Always
-                </p>
-              </div>
-
-              {/* Card 4 */}
-              <div className="h-80 w-72 mt-16 sm:w-80 shrink-0 sm:shrink-0 md:shrink-0 lg:shrink-0 rounded-lg shadow-md bg-gray-50 lg:mt-16">
-                <svg className="w-10 h-10 text-gray-500 m-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-                <p className="p-5 text-gray-500 m-1 border-b border-gray-400 text-sm">
-                  Our guidance is completely free for students and parents.
-                  You get honest, unbiased advice with no charges or pressure—
-                  just the help you need to make the right choice.
-                </p>
-                <p className="text-primary font-medium text-2xl p-3">
-                  Free Counseling, Always
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <WhyChooseUs />
+       
 
         {/* Featured colleges */}
         <FeaturesColleges />
