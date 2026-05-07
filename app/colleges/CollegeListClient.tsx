@@ -55,7 +55,7 @@ export default function CollegeListClient({
     const [selectedCollegeName, setSelectedCollegeName] = useState('');
     const [carouselInitialIndex, setCarouselInitialIndex] = useState(0);
     const { isTriggered, hasSubmitted } = useScrollTrigger(0.7);
-    
+
     // Lock scroll when filter sidebar is open on mobile
     useScrollLock(isFilterOpen);
 
@@ -80,12 +80,12 @@ export default function CollegeListClient({
     const extractImagesFromJsonb = (images: any): string[] => {
         try {
             if (!images) return [];
-            
+
             // If it's already an array of strings
             if (Array.isArray(images) && images.every(item => typeof item === 'string')) {
                 return images;
             }
-            
+
             // If it's an array of objects like [{"image1":"url"},{"image2":"url"}]
             if (Array.isArray(images)) {
                 return images.map((item: any) => {
@@ -97,13 +97,13 @@ export default function CollegeListClient({
                     return '';
                 }).filter(Boolean);
             }
-            
+
             // If it's a string, try to parse it
             if (typeof images === 'string') {
                 const parsed = JSON.parse(images);
                 return extractImagesFromJsonb(parsed);
             }
-            
+
             return [];
         } catch (error) {
             console.error('Error extracting images:', error);
@@ -188,25 +188,52 @@ export default function CollegeListClient({
             )}
 
             {/* Hero Section */}
-            <section className="max-w-375 mx-auto bg-linear-to-tr from-blue-500 to-indigo-600 md:rounded-2xl lg:rounded-2xl text-white pt-4 pb-4 px-4 relative overflow-hidden">
-                <div className="max-w-10xl p-3 mx-auto">
-                    <div className="z-50 w-full lg:w-2/3 md:w-2/3">
-                        <p className="text-sm opacity-80 mb-15 md:mb-15 lg:mb-20">Home / Colleges</p>
-                        <h2 className="text-2xl md:text-3xl flex font-semibold">Find Your Perfect Colleges</h2>
-                        <p className="text-md md:text-lg opacity-90 mb-4"> Explore hundreds of colleges to find the right one for you. </p>
-                        <form onChange={handleSearchSubmit} className="w-full mt-4 flex bg-white p-1 md:p-2 rounded-lg shadow-lg border border-gray-200 text-gray-800">
-                            <button type="submit" className="p-2 text-blue-700 hover:text-blue-600 transition">
-                                <Search size={20} />
-                            </button>
-                            <input type="text" placeholder="Search for colleges..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
-                                className="grow p-2 outline-none placeholder-blue-700" />
-                        </form>
+            <div className='md:m-3'>
+                <section className="max-w-375 mx-auto bg-linear-to-tr from-blue-500 to-indigo-600 md:rounded-2xl lg:rounded-2xl text-white relative overflow-hidden">
+                    <div className="max-w-375 flex">
+
+                        {/* Content */}
+                        <div className="relative z-20 w-full md:w-2/3 lg:w-2/3 p-6">
+                            <p className="text-sm opacity-80 mb-40 md:mb-20 lg:mb-38">
+                                Home / Colleges</p>
+                            <h2 className="text-2xl md:text-3xl font-semibold">
+                                Find Your Perfect Colleges</h2>
+                            <p className="text-md md:text-lg opacity-90 mb-4">
+                                Explore hundreds of colleges to find the right one for you.</p>
+
+                            <form
+                                onSubmit={handleSearchSubmit}
+                                className="w-full mt-4 flex bg-white p-1 md:p-2 rounded-lg shadow-lg border border-gray-200 text-gray-800"
+                            >
+                                <button
+                                    type="submit"
+                                    className="p-2 text-blue-700 hover:text-blue-600 transition"
+                                >
+                                    <Search size={20} />
+                                </button>
+                                <input
+                                    type="text"
+                                    placeholder="Search for colleges..."
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    className="grow p-2 outline-none placeholder-blue-700 bg-transparent"
+                                />
+                            </form>
+                        </div>
+
+                        {/* Hero Image */}
+                        <div className="absolute md:relative right-0 bottom-0 md:w-1/3 lg:w-1/3 flex justify-end pointer-events-none">
+                            <Image
+                                src="/collegehero.png"
+                                alt="Hero"
+                                width={320}
+                                height={320}
+                                className="w-70 md:w-[78%] lg:w-[78%] z-0 md:z-10"
+                            />
+                        </div>
                     </div>
-                    <div className='w-full lg:w-1/3 md:w-1/3 z-0'>
-                        <Image src="/collegehero.png" alt="Hero" width={320} height={320} className="absolute right-0 bottom-0 z-0 hidden lg:block" />
-                    </div>
-                </div>
-            </section>
+                </section>
+            </div>
 
             {/* Mobile Toggle Button */}
             <div className="lg:hidden px-8 my-2">
@@ -356,8 +383,8 @@ export default function CollegeListClient({
                     ) : (
                         initialColleges.map((college) => {
                             const validImages = extractImagesFromJsonb(college.image_urls);
-                            
-                            
+
+
                             // Returns the first image or a placeholder if none
                             const getMainImage = (images: string[]) => {
                                 return images && images.length > 0 ? images[0] : "https://via.placeholder.com/400x300";
@@ -508,7 +535,7 @@ export default function CollegeListClient({
                                                 <button className="flex-1 sm:flex-none border-2 border-[#2D5BFF] text-[#2D5BFF] font-bold px-4 md:px-6 py-2 rounded-lg hover:bg-blue-50 transition-colors text-xs md:text-sm">
                                                     Apply now
                                                 </button>
-                                                <button className="flex-1 sm:flex-none bg-[#4F46E5] text-white font-bold px-4 md:px-6 py-2 rounded-lg shadow-md hover:bg-[#4338CA] transition-colors justify-center text-xs md:text-sm">
+                                                <button className="flex-1 sm:flex-none bg-[#155DFC] text-white font-bold px-4 md:px-6 py-2 rounded-lg shadow-md hover:bg-[#4338CA] transition-colors justify-center text-xs md:text-sm">
                                                     <a href={`/colleges/${college.slug}`} >View More</a>
                                                 </button>
                                             </div>
