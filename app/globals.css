@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100..900&display=swap');
 @import "tailwindcss";
 /* Project Rules: Max 2 fonts, H1: 36-48px, Body: 16px, Line height: 1.5 body, 1.2 headings */
 
@@ -22,19 +22,10 @@ body {
 /* Typography following project rules */
 h1 {
   font-size: 32px;
-  font-weight: 700; /* Lighter weight for smaller screens */
+  font-weight: 600; /* Lighter weight for smaller screens */
   line-height: 1.19;
   margin-bottom: 1rem;
   text-wrap: balance; /* Prevents awkward line breaks */
-}
-
-h2 {
-  font-size: 28px; /* sm:text-3xl */
-  font-weight: 500; /* font-medium */
-   /* text-gray-800 */
-  margin-bottom: 0.5rem; /* mb-2 */
-  letter-spacing: 0.025em; /* tracking-wide */
-  line-height: 1.5;
 }
 
 
@@ -46,9 +37,7 @@ h2 {
     font-weight: 700; 
     line-height: 1.3;
   }
-   h2 {
-    font-size: 32px;
-  }
+  
 }
 
 /* 3. DESKTOP: Viewports larger than 960px */
@@ -58,9 +47,7 @@ h2 {
     font-weight: 700; /* Full bold for large screens */
     line-height: 1.2;
   }
-   h2 {
-    font-size: 40px;
-  }
+  
 }
 
  h3, h4, h5, h6 {
