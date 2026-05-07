@@ -15,7 +15,7 @@ export default function FeaturedColleges() {
   };
 
   return (
-    <section className="bg-gray-100 p-4 md:p-12">
+    <section className="bg-white p-4 md:p-12">
       <div className="max-w-7xl mx-auto relative">
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 items-center">
 
