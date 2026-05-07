@@ -3,7 +3,7 @@ import { PhoneCall, MailMinus } from 'lucide-react';
 const Footer = () => {
     return (
         <>
-            <footer className='max-w-378 mx-auto bg-gray-100 pt-36 md:pt-40 sm:pt-52'>
+            <footer className='max-w-378 mx-auto bg-white pt-36 md:pt-40 sm:pt-52'>
                     <div className='bg-[#001c54] relative h-220 sm:pt-5 pt-4'>
                         <div className='max-w-full absolute md:absolute -top-45 left-0 right-0 sm:absolute sm:m-5 mx-3 my-8 md:m-10 '>
                             <div className=" bg-[#F4F7FF] rounded-t-xl p-5 md:p-7 lg:p-7">
