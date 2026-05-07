@@ -77,7 +77,7 @@ export default function CourseListClient({ initialCourses, currentParams }: Prop
   const [localSearch, setLocalSearch] = useState<Record<string, string>>({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { isTriggered, hasSubmitted } = useScrollTrigger(0.7);
-  
+
   // Lock scroll when filter sidebar is open on mobile
   useScrollLock(isFilterOpen);
 
@@ -149,31 +149,66 @@ export default function CourseListClient({ initialCourses, currentParams }: Prop
       )}
 
       {/* Hero Section */}
-      <section className="max-w-375 mx-auto bg-linear-to-tr from-blue-500 to-indigo-600 md:rounded-2xl lg:rounded-2xl text-white pt-4 pb-4 px-4 relative overflow-hidden">
-        <div className="max-w-10xl p-3 mx-auto">
-          <div className="z-50 w-full lg:w-2/3 md:w-2/3">
-            <p className="text-sm opacity-80 mb-15 md:mb-15 lg:mb-30">Home / Courses</p>
-            <h2 className="text-2xl md:text-3xl flex font-semibold">Find Your Perfect Courses</h2>
-            <p className="text-md md:text-lg opacity-90 mb-4"> Explore hundreds of Courses to find the right one for you. </p>
-            <form onChange={handleSearchSubmit} className="w-full mt-4 flex bg-white p-1 md:p-2 rounded-lg shadow-lg border border-gray-200 text-gray-800">
-              <button type="submit" className="p-2 text-blue-700 hover:text-blue-600 transition">
-                <Search size={20} />
-              </button>
-              <input type="text" placeholder="Search for courses..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
-                className="grow p-2 outline-none placeholder-blue-700" />
-            </form>
+      <div className="md:m-3">
+
+        <section className="max-w-387 mx-auto lg:mx-auto bg-linear-to-tr from-blue-500 to-indigo-600 md:rounded-2xl lg:rounded-2xl text-white relative overflow-hidden">
+          <div className="max-w-387 flex">
+
+            {/* Content */}
+            <div className="relative z-20 w-full md:w-2/3 lg:w-2/3 p-6">
+              <p className="text-sm opacity-80 mb-45 md:mb-10 lg:mb-38">
+                Home / Courses
+              </p>
+              <h2 className="text-3xl md:text-3xl font-semibold">
+                Find Your Perfect Courses</h2>
+              <p className="text-md md:text-lg opacity-90 mb-4">
+                Explore hundreds of Courses to find the right one for you.</p>
+              <form
+                onChange={handleSearchSubmit}
+                className="w-full mt-4 flex bg-white p-1 md:p-2 rounded-lg shadow-lg border border-gray-200 text-gray-800"
+              >
+                <button
+                  type="submit"
+                  className="p-2 text-blue-700 hover:text-blue-600 transition"
+                >
+                  <Search size={20} />
+                </button>
+
+                <input
+                  type="text"
+                  placeholder="Search for courses..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="grow p-2 outline-none placeholder-blue-700 bg-transparent"
+                />
+              </form>
+            </div>
+
+            {/* Hero Image */}
+            <div className="absolute md:relative right-0 bottom-0 md:w-1/3 lg:w-1/3 flex justify-end pointer-events-none">
+
+              <Image
+                src="/coursehero.png"
+                alt="Hero"
+                width={320}
+                height={320}
+                className="
+              w-70 md:w-[70%] lg:w-[58%]
+              opacity-100 md:opacity-100
+              
+              z-0 md:z-10
+              "
+              />
+            </div>
           </div>
-          <div className='w-full lg:w-1/3 md:w-1/3 z-0'>
-            <Image src="/coursehero.png" alt="Hero" width={280} height={300} className="absolute right-0 bottom-0 z-0 hidden lg:block" />
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
       {/* Mobile Toggle Button */}
-      <div className="lg:hidden px-8 my-2">
+      <div className="lg:hidden px-3 my-2">
         <button
           onClick={() => setIsFilterOpen(true)}
-          className="w-full flex items-center justify-center gap-2 bg-blue-600 text-white py-3 rounded-xl font-bold shadow-md"
+          className="w-40 flex items-left justify-center gap-2 underline decoration-gray-300 text-black py-3 font-bold"
         >
           <Settings2 />
           Filter Options
@@ -182,7 +217,7 @@ export default function CourseListClient({ initialCourses, currentParams }: Prop
 
       {/* Main */}
 
-      <main className="max-w-387 mx-auto p-2 md:px-4 md:py-4 flex flex-col lg:flex-row gap-6">
+      <main className="max-w-387 p-3 mx-auto md:px-4 md:py-4 flex flex-col lg:flex-row gap-6">
         {/* Mobile Overlay Background */}
         {isFilterOpen && (
           <div
@@ -267,7 +302,7 @@ export default function CourseListClient({ initialCourses, currentParams }: Prop
 
         {/* Results Section */}
         <section className="w-full lg:w-3/4">
-          <div className="@max-xs:flex-1 sm:flex md:flex lg:flex justify-between items-center mb-6">
+          <div className="@max-xs:flex-1 sm:flex md:flex lg:flex justify-between items-center mb-6 mx-2">
             <h3 className="font-bold text-lg text-gray-800 mb-2">
               Showing {initialCourses.length || 'All'} Courses
             </h3>
@@ -275,7 +310,7 @@ export default function CourseListClient({ initialCourses, currentParams }: Prop
             {/* --- SORTING DROPDOWN --- */}
             <div className="relative group">
               <select
-                className="bg-white border border-gray-200 text-sm rounded-lg px-2 py-1 outline-none focus:ring-2 focus:ring-indigo-500"
+                className="bg-white border border-gray-200 text-sm rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-indigo-500"
 
                 onChange={(e) => updateFilter('sort', e.target.value)}
               >
@@ -295,13 +330,13 @@ export default function CourseListClient({ initialCourses, currentParams }: Prop
             </div>
           ) : (
             initialCourses.map((course) => (
-              <div key={course.id} className="p-3 border border-gray-200 m-3 lg:m-4 rounded-xl shadow-sm bg-white">
-                <h2 className="text-lg sm:text-xl md:text-2xl font-medium md:font-medium mb-3 bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+              <div key={course.id} className="p-7 border border-gray-200 lg:m-4 rounded-xl shadow-sm bg-white">
+                <h2 className="text-xl sm:text-xl md:text-2xl font-medium md:font-medium mb-3 bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                   {course.name || 'N/A'} </h2>
                 {/* Stats */}
                 <div className="flex flex-wrap gap-2 md:gap-6 lg:gap-8 mb-3 text-gray-500 font-medium">
                   <div className="flex items-center gap-2">
-                    <CalendarClock className='w-5 h-5 text-blue-600' strokeWidth={1}/>
+                    <CalendarClock className='w-5 h-5 text-blue-600' strokeWidth={1} />
                     <span className="text-sm">{course.duration || 'N/A'}</span>
                   </div>
 
@@ -327,12 +362,9 @@ export default function CourseListClient({ initialCourses, currentParams }: Prop
                 </p>
 
                 {/* Header */}
-                <div className="flex justify-between items-center mb-3">
-                  <h3 className="text-blue-600 font-medium text-md md:text-lg lg:text-xl">Colleges Offering this Course</h3>
-                  <div className="flex gap-3">
-                    <ChevronLeftCircle className='w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 text-blue-600' strokeWidth={1} />
-                    <ChevronRightCircle className='w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 text-blue-600' strokeWidth={1} />
-                  </div>
+                <div className="flex justify-between items-center mt-8 mb-3">
+                  <h3 className="text-blue-600 font-medium text-md">Colleges Offering this Course</h3>
+
                 </div>
 
                 {/* Nested Horizontal College Scroll */}
@@ -343,20 +375,43 @@ export default function CourseListClient({ initialCourses, currentParams }: Prop
                     </div>
                   )}
                   {course.offered_at_colleges.map((item) => (
-                    <div key={item.college.id} className="w-70 md:w-75 lg:w-80 bg-white shrink-0 p-3 rounded-xl border border-blue-100 shadow-sm">
-                      <div className="flex justify-between items-start mb-1">
-                        <h4 className="font-medium text-gray-600 text-md w-2/3">
+                    <div
+                      key={item.college.id}
+                      className="w-70 md:w-75 lg:w-80 bg-white shrink-0 p-3 rounded-xl border border-blue-100 shadow-sm flex flex-col"
+                    >
+                      {/* Top Section */}
+                      <div className="flex justify-between items-start mb-2">
+                        <h4 className="font-medium text-gray-600 text-md w-2/3 min-h-18">
                           {item.college.name}
                         </h4>
-                        <Image src={item.college.logo_url || '/hero-corner.svg'}
-                          alt="Hero corner image"
+
+                        <Image
+                          src={item.college.logo_url || '/hero-corner.svg'}
+                          alt="College logo"
                           width={600}
-                          height={600} className="w-8 h-8 md:w-9 md:h-9 lg:w-13 lg:h-13 opacity-80" />
+                          height={600}
+                          className="w-12 h-12 md:w-9 md:h-9 lg:w-18 lg:h-18 opacity-80 object-contain"
+                        />
                       </div>
-                      <p className="text-blue-500 text-sm mb-3">{item.college.city}</p>
-                      <div className="flex gap-2">
-                        <Link href={`/colleges/${item.college.slug}?courses&fees&courseId=${course.id}`} className="flex-1 py-2 border border-blue-600 text-blue-600 rounded-lg font-semibold text-md text-center">View</Link>
-                        <button className="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold text-md shadow-md">Apply now</button>
+
+                      {/* Bottom Section */}
+                      <div className="mt-auto">
+                        <p className="text-blue-500 text-sm mb-3">
+                          {item.college.city}
+                        </p>
+
+                        <div className="flex gap-2">
+                          <Link
+                            href={`/colleges/${item.college.slug}?courses&fees&courseId=${course.id}`}
+                            className="flex-1 py-2 border border-blue-600 text-blue-600 rounded-lg font-semibold text-md text-center"
+                          >
+                            View
+                          </Link>
+
+                          <button className="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold text-md shadow-md">
+                            Apply now
+                          </button>
+                        </div>
                       </div>
                     </div>
                   ))}
