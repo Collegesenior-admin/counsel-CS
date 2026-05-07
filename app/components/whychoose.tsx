@@ -66,7 +66,7 @@ const WhyChooseUs = () => {
       {/* Header */}
       <div className="mb-12 text-center lg:text-left">
         <p className="text-sm text-blue-600 font-medium mb-2">The CollegeSenior’s Advantage</p>
-        <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900">
+        <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
           Why Choose <span className="text-[#2F80ED]">CollegeSenior?</span>
         </h2>
         <p className="text-gray-600 mt-4 max-w-3xl mx-auto lg:mx-0 text-[15px] leading-relaxed">
