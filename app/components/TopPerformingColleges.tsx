@@ -112,7 +112,7 @@ export default function TopPerformingColleges({ colleges }: TopPerformingCollege
   const validImages = extractImagesFromJsonb(currentCollege.image_urls);
 
   return (
-    <section className="bg-gray-100 my-6 md:p-4">
+    <section className="bg-white my-6 md:p-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between mb-4 gap-2">
