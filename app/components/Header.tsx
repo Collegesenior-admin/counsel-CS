@@ -69,7 +69,7 @@ export default function Header() {
   return (
     <header
       className={`max-w-387 mx-auto sticky top-0 z-40 transition-colors duration-300 ${
-        useGrayStyle ? 'bg-[#FFF5EE]' : 'bg-[#0d68f2]'
+        useGrayStyle ? 'bg-[#FFFFFF]' : 'bg-[#0d68f2]'
       }`}
     >
       <div className="flex items-center justify-between px-4 lg:px-12 py-3 max-w-400 mx-auto">
@@ -86,7 +86,7 @@ export default function Header() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden min-[1300px]:flex space-x-6 text-lg">
+        <nav className="hidden min-[1300px]:flex space-x-6 text-lg shadow-sm">
           {navLinks.map((link) => (
             <Link
               key={link.name}
