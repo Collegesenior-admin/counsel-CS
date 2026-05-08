@@ -193,14 +193,13 @@ export default function CollegeListClient({
                     <div className="max-w-375 flex">
 
                         {/* Content */}
-                        <div className="relative z-20 w-full md:w-2/3 lg:w-2/3 p-6">
-                            <p className="text-sm opacity-80 mb-40 md:mb-20 lg:mb-38">
+                        <div className="relative z-20 w-full lg:w-2/3 p-6">
+                            <p className="text-sm opacity-80 mb-3 lg:mb-38">
                                 Home / Colleges</p>
-                            <h2 className="text-2xl md:text-3xl font-semibold">
+                            <h2 className="text-2xl md:text-3xl mt-29 sm:mt-35 md:mt-25 font-semibold">
                                 Find Your Perfect Colleges</h2>
                             <p className="text-md md:text-lg opacity-90 mb-4">
                                 Explore hundreds of colleges to find the right one for you.</p>
-
                             <form
                                 onSubmit={handleSearchSubmit}
                                 className="w-full mt-4 flex bg-white p-1 md:p-2 rounded-lg shadow-lg border border-gray-200 text-gray-800"
@@ -222,13 +221,13 @@ export default function CollegeListClient({
                         </div>
 
                         {/* Hero Image */}
-                        <div className="absolute md:relative right-0 bottom-0 md:w-1/3 lg:w-1/3 flex justify-end pointer-events-none">
+                        <div className="absolute lg:relative right-0 bottom-0 lg:w-1/3 flex justify-end pointer-events-none">
                             <Image
                                 src="/collegehero.png"
                                 alt="Hero"
                                 width={320}
                                 height={320}
-                                className="w-70 md:w-[78%] lg:w-[78%] z-0 md:z-10"
+                                className="w-82 md:w-78 lg:w-89 z-0 md:z-10"
                             />
                         </div>
                     </div>
@@ -236,10 +235,10 @@ export default function CollegeListClient({
             </div>
 
             {/* Mobile Toggle Button */}
-            <div className="lg:hidden px-8 my-2">
+            <div className="lg:hidden px-3 my-2">
                 <button
                     onClick={() => setIsFilterOpen(true)}
-                    className="w-full flex items-center justify-center gap-2 bg-blue-600 text-white py-3 rounded-xl font-bold shadow-md"
+                    className="w-40 flex items-left justify-center gap-2 underline decoration-gray-300 text-black py-3 font-bold"
                 >
                     <Settings2 />
                     Filter Options
