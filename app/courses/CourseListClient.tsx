@@ -149,20 +149,24 @@ export default function CourseListClient({ initialCourses, currentParams }: Prop
       )}
 
       {/* Hero Section */}
-      <div className="md:m-3">
+      <div className='md:m-3'>
+                <section className="max-w-375 mx-auto bg-linear-to-tr from-blue-500 to-indigo-600 md:rounded-2xl lg:rounded-2xl text-white relative overflow-hidden">
+                    <div className="max-w-375 flex">
 
-        <section className="max-w-387 mx-auto lg:mx-auto bg-linear-to-tr from-blue-500 to-indigo-600 md:rounded-2xl lg:rounded-2xl text-white relative overflow-hidden">
-          <div className="max-w-387 flex">
-
-            {/* Content */}
-            <div className="relative z-20 w-full md:w-2/3 lg:w-2/3 p-6">
-              <p className="text-sm opacity-80 mb-45 md:mb-10 lg:mb-38">
+                        {/* Content */}
+                        <div className="relative z-20 w-full lg:w-2/3 p-6">
+                            <p className="text-sm opacity-80 mb-3 lg:mb-38">
                 Home / Courses
               </p>
-              <h2 className="text-3xl md:text-3xl font-semibold">
-                Find Your Perfect Courses</h2>
+
+              <h2 className="text-2xl md:text-3xl mt-29 sm:mt-35 md:mt-25 font-semibold">
+                Find Your Perfect Courses
+              </h2>
+
               <p className="text-md md:text-lg opacity-90 mb-4">
-                Explore hundreds of Courses to find the right one for you.</p>
+                Explore hundreds of Courses to find the right one for you.
+              </p>
+
               <form
                 onChange={handleSearchSubmit}
                 className="w-full mt-4 flex bg-white p-1 md:p-2 rounded-lg shadow-lg border border-gray-200 text-gray-800"
@@ -185,21 +189,17 @@ export default function CourseListClient({ initialCourses, currentParams }: Prop
             </div>
 
             {/* Hero Image */}
-            <div className="absolute md:relative right-0 bottom-0 md:w-1/3 lg:w-1/3 flex justify-end pointer-events-none">
+            <div className="absolute lg:relative right-0 bottom-0 lg:w-1/3 flex justify-end pointer-events-none">
 
               <Image
                 src="/coursehero.png"
                 alt="Hero"
-                width={320}
-                height={320}
-                className="
-              w-70 md:w-[70%] lg:w-[58%]
-              opacity-100 md:opacity-100
-              
-              z-0 md:z-10
-              "
+                width={500}
+                height={500}
+                className="w-60 md:w-60 lg:w-70 z-0 md:z-10"
               />
             </div>
+
           </div>
         </section>
       </div>
