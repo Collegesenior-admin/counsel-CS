@@ -201,12 +201,13 @@ export default async function HomePage() {
 
                   <div className='flex justify-center items-end'>
 
-                    <button
-
-                      className="bg-[#0B1A33] text-white w-full px-6 py-3.5 rounded-lg hover:opacity-90 transition"
-                    >
-                      Calculate Cutoff
-                    </button>
+                    <Link href="/calculator" className='bg-[#0B1A33] text-white text-center w-full px-6 py-3.5 rounded-lg hover:opacity-90 transition'>
+                      <button
+                        className=""
+                      >
+                        Calculate Cutoff
+                      </button>
+                    </Link>
                   </div>
                 </div>
 
@@ -265,8 +266,8 @@ export default async function HomePage() {
         <StreamsCard />
 
         {/* why choose college senior */}
-          <WhyChooseUs />
-       
+        <WhyChooseUs />
+
 
         {/* Featured colleges */}
         <FeaturesColleges />
