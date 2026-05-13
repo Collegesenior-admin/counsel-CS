@@ -150,66 +150,33 @@ export default function CourseListClient({ initialCourses, currentParams }: Prop
 
       {/* Hero Section */}
       <div className='md:m-3'>
-                <section className="max-w-375 mx-auto bg-linear-to-tr from-blue-500 to-indigo-600 md:rounded-2xl lg:rounded-2xl text-white relative overflow-hidden">
-                    <div className="max-w-375 flex">
+        <section className="max-w-375 mx-auto bg-linear-to-tr from-blue-500 to-indigo-600 md:rounded-2xl lg:rounded-2xl text-white relative overflow-hidden">
+          <div className="max-w-375 flex">
 
-                        {/* Content */}
-                        <div className="relative z-20 w-full lg:w-2/3 p-6">
-                            <p className="text-sm opacity-80 mb-3 lg:mb-38">
-                Home / Courses
-              </p>
-
-              <h2 className="text-2xl md:text-3xl mt-29 sm:mt-35 md:mt-25 font-semibold">
-                Find Your Perfect Courses
-              </h2>
-
-              <p className="text-md md:text-lg opacity-90 mb-4">
-                Explore hundreds of Courses to find the right one for you.
-              </p>
-
-              <form
-                onChange={handleSearchSubmit}
-                className="w-full mt-4 flex bg-white p-1 md:p-2 rounded-lg shadow-lg border border-gray-200 text-gray-800"
-              >
-                <button
-                  type="submit"
-                  className="p-2 text-blue-700 hover:text-blue-600 transition"
-                >
+            {/* Content */}
+            <div className="relative z-20 w-full lg:w-2/3 p-6">
+              <p className="text-sm opacity-80 mb-3 lg:mb-38">Home / Courses</p>
+              <h2 className="text-2xl md:text-3xl mt-3 md:mt-25 font-semibold">Find Your Perfect Courses</h2>
+              <p className="text-md md:text-lg opacity-90 mb-45 md:mb-4">Explore hundreds of Courses to find the right one for you.</p>
+              <form onChange={handleSearchSubmit} className="w-full mt-4 flex bg-white p-1 md:p-2 rounded-lg shadow-lg border border-gray-200 text-gray-800">
+                <button type="submit" className="p-2 text-blue-700 hover:text-blue-600 transition">
                   <Search size={20} />
                 </button>
-
-                <input
-                  type="text"
-                  placeholder="Search for courses..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="grow p-2 outline-none placeholder-blue-700 bg-transparent"
-                />
+                <input type="text" placeholder="Search for courses..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="grow p-2 outline-none placeholder-blue-700 bg-transparent" />
               </form>
             </div>
 
             {/* Hero Image */}
             <div className="absolute lg:relative right-0 bottom-0 lg:w-1/3 flex justify-end pointer-events-none">
-
-              <Image
-                src="/coursehero.png"
-                alt="Hero"
-                width={500}
-                height={500}
-                className="w-60 md:w-60 lg:w-70 z-0 md:z-10"
-              />
+              <Image src="/coursehero.png" alt="Hero" width={500} height={500} className="w-60 md:w-60 lg:w-70 z-0 md:z-10" />
             </div>
-
           </div>
         </section>
       </div>
 
       {/* Mobile Toggle Button */}
       <div className="lg:hidden px-3 my-2">
-        <button
-          onClick={() => setIsFilterOpen(true)}
-          className="w-40 flex items-left justify-center gap-2 underline decoration-gray-300 text-black py-3 font-bold"
-        >
+        <button onClick={() => setIsFilterOpen(true)} className="w-40 flex items-left justify-center gap-2 underline decoration-gray-300 text-black py-3 font-bold" >
           <Settings2 />
           Filter Options
         </button>
