@@ -95,10 +95,10 @@ export default function TNEACalculator() {
       {/* Top Navigation */}
       <Header />
 
-      <div className="max-w-350 mx-auto px-6">
+      <div className="max-w-350 mx-auto p-3 md:px-6">
 
         {/* College Banners */}
-       {/* ==================== COLLEGE BANNERS CAROUSEL ==================== */}
+        {/* ==================== COLLEGE BANNERS CAROUSEL ==================== */}
         <div className="relative bg-white py-8">
           <div className="relative h-60 rounded-2xl overflow-hidden shadow-md">
             {/* Banner Image */}
@@ -131,9 +131,8 @@ export default function TNEACalculator() {
                 <button
                   key={index}
                   onClick={() => goToBanner(index)}
-                  className={`w-3 h-3 rounded-full transition-all ${
-                    currentBanner === index ? 'bg-white scale-125' : 'bg-white/60'
-                  }`}
+                  className={`w-3 h-3 rounded-full transition-all ${currentBanner === index ? 'bg-white scale-125' : 'bg-white/60'
+                    }`}
                 />
               ))}
             </div>
@@ -141,15 +140,15 @@ export default function TNEACalculator() {
         </div>
 
         <div className="py-10">
+          <h2 className="text-[28px] md:text-[55px] font-bold text-[#1f2d5a]">TNEA Cutoff Calculator</h2>
           <div className="grid lg:grid-cols-12 gap-8">
             {/* Left Form Section */}
-            <div className="lg:col-span-8 space-y-8">
+            <div className="lg:col-span-8">
 
               {/* Header Title & Buttons */}
-              <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-8 gap-6">
-                <div className="lg:w-3/5">
-                  <h1 className="text-5xl font-black text-[#1f2d5a]">TNEA Cutoff Calculator</h1>
-                  <p className="mt-3 text-gray-400 font-semibold text-md tracking-wider">
+              <div className="flex flex-col lg:flex-row lg:items-end justify-between md:gap-6 mt-2 mb-6">
+                <div className="w-full md:w-3/5">
+                  <p className=" text-gray-400 font-semibold text-md tracking-wider">
                     Calculate Your TNEA Cutoff Marks And Estimate Your Rank For Engineering Admissions In Tamil Nadu.
                   </p>
                 </div>
@@ -162,7 +161,7 @@ export default function TNEACalculator() {
 
               {/* ==================== STEP 1 ==================== */}
               {step === 1 && (
-                <div className="bg-white border border-gray-100 rounded-lg p-6 shadow-md">
+                <div className="bg-white border border-gray-100 rounded-lg p-2 md:p-6 shadow-md">
                   <div className="mb-8">
                     <p className="text-blue-600 font-bold">Step 1/2</p>
                     <h2 className="text-blue-600 font-bold">Enter Your Marks</h2>
@@ -179,7 +178,7 @@ export default function TNEACalculator() {
                     <SelectField label="Any preferred district/location? (optional)" placeholder="e.g. chennai, kanchipuram, cuddalore,..." />
                   </div>
 
-                  <div className="flex justify-end mt-10">
+                  <div className="flex justify-center md:justify-end mt-10">
                     <button
                       onClick={() => setStep(2)}
                       className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-30 py-2 rounded-lg text-lg"
@@ -192,7 +191,7 @@ export default function TNEACalculator() {
 
               {/* ==================== STEP 2 ==================== */}
               {step === 2 && (
-                <div className="bg-white border border-gray-100 rounded-3xl p-6 shadow-md">
+                <div className="bg-white border border-gray-100 rounded-lg p-2 md:p-6 shadow-md">
                   <div className="mb-8">
                     <p className="text-blue-600 font-bold">Step 2/2</p>
                     <h2 className="text-blue-600 font-bold">Enter Your Information</h2>
@@ -203,23 +202,28 @@ export default function TNEACalculator() {
 
                   <div className="grid md:grid-cols-2 gap-8">
                     <InputField label='' placeholder="Enter Student Name" value={student.name} onChange={(v) => handleStudent('name', v)} />
-                    <InputField label="" placeholder="+91 Parent/Student Contact Number" value={student.phone} onChange={(v) => handleStudent('phone', v)} />
+                    <div className='w-full flex items-center gap-1.5 md:gap-3'>
+                      <span className='text-primary'>+91</span>
+                      <div className='flex-1 w-full'>
+                        <InputField label="" placeholder="Parent/Student Contact Number" value={student.phone} onChange={(v) => handleStudent('phone', v)} />
+                      </div>
+                    </div>
                   </div>
 
                   <div className="mt-8">
                     <InputField label="" placeholder="Student/Parent Email" value={student.email} onChange={(v) => handleStudent('email', v)} />
                   </div>
 
-                  <div className="flex justify-end mt-10 gap-4">
+                  <div className="flex justify-center md:justify-end mt-10 gap-4 mb-5">
                     <button
                       onClick={() => setStep(1)}
-                      className="border border-gray-300 text-gray-700 font-semibold px-25 py-2 rounded-lg text-lg hover:bg-gray-50"
+                      className="border border-gray-300 text-gray-700 font-semibold px-4 py-1.5 md:px-25 md:py-2 rounded-lg text-lg hover:bg-gray-50"
                     >
                       Back
                     </button>
                     <button
                       onClick={calculateCutoff}
-                      className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-20 py-2 rounded-lg text-lg"
+                      className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-1.5 md:px-20 md:py-2 rounded-lg text-lg"
                     >
                       Calculate Cutoff
                     </button>
@@ -239,7 +243,7 @@ export default function TNEACalculator() {
                   />
                 </div>
 
-                <div className="bg-white rounded-2xl overflow-hidden ">
+                <div className="bg-white rounded-2xl overflow-hidden">
                   <table className="w-full">
                     <thead>
                       <tr className="border-b border-gray-400 bg-gray-50">
@@ -264,7 +268,7 @@ export default function TNEACalculator() {
 
             {/* Right Results Sidebar */}
             <div className="lg:col-span-4">
-              <div className="bg-[#1565f7] text-white rounded-xl p-6 mt-35">
+              <div className="bg-[#1565f7] text-white rounded-xl p-6 mt-20 sticky top-25">
                 <h3 className="text-xl font-bold mb-3">Your Results</h3>
                 <p className="opacity-90 text-xs leading-relaxed mb-6">
                   This is an estimated prediction based on previous year data. Actual ranks may vary based on the number of applicants and difficulty level of the exam.
@@ -272,17 +276,17 @@ export default function TNEACalculator() {
 
                 <div className="mb-6">
                   <p className="text-sm font-semibold mb-2">Your Cutoff</p>
-                  <p className="text-3xl tracking-wider font-bold border-b border-blue-400 pb-2">{result.cutoff}/200</p>
+                  <p className="text-4xl tracking-wider font-bold border-b border-blue-400 pb-2">{result.cutoff}/200</p>
                 </div>
 
                 <div className="mb-6">
                   <p className="text-sm font-semibold mb-2">Estimated Rank Range</p>
-                  <p className="text-3xl tracking-wider font-semibold border-b border-blue-400 pb-2">{result.rank}</p>
+                  <p className="text-4xl tracking-wider font-semibold border-b border-blue-400 pb-2">{result.rank}</p>
                 </div>
 
                 <div>
                   <p className="text-sm font-semibold mb-2">College Tier</p>
-                  <p className="text-sm font-semibold border-b border-blue-400 pb-2">{result.tier}</p>
+                  <p className="text-md font-semibold border-b border-blue-400 pb-2">{result.tier}</p>
                 </div>
               </div>
             </div>
@@ -308,7 +312,7 @@ function InputField({ label, placeholder, value, onChange }: {
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full border-b-2 border-gray-300 pb-3 outline-none focus:border-blue-600 text-lg"
+        className="w-full border-b-2 border-blue-300 pb-3 outline-none focus:border-blue-600 text-lg"
       />
     </div>
   );
@@ -322,7 +326,7 @@ function SelectField({ label, placeholder }: { label: string; placeholder: strin
         <input
           type="text"
           placeholder={placeholder}
-          className="w-full border-b-2 border-gray-300 pb-3 outline-none focus:border-blue-600 text-lg"
+          className="w-full border-b-2 border-blue-300 pb-3 outline-none focus:border-blue-600 text-lg"
         />
         <ChevronDown className="absolute right-2 top-4 text-gray-400" size={20} />
       </div>
