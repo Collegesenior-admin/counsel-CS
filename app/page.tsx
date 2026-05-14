@@ -112,10 +112,8 @@ export default async function HomePage() {
         </section>
 
 
-
-
         {/* CTA Section */}
-        <section className="max-w-387 mx-auto relative flex flex-col w-full lg:bg-[#ffd14b] md:bg-[#ffd14b] bg-linear-to-b from-[#ffd14b] p-3 md:py-3 md:px-6 items-center text-center ">
+        <section className="max-w-387 mx-auto relative flex flex-col w-full lg:bg-[#ffd14b] md:bg-[#ffd14b] bg-linear-to-b from-[#ffd14b] p-4 md:py-3 md:px-6 items-center text-center ">
 
           <div className="relative z-10 max-w-4xl px-2 md:justify-end md:text-center">
             <span className="text-stone-600 font-semibold my-2 text-xs md:text-base block tracking-wider">
