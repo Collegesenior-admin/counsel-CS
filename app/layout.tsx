@@ -27,7 +27,7 @@ export default function RootLayout({
           rel="stylesheet" 
         />
       </head>
-      <body className="font-sans antialiased">
+      <body className="font-poppins antialiased">
         {children}
       </body>
     </html>
