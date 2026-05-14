@@ -215,7 +215,7 @@ export default function TNEACalculator() {
               {/* Header Title & Buttons */}
               <div className="flex flex-col lg:flex-row lg:items-end justify-between md:gap-6 mt-2 mb-6">
                 <div className="w-full md:w-3/5">
-                  <p className=" text-gray-400 font-semibold text-md tracking-wider italic">
+                  <p className=" text-gray-400 font-medium text-md tracking-wider italic">
                     Calculate Your TNEA Cutoff Marks And Estimate Your Rank For Engineering Admissions In Tamil Nadu.
                   </p>
                 </div>
