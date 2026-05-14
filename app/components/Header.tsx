@@ -69,7 +69,7 @@ export default function Header() {
   return (
     <header
       className={`max-w-387 mx-auto sticky top-0 z-40 transition-colors duration-300 ${
-        useGrayStyle ? 'bg-[#FFFFFF]' : 'bg-[#0d68f2]'
+        useGrayStyle ? 'bg-white' : 'bg-[#0d68f2]'
       }`}
     >
       <div className="flex items-center justify-between px-4 lg:px-12 py-3 max-w-400 mx-auto">
@@ -181,7 +181,7 @@ export default function Header() {
               className={`w-full py-3 text-center rounded-lg font-bold ${
                 !useGrayStyle
                   ? 'bg-white text-[#0d68f2]'
-                  : 'bg-blue-600 text-white'
+                  : 'bg-[#155DFC] text-white'
               }`}
             >
               Talk to Expert
