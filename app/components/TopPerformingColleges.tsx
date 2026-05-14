@@ -112,7 +112,7 @@ export default function TopPerformingColleges({ colleges }: TopPerformingCollege
   const validImages = extractImagesFromJsonb(currentCollege.image_urls);
 
   return (
-    <section className="bg-white my-6 md:p-4">
+    <section className="bg-white my-6 p-3 md:p-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between mb-4 gap-2">
@@ -135,7 +135,7 @@ export default function TopPerformingColleges({ colleges }: TopPerformingCollege
 
         {/* Main Content - Using College Listing Card Structure */}
         {/* <div className='h-180 md:h-133 lg:h-115 my-auto'> */}
-          <div className="sm:w-[80%] sm:mx-auto sm:my-auto md:w-full lg:w-full bg-white rounded-2xl shadow-sm border border-gray-100 p-3 md:p-4 mb-3 flex flex-col md:flex-row lg:flex-row gap-2 md:gap-6">
+          <div className="sm:w-[80%] sm:mx-auto sm:my-auto md:w-full lg:w-full bg-white rounded-2xl shadow-md border border-gray-100 p-5 md:p-4 mb-3 flex flex-col md:flex-row lg:flex-row gap-2 md:gap-6">
             {/* Left Side: Image Gallery Section */}
             <div className="relative mx-auto w-full md:w-75 lg:w-75 shrink-0">
               {/* Main Image Container */}
