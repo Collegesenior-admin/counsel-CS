@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 /* Project Rules: Max 2 fonts, H1: 36-48px, Body: 16px, Line height: 1.5 body, 1.2 headings */
 
@@ -9,17 +9,23 @@
   --accent-yellow: #FFD700;
 }
 
-
+* {
+  font-family: "Poppins", sans-serif !important;
+}
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: "Poppins", sans-serif;
+  font-family: "Poppins", sans-serif !important;
   font-size: 16px;
   line-height: 1.5;
 }
 
 /* Typography following project rules */
+h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label {
+  font-family: "Poppins", sans-serif !important;
+}
+
 h1 {
   font-size: 32px;
   font-weight: 600; /* Lighter weight for smaller screens */
