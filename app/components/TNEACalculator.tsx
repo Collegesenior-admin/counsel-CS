@@ -207,7 +207,7 @@ export default function TNEACalculator() {
         </div>
 
         <div className="py-10">
-          <h2 className="text-[28px] md:text-[55px] font-bold text-[#1f2d5a]">TNEA Cutoff Calculator</h2>
+          <h2 className="text-[28px] md:text-[55px] font-semibold text-[#1f2d5a]">TNEA Cutoff Calculator</h2>
           <div className="grid lg:grid-cols-12 gap-8">
             {/* Left Form Section */}
             <div className="lg:col-span-8">
