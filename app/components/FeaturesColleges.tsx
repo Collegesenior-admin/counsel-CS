@@ -15,7 +15,7 @@ export default function FeaturedColleges() {
   };
 
   return (
-    <section className="bg-white p-4 md:p-12">
+    <section className="bg-white p-5 md:p-12">
       <div className="max-w-7xl mx-auto relative">
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 items-center">
 
@@ -62,7 +62,7 @@ export default function FeaturedColleges() {
               className="absolute -left-2 md:-left-5 top-1/2 -translate-y-1/2 z-10 bg-white w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center text-[#1D71F2] shadow-xl hover:bg-[#1D71F2] hover:text-white transition-colors"
             >
               <svg className="w-4 h-4 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <polyline points="15,18 9,12 15,6"/>
+                <polyline points="15,18 9,12 15,6" />
               </svg>
             </button>
 
@@ -71,7 +71,7 @@ export default function FeaturedColleges() {
               className="absolute -right-2 md:-right-5 top-1/2 -translate-y-1/2 z-10 bg-white w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center text-[#1D71F2] shadow-xl hover:bg-[#1D71F2] hover:text-white transition-colors"
             >
               <svg className="w-4 h-4 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <polyline points="9,18 15,12 9,6"/>
+                <polyline points="9,18 15,12 9,6" />
               </svg>
             </button>
 
@@ -88,7 +88,7 @@ export default function FeaturedColleges() {
                 >
                   <div className="rounded-lg overflow-hidden mb-1">
                     <div className="w-full h-full md:h-90 lg:h-90 flex items-center justify-center text-gray-600 text-sm md:text-base">
-                      <img src="clgbanner.webp" alt="College-Banner" className='w-full h-full'/>
+                      <img src="clgbanner.webp" alt="College-Banner" className='w-full h-full' />
                     </div>
                   </div>
 
