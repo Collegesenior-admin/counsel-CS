@@ -297,7 +297,7 @@ export default function CourseListClient({ initialCourses, currentParams }: Prop
             </div>
           ) : (
             initialCourses.map((course) => (
-              <div key={course.id} className="p-7 border border-gray-200 lg:m-4 rounded-xl shadow-sm bg-white">
+              <div key={course.id} className="p-5 mb-6 border border-gray-200 lg:m-4 rounded-xl shadow-md bg-white">
                 <h2 className="text-xl sm:text-xl md:text-2xl font-medium md:font-medium mb-3 bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                   {course.name || 'N/A'} </h2>
                 {/* Stats */}
