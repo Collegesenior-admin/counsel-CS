@@ -63,6 +63,19 @@ export default function TNEACalculator() {
         setPreferences((prev) => ({ ...prev, [field]: value }));
     };
 
+    const validateStep1 = () => {
+        if (
+            marks.maths.trim() === '' ||
+            marks.physics.trim() === '' ||
+            marks.chemistry.trim() === ''
+        ) {
+            alert('Please enter all required marks');
+            return;
+        }
+
+        setStep(2);
+    };
+
     const calculateCutoff = async () => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -234,7 +247,7 @@ export default function TNEACalculator() {
 
                                     <div className="flex justify-center md:justify-end mt-10">
                                         <button
-                                            onClick={() => setStep(2)}
+                                            onClick={validateStep1}
                                             className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-30 py-2 rounded-lg text-lg"
                                         >
                                             Next
