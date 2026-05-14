@@ -69,7 +69,7 @@ export default function TNEACalculator() {
             marks.physics.trim() === '' ||
             marks.chemistry.trim() === ''
         ) {
-            alert('Please enter all required marks');
+            alert('Please Enter all Required Marks');
             return;
         }
 
