@@ -13,7 +13,14 @@ const nextConfig: NextConfig = {
       { hostname: 'via.placeholder.com' },
       { hostname: '*.googleapis.com' },
       { hostname: '*.edu' },
-      { hostname: '*.ac.in' }
+      { hostname: '*.ac.in' },
+      { hostname: '*.edu.in' },
+      { hostname: 'www.*.edu.in' },
+      { hostname: '*.veltech.edu.in' },
+      { hostname: 'www.veltech.edu.in' },
+      { hostname: '*.org' },
+      { hostname: '*.com' },
+      { hostname: '*.in' }
     ],
     formats: ['image/webp', 'image/avif'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
