@@ -56,7 +56,7 @@ type CourseWithColleges = CourseType & {
   }[];
 };
 
-// 2. Update the Props to include currentParams
+// 2. Update the Props to include currentParams and filterOptions
 interface Props {
   initialCourses: CourseWithColleges[];
   currentParams: {
@@ -66,9 +66,14 @@ interface Props {
     duration?: string;
     sort?: string;
   };
+  filterOptions: {
+    streams: string[];
+    levels: string[];
+    durations: string[];
+  };
 }
 
-export default function CourseListClient({ initialCourses, currentParams }: Props) {
+export default function CourseListClient({ initialCourses, currentParams, filterOptions }: Props) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
@@ -210,8 +215,9 @@ export default function CourseListClient({ initialCourses, currentParams }: Prop
           </div>
           <div className="space-y-6">
             {[
-              { title: "Stream", key: "stream", options: ["Engineering", "Management", "Science", "Commerce"] },
-              { title: "Level", key: "level", options: ["UG", "PG", "Diploma", "PhD"] }
+              { title: "Stream", key: "stream", options: filterOptions.streams },
+              { title: "Level", key: "level", options: ["UG", "PG", "Diploma", "PhD"] },
+              { title: "Duration", key: "duration", options: ["1 Year","2 Years", "3 Years", "4 Years"] }
             ].map((block) => {
               const searchTerm = localSearch[block.title]?.toLowerCase() || "";
               const filteredOptions = block.options.filter(opt => opt.toLowerCase().includes(searchTerm));
