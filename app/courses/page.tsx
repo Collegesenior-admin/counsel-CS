@@ -26,54 +26,93 @@ export default async function CoursesPage({
 }) {
   const params = await searchParams;
 
-  // 1. Properly type the orderBy variable for Course metrics
-  let orderBy: Record<string, 'asc' | 'desc'> = { name: 'asc' };
-
-  if (params.sort === 'fees_low') {
-    orderBy = { total_fees: 'asc' };
-  } else if (params.sort === 'seats_high') {
-    orderBy = { seats_available: 'desc' };
-  }
-
-  // 2. Fetch courses with filters and linked colleges
-  const courses = await prisma.courses.findMany({
-    where: {
-      AND: [
-        // Filter by Stream (e.g., Engineering, Management)
-        params.stream ? { stream: { equals: params.stream, mode: 'insensitive' } } : {},
-        
-        // Filter by Level (e.g., UG, PG, Diploma, PhD)
-        params.level ? { level: { equals: params.level, mode: 'insensitive' } } : {},
-        
-        // Filter by Duration (e.g., 4 years)
-        params.duration ? { duration: { equals: params.duration, mode: 'insensitive' } } : {},
-        
-        // Search by Course Name or Short Name
-        params.search ? {
-          OR: [
-            { name: { contains: params.search, mode: 'insensitive' } },
-            { short_name: { contains: params.search, mode: 'insensitive' } }
+  try {
+    // 1. Fetch courses and filter data in parallel
+    const [courses, filterData] = await Promise.all([
+      // Fetch courses with filters
+      prisma.courses.findMany({
+        where: {
+          AND: [
+            params.stream ? { stream: { equals: params.stream, mode: 'insensitive' } } : {},
+            params.level ? { level: { equals: params.level, mode: 'insensitive' } } : {},
+            params.duration ? { duration: { equals: params.duration, mode: 'insensitive' } } : {},
+            params.search ? {
+              OR: [
+                { name: { contains: params.search, mode: 'insensitive' } },
+                { short_name: { contains: params.search, mode: 'insensitive' } }
+              ]
+            } : {},
           ]
-        } : {},
-      ]
-    },
-    include: {
-      offered_at_colleges: {
+        },
         include: {
-          college: true // Includes the actual college details for the horizontal scroll
-        }
-      }
-    },
-    orderBy: orderBy,
-  });
+          offered_at_colleges: {
+            include: {
+              college: true
+            }
+          }
+        },
+        orderBy: params.sort === 'fees_low' ? { avg_fees: 'asc' } : 
+                params.sort === 'duration' ? { duration: 'asc' } : 
+                { name: 'asc' },
+      }),
+      
+      // Fetch unique filter values
+      Promise.all([
+        // Get unique streams
+        prisma.courses.findMany({
+          select: { stream: true },
+          distinct: ['stream'],
+          orderBy: { stream: 'asc' }
+        }),
+        
+        // Get unique levels
+        prisma.courses.findMany({
+          select: { level: true },
+          distinct: ['level'],
+          orderBy: { level: 'asc' }
+        }),
+        
+        // Get unique durations
+        prisma.courses.findMany({
+          select: { duration: true },
+          distinct: ['duration'],
+          orderBy: { duration: 'asc' }
+        })
+      ])
+    ]);
 
-  // 3. Serialization (Ensuring Date objects don't break Client Components)
-  const serializedCourses = JSON.parse(JSON.stringify(courses));
+    const [streams, levels, durations] = filterData;
 
-  return (
-    <CourseListClient
-      initialCourses={serializedCourses}
-      currentParams={params}
-    />
-  );
+    // 2. Prepare filter options
+    const filterOptions = {
+      streams: streams.map((s: { stream: string | null }) => s.stream).filter(Boolean),
+      levels: levels.map((l: { level: string | null }) => l.level).filter(Boolean),
+      durations: durations.map((d: { duration: string | null }) => d.duration).filter(Boolean)
+    };
+
+    // 3. Serialization (Ensuring Date objects don't break Client Components)
+    const serializedCourses = JSON.parse(JSON.stringify(courses));
+    const serializedFilterOptions = JSON.parse(JSON.stringify(filterOptions));
+
+    return (
+      <CourseListClient
+        initialCourses={serializedCourses}
+        currentParams={params}
+        filterOptions={serializedFilterOptions}
+      />
+    );
+  } catch (error) {
+    console.error('Database error in courses page:', error);
+    
+    // Return fallback UI when database fails
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center p-8">
+          <h1 className="text-2xl font-bold text-gray-800 mb-4">Courses</h1>
+          <p className="text-gray-600 mb-4">We're experiencing technical difficulties.</p>
+          <p className="text-sm text-gray-500">Please try again later or contact support.</p>
+        </div>
+      </div>
+    );
+  }
 }
