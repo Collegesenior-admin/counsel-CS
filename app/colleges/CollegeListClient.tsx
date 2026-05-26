@@ -37,11 +37,17 @@ import { useScrollTrigger } from '../hooks/useScrollTrigger';
 interface Props {
   initialColleges: CollegeType[];
   currentParams: Record<string, string | undefined>;
+  filterOptions: {
+    cities: string[];
+    streams: string[];
+    courses: string[];
+  };
 }
 
 export default function CollegeListClient({
   initialColleges,
-  currentParams
+  currentParams,
+  filterOptions
 }: Props) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -73,6 +79,7 @@ export default function CollegeListClient({
   const hiddenFields = {
     city: currentParams.city || 'All',
     stream: currentParams.stream || 'All',
+    course: currentParams.course || 'All',
     searchQuery: currentParams.search || '',
     sortBy: currentParams.sort || 'ranking'
   };
@@ -255,17 +262,17 @@ export default function CollegeListClient({
               {
                 title: "Stream",
                 key: "stream",
-                options: ["Commerce & Banking", "Design", "Engineering", "Management", "Hotel Management"],
+                options: filterOptions.streams,
               },
               {
-                title: "Degree",
-                key: "degree",
-                options: ["B.Tech. ( Bachelor of Technology)", "M.Tech. ( Master of Technology)", "B.E. ( Bachelor of Engineering)", "MBA ( Master of Business Administration)", "BBA ( Bachelor of Business Administration)", "BCA ( Bachelor of Computer Applications)", "B.Sc. ( Bachelor of Science)", "M.Sc. ( Master of Science)", "B.Com. ( Bachelor of Commerce)", "M.Com. ( Master of Commerce)", "B.Arch. ( Bachelor of Architecture)", "M.Arch. ( Master of Architecture)", "Ph.D. (Doctor of Philosophy)", "M.D.S. ( Master of Dental Surgery)", "B.Pharm. ( Bachelor of Pharmacy)", "M.B.B.S. ( Bachelor of Medicine and Bachelor of Surgery)", "M.Pharm. ( Master of Pharmacy)", "B.H.M. ( Bachelor of Hotel Management)"],
+                title: "Courses",
+                key: "course",
+                options: filterOptions.courses,
               },
               {
                 title: "Cities",
                 key: "city",
-                options: ["Chennai", "Kanchipuram", "Tiruvallur", "Chengalpattu", "Pondicherry", "Trichy", "Coimbatore", "Salem", "Erode", "Madurai"],
+                options: filterOptions.cities,
               }
             ].map((block) => {
               // FILTER LOGIC: Get the search term for this specific block
@@ -534,4 +541,3 @@ export default function CollegeListClient({
     </div>
   );
 }
-
