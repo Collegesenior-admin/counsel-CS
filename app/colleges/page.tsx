@@ -8,45 +8,110 @@ export default async function CollegesPage({
     city?: string;
     search?: string;
     stream?: string;
-    degree?: string;
+    course?: string;
     sort?: string
   }>;
 }) {
   const params = await searchParams;
 
   try {
-    // 1. Properly type the orderBy variable
-    let orderBy: Record<string, 'asc' | 'desc'> = { nirf_ranking: 'asc' };
+    // 1. Fetch dynamic filter values from database
+    const [colleges, filterData] = await Promise.all([
+      // Fetch colleges with filters
+      prisma.colleges.findMany({
+        where: {
+          AND: [
+            params.city ? { city: { equals: params.city, mode: 'insensitive' } } : {},
+            params.stream ? {
+              course_offerings: {
+                some: {
+                  course: {
+                    stream: { equals: params.stream, mode: 'insensitive' }
+                  }
+                }
+              }
+            } : {},
+            params.course ? {
+              course_offerings: {
+                some: {
+                  course: {
+                    name: { equals: params.course, mode: 'insensitive' }
+                  }
+                }
+              }
+            } : {},
+            params.search ? {
+              OR: [
+                { name: { contains: params.search, mode: 'insensitive' } },
+                { city: { contains: params.search, mode: 'insensitive' } }
+              ]
+            } : {},
+          ]
+        },
+        include: {
+          course_offerings: {
+            include: {
+              course: true
+            }
+          }
+        },
+        orderBy: params.sort === 'fees_low' ? { min_fees: 'asc' } : 
+                params.sort === 'package_high' ? { avg_package: 'desc' } : 
+                { nirf_ranking: 'asc' },
+      }),
+      
+      // Fetch unique filter values
+      Promise.all([
+        // Get unique cities from colleges
+        prisma.colleges.findMany({
+          select: { city: true },
+          distinct: ['city'],
+          orderBy: { city: 'asc' }
+        }),
+        
+        // Get unique streams that are actually offered by colleges
+        prisma.courses.findMany({
+          select: { stream: true },
+          distinct: ['stream'],
+          where: {
+            offered_at_colleges: {
+              some: {} // Only courses that are offered at some college
+            }
+          },
+          orderBy: { stream: 'asc' }
+        }),
+        
+        // Get unique courses that are actually offered by colleges
+        prisma.courses.findMany({
+          select: { name: true },
+          distinct: ['name'],
+          where: {
+            offered_at_colleges: {
+              some: {} // Only courses that are offered at some college
+            }
+          },
+          orderBy: { name: 'asc' }
+        })
+      ])
+    ]);
 
-    if (params.sort === 'fees_low') {
-      orderBy = { min_fees: 'asc' };
-    } else if (params.sort === 'package_high') {
-      orderBy = { avg_package: 'desc' };
-    }
+    const [cities, streams, courses] = filterData;
 
-    // 2. Fetch colleges with all filters
-    const colleges = await prisma.colleges.findMany({
-      where: {
-        AND: [
-          params.city ? { city: { equals: params.city, mode: 'insensitive' } } : {},
-          params.stream ? { ownership: { equals: params.stream, mode: 'insensitive' } } : {},
-          params.search ? {
-            OR: [
-              { name: { contains: params.search, mode: 'insensitive' } },
-              { city: { contains: params.search, mode: 'insensitive' } }
-            ]
-          } : {},
-        ]
-      },
-      orderBy: orderBy,
-    });
+    // 2. Prepare filter options
+    const filterOptions = {
+      cities: cities.map((c: { city: string | null }) => c.city).filter(Boolean),
+      streams: streams.map((s: { stream: string | null }) => s.stream).filter(Boolean),
+      courses: courses.map((c: { name: string | null }) => c.name).filter(Boolean)
+    };
 
     const serializedColleges = JSON.parse(JSON.stringify(colleges));
+    const serializedFilterOptions = JSON.parse(JSON.stringify(filterOptions));
 
     return (
       <CollegeListClient
         initialColleges={serializedColleges}
         currentParams={params}
+        filterOptions={serializedFilterOptions}
       />
     );
   } catch (error) {
@@ -59,12 +124,6 @@ export default async function CollegesPage({
           <h1 className="text-2xl font-bold text-gray-800 mb-4">Colleges</h1>
           <p className="text-gray-600 mb-4">We're experiencing technical difficulties.</p>
           <p className="text-sm text-gray-500">Please try again later or contact support.</p>
-          <button 
-            onClick={() => window.location.reload()} 
-            className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-          >
-            Retry
-          </button>
         </div>
       </div>
     );
