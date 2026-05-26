@@ -5,7 +5,10 @@ import {
   SearchCode, 
   Building2, 
   MapPlus, 
-  Route 
+  Route, 
+  ChevronRight,
+  ChevronLast,
+  ChevronLeft
 } from 'lucide-react';
 
 const WhyChooseUs = () => {
@@ -62,10 +65,10 @@ const WhyChooseUs = () => {
   };
 
   return (
-    <section id="why-choose-us" className="max-w-387 mx-auto p-6 font-sans overflow-hidden">
+    <section id="why-choose-us" className="max-w-387 mx-auto p-3 md:p-6 font-sans overflow-hidden">
       {/* Header */}
-      <div className="mb-12 text-center lg:text-left">
-        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
+      <div className="mb-10 text-left">
+        <h2 className="text-3xl md:text-5xl font-semibold md:font-bold text-gray-900 leading-tight">
           Why Choose <span className="text-blue-600">CollegeSenior?</span>
         </h2>
         <p className="text-gray-600 mt-4 max-w-3xl mx-auto lg:mx-0 text-[15px] leading-relaxed">
@@ -114,13 +117,13 @@ const WhyChooseUs = () => {
               return (
                 <div
                   key={index}
-                  className="min-w-[calc((100vw-80px)/1.25)] md:min-w-[calc((100vw-80px)/2.25)] bg-white border-r border-gray-300 p-6 flex flex-col"
+                  className="min-w-[calc((100vw-80px)/1.25)] md:min-w-[calc((100vw-80px)/2.25)] bg-white  flex flex-col"
                 >
-                  <div className="w-14 h-14 bg-gray-50 border-r border-gray-200 rounded-2xl flex items-center justify-center mb-6">
+                  <div className="w-14 h-14 bg-gray-50 border border-gray-200 rounded-xl flex items-center justify-center mb-4">
                     <Icon className="w-8 h-8 text-gray-700" strokeWidth={1.5} />
                   </div>
-                  <h3 className="text-[17px] font-bold text-gray-900 mb-3">{card.title}</h3>
-                  <p className="text-[14px] text-gray-600 leading-relaxed flex-1">{card.desc}</p>
+                  <h3 className="text-[15px] font-bold text-gray-900 mb-3">{card.title}</h3>
+                  <p className="text-[12px] text-gray-600 leading-relaxed flex-1">{card.desc}</p>
                 </div>
               );
             })}
@@ -128,22 +131,22 @@ const WhyChooseUs = () => {
         </div>
 
         {/* Navigation Controls */}
-        <div className="flex justify-end gap-3 mt-8">
+        <div className="flex justify-end gap-3 mt-6">
           <button
             onClick={prevSlide}
             disabled={currentIndex === 0}
-            className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
+            className="w-11 h-11 rounded-full border border-gray-300 flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
             aria-label="Previous slide"
           >
-            ←
+            <ChevronLeft />
           </button>
           <button
             onClick={nextSlide}
             disabled={currentIndex === cards.length - 1}
-            className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
+            className="w-11 h-11 rounded-full border border-gray-300 flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
             aria-label="Next slide"
           >
-            →
+            <ChevronRight size={18} />
           </button>
         </div>
       </div>
