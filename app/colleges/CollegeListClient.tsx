@@ -498,16 +498,8 @@ export default function CollegeListClient({
                     </p>
 
                     {/* Footer Buttons */}
-                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                      <div>
-                        <p className="text-xs font-bold text-[#2D5BFF] mb-2 uppercase">Top Courses</p>
-                        <div className="flex -space-x-2">
-                          <div className="w-8 h-8 rounded-full border-2 border-white bg-red-400"></div>
-                          <div className="w-8 h-8 rounded-full border-2 border-white bg-blue-400"></div>
-                          <div className="w-8 h-8 rounded-full border-2 border-white bg-purple-400"></div>
-                          <div className="w-8 h-8 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-[10px] font-bold">+2</div>
-                        </div>
-                      </div>
+                    <div className="flex flex-col sm:flex-row justify-end items-start sm:items-center gap-4">
+                     
 
                       <div className="flex gap-2 w-full sm:w-auto mb-5">
                         <button className="flex-1 sm:flex-none border-2 border-[#2D5BFF] text-[#2D5BFF] font-bold px-4 md:px-6 py-2 rounded-lg hover:bg-blue-50 transition-colors text-xs md:text-sm">
@@ -542,3 +534,4 @@ export default function CollegeListClient({
     </div>
   );
 }
+
