@@ -1,136 +1,243 @@
 'use client';
 
-import React, { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Search, ChevronLeft, ChevronRight } from 'lucide-react';
+import { BriefcaseBusiness, ChevronLeft, ChevronRight, HeartPulse, PencilRuler, Stethoscope, TestTubes } from 'lucide-react';
 
-interface StreamCard {
-  id: string;
-  count: string;
-  title: string;
-  description: string;
-  stream: string;
+interface Course {
+  id: number;
+  name: string;
+  short_name: string;
+  slug: string;
+  colleges: {
+    id: number;
+    name: string;
+    logo_url: string | null;
+  }[];
 }
 
-const streams: StreamCard[] = [
-  { id: '01', count: '45+ courses', title: 'Engineering & Technology', description: 'Build The Future With Machines, Code, And Innovation. We Help You Choose Your Best-Fit Path.', stream: 'Engineering' },
-  { id: '02', count: '78+ courses', title: 'Arts & Sciences', description: 'From Literature To Life Sciences, Explore Where Curiosity Meets Critical Thinking With Clarity.', stream: 'Science' },
-  { id: '03', count: '17+ courses', title: 'Medical Courses', description: 'A Life In Scrubs Starts Here. We Help You Understand Courses That Lead To Becoming A Doctor.', stream: 'Medical' },
-  { id: '04', count: '29+ courses', title: 'Allied Health Sciences', description: 'Behind Every Doctor Is A Skilled Health Expert. Discover Vital Careers Beyond MBBS.', stream: 'Science' },
-  { id: '05', count: '30+ courses', title: 'Business & Management', description: 'Master the art of leadership and strategy in the corporate world.', stream: 'Management' },
-  { id: '06', count: '12+ courses', title: 'Law & Legal Studies', description: 'Advocate for justice with a strong foundation in legal frameworks.', stream: 'Commerce' },
-  { id: '07', count: '25+ courses', title: 'Architecture & Design', description: 'Shape the world with creativity, from buildings to digital interfaces.', stream: 'Engineering' },
-  { id: '08', count: '15+ courses', title: 'Agriculture', description: 'Innovate in farming and sustainability for a greener future.', stream: 'Science' },
-];
+interface StreamData {
+  stream: string;
+  courses: Course[];
+}
+
+const streamIcons: Record<string, any> = {
+  'Engineering': PencilRuler,
+  'Science': TestTubes,
+  'Medical': Stethoscope,
+  'Health Sciences': HeartPulse,
+  'Management': BriefcaseBusiness,
+  'Business': BriefcaseBusiness,
+};
 
 export default function StreamSection() {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [streams, setStreams] = useState<string[]>([]);
+  const [selectedStream, setSelectedStream] = useState<string>('');
+  const [streamData, setStreamData] = useState<StreamData | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const scroll = (direction: 'left' | 'right') => {
+  // Fetch streams on component mount
+  useEffect(() => {
+    const fetchStreams = async () => {
+      try {
+        const response = await fetch('/api/streams');
+        const data = await response.json();
+        setStreams(data.streams || []);
+        if (data.streams && data.streams.length > 0) {
+          setSelectedStream(data.streams[0]);
+        }
+      } catch (error) {
+        console.error('Error fetching streams:', error);
+      }
+    };
+    fetchStreams();
+  }, []);
+
+  // Fetch courses for selected stream
+  useEffect(() => {
+    if (!selectedStream) return;
+
+    const fetchStreamData = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch(`/api/streams/${encodeURIComponent(selectedStream)}`);
+        const data = await response.json();
+        setStreamData(data);
+      } catch (error) {
+        console.error('Error fetching stream data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchStreamData();
+  }, [selectedStream]);
+
+  const scrollLeft = () => {
     if (scrollRef.current) {
-      const { scrollLeft, clientWidth } = scrollRef.current;
-      const scrollTo = direction === 'left' 
-        ? scrollLeft - clientWidth / 2 
-        : scrollLeft + clientWidth / 2;
-      
-      scrollRef.current.scrollTo({ left: scrollTo, behavior: 'smooth' });
+      scrollRef.current.scrollBy({
+        left: -250,
+        behavior: "smooth",
+      });
     }
   };
 
+  const scrollRight = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({
+        left: 250,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const getStreamIcon = (stream: string) => {
+    const IconComponent = streamIcons[stream] || PencilRuler;
+    return <IconComponent size={18} />;
+  };
+
   return (
-    <section className="relative max-w-365 mx-auto h-auto p-3 py-6 md:p-8 m-5 bg-primary lg:rounded-lg text-center text-white overflow-hidden">
-      
-      {/* Background Decal Image */}
-      <div className="z-0">
-        <Image 
-          src="/logoblue.svg" 
-          alt="Decoration" 
-          width={600} 
-          height={600} 
-          className="absolute -right-2 -bottom-1 z-10 rotate-0"
-        />
-      </div>
-
-      <div className="relative z-10">
-        {/* Header */}
-       <p className="text-sm md:text-md mb-2 mt-4 tracking-wider">Top courses for better future</p>
-
-        <h2 className="sm:text-3xl md:text-[32px] lg:text-[40px] font-medium text-white mb-2 tracking-wide">Explore Courses By Stream</h2>
-
-        <p className="text-xs m-3 mb-5 md:m-4">
-          Here’s why thousands of students and parents trust CollegeSenior for a
-          stress-free admission <br />
-          journey with expert guidance, personal attention, and reliable support.
-        </p>
-
-        {/* Search Bar */}
-        <div className="mt-3 mb-6 md:mt-10 max-w-4xl mx-auto relative">
-          <div className="flex items-center bg-white rounded-lg p-2.5 md:px-5 md:py-4">
-            <Search className="text-[#0B69F2] w-6 h-6 mr-2" />
-            <input 
-              type="text" 
-              placeholder="Search for courses, colleges, or exams"
-              className="w-full bg-transparent outline-none text-gray-500 placeholder:text-sm placeholder:text-[#0B69F2]/80 font-medium"
-            />
-          </div>
+    <section className="relative overflow-hidden bg-linear-to-tr from-[#0B6AF3] to-[#1C4FD9] max-w-387 mx-auto px-6 py-10 md:px-12">
+      <img src="streams.svg" alt="" className='absolute' />
+      <div className="relative z-10 mx-auto max-w-385">
+        {/* Heading */}
+        <div className="text-center">
+          <h2 className="text-3xl font-semibold tracking-wide text-white md:text-[43px]">
+            Explore Courses By Stream
+          </h2>
+          <p className="mx-auto mt-4 max-w-3xl text-sm italic leading-7 text-white/85 md:text-base">
+            Here's Why Thousands Of Students And Parents Trust CollegeSenior
+            For A Stress-Free Admission Journey — With Expert Guidance,
+            Personal Attention, And Reliable Support.
+          </p>
         </div>
 
-        <div className="mt-4 md:mt-12 mb-6 text-left">
-           <p className="text-md md:text-lg font-semibold ">Few Popular Streams</p>
-        </div>
-
-        {/* Carousel Container */}
-        <div className="flex flex-col lg:flex-row items-end md:gap-6 m-3 md:m-7">
-          
-          {/* Scrollable Track */}
-          <div 
-            ref={scrollRef}
-            className="w-full lg:w-[85%] flex gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-4"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        {/* Stream Tabs */}
+        <div className="my-6 relative flex items-center h-13">
+          {/* Left Arrow */}
+          <button
+            onClick={scrollLeft}
+            className="absolute left-0 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-md transition hover:bg-white hover:text-[#0057ff]"
           >
-            {streams.map((item) => (
-              <div 
-                key={item.id}
-                className="min-w-70 md:min-w-[320px] max-h-55 my-3 flex flex-col justify-between rounded-xl transition-all group snap-start"
-              >
-                <div className='flex justify-between border-b border-white/50 px-1.5 pb-1.5 mb-2.5'>
+            <ChevronLeft size={18} />
+          </button>
 
-                <p className="text-sm md:text-md">{item.id}</p>
-              <p className="text-sm font-medium">{item.count}</p>
+          {/* Scrollable Tabs */}
+          <div
+            ref={scrollRef}
+            className="flex w-[90%] mx-auto items-center gap-6 overflow-x-auto whitespace-nowrap scroll-smooth scrollbar-hide h-30"
+          >
+            {streams.map((stream, index) => {
+              const isActive = stream === selectedStream;
+              return (
+                <div key={stream}>
+                  <button
+                    onClick={() => setSelectedStream(stream)}
+                    className={`relative flex shrink-0 items-center gap-2 pb-1.5 text-sm font-medium md:text-base transition-colors ${isActive ? 'text-white' : 'text-white/85 hover:text-white'
+                      }`}
+                  >
+                    {getStreamIcon(stream)}
+                    <span>{stream}</span>
+                    {isActive && (
+                      <div className="absolute bottom-0 left-0 h-0.5 w-full rounded-full bg-white"></div>
+                    )}
+                  </button>
+                  {index < streams.length - 1 && (
+                    <div className="h-6 w-0.5 shrink-0 bg-white/40 -ml-3 -mt-7" />
+                  )}
                 </div>
-                
-                <div className="text-center">
-                  <h3 className="text-md md:text-lg transition-colors">
-                    {item.title}
-                  </h3>
-                  <p className="text-xs md:text-sm my-3">
-                    {item.description}
-                  </p>
-                  <Link href={`/courses?stream=${item.stream}`} className="inline-block text-xs font-medium text-yellow-300/90 tracking-wide hover:underline">
-                    View More &gt;
-                  </Link>
+              );
+            })}
+          </div>
+
+          {/* Right Arrow */}
+          <button
+            onClick={scrollRight}
+            className="absolute right-0 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#0057ff] shadow-lg transition hover:scale-105"
+          >
+            <ChevronRight size={18} />
+          </button>
+        </div>
+
+        {/* Highlight Banner */}
+        <div className="mt-6 flex flex-col items-start justify-between gap-6 rounded-xl bg-white/13 px-5 py-5 backdrop-blur-md lg:flex-row lg:items-center">
+          <div>
+            <h3 className="text-xl font-medium text-white md:text-2xl">
+              Right Now You Are Seeing Top/Popular Courses Of {selectedStream}
+            </h3>
+            <p className="mt-2 text-sm text-white/80 md:text-base">
+              To know more about other courses explore the whole catalog of courses
+            </p>
+          </div>
+          <Link
+            href="/courses"
+            className="rounded-xl bg-white px-8 py-3 text-sm font-semibold text-[#0057ff] transition hover:scale-105 whitespace-nowrap"
+          >
+            Explore all courses
+          </Link>
+        </div>
+
+        {/* Course Cards Grid */}
+        <div
+          className="mt-10 grid grid-rows-2 grid-flow-col auto-cols-[85%] sm:auto-cols-[48%] md:auto-cols-[45%] xl:grid-rows-none xl:grid-flow-row xl:auto-cols-auto xl:grid-cols-3 gap-x-5 gap-y-5 overflow-x-auto xl:overflow-visible snap-x snap-mandatory " >
+          {loading ? (
+            // Loading skeleton
+            Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="animate-pulse">
+                <div className="h-4 bg-white/20 rounded mb-3"></div>
+                <div className="h-16 bg-white/20 rounded mb-3"></div>
+                <div className="flex gap-2">
+                  <div className="w-8 h-8 bg-white/20 rounded-full"></div>
+                  <div className="w-8 h-8 bg-white/20 rounded-full"></div>
                 </div>
               </div>
-            ))}
-          </div>
+            ))
+          ) : (
+            streamData?.courses.slice(0, 6).map((course, index) => (
+              <Link
+                key={course.id}
+                href={`/courses?search=${encodeURIComponent(course.short_name || course.name)}`}
+                className=" relative group block cursor-pointer snap-center">
+                {/* Top Line */}
+                <div className="absolute left-14 top-4 h-px w-[80%] bg-linear-to-r from-white to-transparent" />
 
-          {/* Navigation Buttons */}
-          <div className="flex lg:flex-row gap-3 w-20% md:w-20% lg:w-[18%] justify-center md:justify-end lg:justify-end p-2">
-            <button 
-              onClick={() => scroll('left')}
-              className="flex-1 flex items-center md:min-w-20 justify-center w-18 h-11 lg:h-14 border-2 border-white rounded-sm hover:bg-white hover:text-[#0B69F2] transition-all active:scale-95"
-            >
-              <ChevronLeft size={28} />
-            </button>
-            <button 
-              onClick={() => scroll('right')}
-              className="flex-1 flex items-center md:min-w-20 justify-center w-18 h-11 lg:h-14 border-2 border-white rounded-sm hover:bg-white hover:text-[#0B69F2] transition-all active:scale-95"
-            >
-              <ChevronRight size={28} />
-            </button>
-          </div>
+                {/* Number */}
+                <div className="relative z-10 inline-block pr-3 text-3xl font-medium mb-3 text-white">
+                  {String(index + 1).padStart(2, '0')}
+                </div>
 
+                {/* Title */}
+                <h4 className="text-[22px] font-medium leading-tight text-white group-hover:text-yellow-300 transition-colors">
+                  {course.name}
+                </h4>
+
+                {/* Colleges */}
+                <div className="mb-3 flex flex-wrap items-center gap-3 mt-1.5">
+                  <span className="text-sm text-white/85">
+                    Colleges Offering this Course -
+                  </span>
+                  <div className="flex items-center -space-x-3">
+                    {course.colleges.slice(0, 3).map((college) => (
+                      <Image
+                        key={college.id}
+                        src={college.logo_url || '/placeholder-logo.svg'}
+                        alt={`${college.name} Logo`}
+                        width={32}
+                        height={32}
+                        className="rounded-full w-10 h-10 object-contain bg-white"
+                      />
+                    ))}
+                    {course.colleges.length > 3 && (
+                      <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-xs text-white font-medium">
+                        +{course.colleges.length - 3}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </Link>
+            ))
+          )}
         </div>
       </div>
     </section>
