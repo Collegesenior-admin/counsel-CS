@@ -78,10 +78,15 @@ export default function CourseListClient({ initialCourses, currentParams, filter
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
+  const [searchQuery, setSearchQuery] = useState(currentParams.search || '');
   const [localSearch, setLocalSearch] = useState<Record<string, string>>({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { isTriggered, hasSubmitted } = useScrollTrigger(0.7);
+
+  // Update search query when URL parameters change
+  useEffect(() => {
+    setSearchQuery(currentParams.search || '');
+  }, [currentParams.search]);
 
   // Lock scroll when filter sidebar is open on mobile
   useScrollLock(isFilterOpen);
@@ -163,7 +168,7 @@ export default function CourseListClient({ initialCourses, currentParams, filter
               <p className="text-sm opacity-80 mb-3 lg:mb-38">Home / Courses</p>
               <h2 className="text-2xl md:text-3xl mt-3 md:mt-25 font-semibold">Find Your Perfect Courses</h2>
               <p className="text-md md:text-lg opacity-90 mb-45 md:mb-4">Explore hundreds of Courses to find the right one for you.</p>
-              <form onChange={handleSearchSubmit} className="w-full mt-4 flex bg-white p-1 md:p-2 rounded-lg shadow-lg border border-gray-200 text-gray-800">
+              <form onSubmit={handleSearchSubmit} className="w-full mt-4 flex bg-white p-1 md:p-2 rounded-lg shadow-lg border border-gray-200 text-gray-800">
                 <button type="submit" className="p-2 text-blue-700 hover:text-blue-600 transition">
                   <Search size={20} />
                 </button>
@@ -276,9 +281,26 @@ export default function CourseListClient({ initialCourses, currentParams, filter
         {/* Results Section */}
         <section className="w-full lg:w-3/4">
           <div className="@max-xs:flex-1 sm:flex md:flex lg:flex justify-between items-center mb-6 mx-2">
-            <h3 className="font-bold text-lg text-gray-800 mb-2">
-              Showing {initialCourses.length || 'All'} Courses
-            </h3>
+            <div>
+              <h3 className="font-bold text-lg text-gray-800 mb-2">
+                Showing {initialCourses.length || 'All'} Courses
+              </h3>
+              {currentParams.search && (
+                <p className="text-sm text-gray-600">
+                  Search results for: <span className="font-semibold text-blue-600">"{currentParams.search}"</span>
+                  <button 
+                    onClick={() => {
+                      const params = new URLSearchParams(searchParams.toString());
+                      params.delete('search');
+                      router.push(`/courses?${params.toString()}`);
+                    }}
+                    className="ml-2 text-red-500 hover:text-red-700 text-xs underline"
+                  >
+                    Clear search
+                  </button>
+                </p>
+              )}
+            </div>
 
             {/* --- SORTING DROPDOWN --- */}
             <div className="relative group">
