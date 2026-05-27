@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { BriefcaseBusiness, ChevronLeft, ChevronRight, HeartPulse, PencilRuler, Stethoscope, TestTubes } from 'lucide-react';
+import { BriefcaseBusiness, ChevronLeft, ChevronRight, HeartPulse, PencilRuler, Stethoscope, TestTubes, Palette, Calculator, Utensils, GraduationCap, Building2, Laptop, Wrench, Microscope, TrendingUp, Users, BookOpen, Briefcase } from 'lucide-react';
 
 interface Course {
   id: number;
@@ -23,12 +23,64 @@ interface StreamData {
 }
 
 const streamIcons: Record<string, any> = {
+  // Engineering & Technology
   'Engineering': PencilRuler,
+  'Technology': Laptop,
+  'Computer Science': Laptop,
+  'Information Technology': Laptop,
+  'Mechanical Engineering': Wrench,
+  'Civil Engineering': Building2,
+  'Electrical Engineering': Calculator,
+  
+  // Science & Research
   'Science': TestTubes,
+  'Physics': TestTubes,
+  'Chemistry': Microscope,
+  'Biology': Microscope,
+  'Mathematics': Calculator,
+  'Research': TestTubes,
+  
+  // Medical & Health
   'Medical': Stethoscope,
+  'Medicine': Stethoscope,
   'Health Sciences': HeartPulse,
+  'Nursing': HeartPulse,
+  'Pharmacy': HeartPulse,
+  'Dental': Stethoscope,
+  
+  // Business & Management
   'Management': BriefcaseBusiness,
-  'Business': BriefcaseBusiness,
+  'Business': Briefcase,
+  'MBA': BriefcaseBusiness,
+  'Commerce': TrendingUp,
+  'Finance': TrendingUp,
+  'Economics': TrendingUp,
+  'Accounting': Calculator,
+  
+  // Arts & Design
+  'Arts': Palette,
+  'Design': Palette,
+  'Fine Arts': Palette,
+  'Fashion Design': Palette,
+  'Architecture': Building2,
+  
+  // Hospitality & Services
+  'Hotel Management': Utensils,
+  'Hospitality': Utensils,
+  'Tourism': Users,
+  'Catering': Utensils,
+  
+  // Education & Liberal Arts
+  'Education': GraduationCap,
+  'Liberal Arts': BookOpen,
+  'Humanities': BookOpen,
+  'Literature': BookOpen,
+  'Philosophy': BookOpen,
+  
+  // Commerce & Banking
+  'Commerce & Banking': TrendingUp,
+  'Banking': TrendingUp,
+  'Insurance': TrendingUp,
 };
 
 export default function StreamSection() {
@@ -93,7 +145,18 @@ export default function StreamSection() {
   };
 
   const getStreamIcon = (stream: string) => {
-    const IconComponent = streamIcons[stream] || PencilRuler;
+    // Try exact match first
+    let IconComponent = streamIcons[stream];
+    
+    // If no exact match, try partial matching
+    if (!IconComponent) {
+      const streamKey = Object.keys(streamIcons).find(key => 
+        stream.toLowerCase().includes(key.toLowerCase()) || 
+        key.toLowerCase().includes(stream.toLowerCase())
+      );
+      IconComponent = streamKey ? streamIcons[streamKey] : GraduationCap;
+    }
+    
     return <IconComponent size={18} />;
   };
 
