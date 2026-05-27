@@ -14,7 +14,7 @@ export async function GET() {
       orderBy: { stream: 'asc' }
     });
 
-    const streamNames = streams.map(s => s.stream).filter(Boolean);
+    const streamNames = streams.map((s: { stream: string | null }) => s.stream).filter(Boolean);
 
     return NextResponse.json({ streams: streamNames });
   } catch (error) {
