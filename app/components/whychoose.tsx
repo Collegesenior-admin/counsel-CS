@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { 
-  SearchCode, 
-  Building2, 
-  MapPlus, 
-  Route, 
+import {
+  SearchCode,
+  Building2,
+  MapPlus,
+  Route,
   ChevronRight,
   ChevronLast,
   ChevronLeft
@@ -56,22 +56,47 @@ const WhyChooseUs = () => {
     return () => observer.disconnect();
   }, []);
 
+  const [visibleCards, setVisibleCards] = useState(1.13);
+
+  useEffect(() => {
+    const updateVisibleCards = () => {
+      if (window.innerWidth >= 768) {
+        setVisibleCards(2.33); // tablet
+      } else {
+        setVisibleCards(1.13); // mobile
+      }
+    };
+
+    updateVisibleCards();
+    window.addEventListener('resize', updateVisibleCards);
+
+    return () => window.removeEventListener('resize', updateVisibleCards);
+  }, []);
+
+  const maxIndex =
+    visibleCards > 2
+      ? Math.floor(cards.length - visibleCards) // tablet
+      : Math.ceil(cards.length - visibleCards); // mobile
   const nextSlide = () => {
-    if (currentIndex < cards.length - 1) setCurrentIndex(currentIndex + 1);
+    if (currentIndex < maxIndex) {
+      setCurrentIndex(currentIndex + 1);
+    }
   };
 
   const prevSlide = () => {
-    if (currentIndex > 0) setCurrentIndex(currentIndex - 1);
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+    }
   };
 
   return (
-    <section id="why-choose-us" className="max-w-387 mx-auto p-3 md:p-6 font-sans overflow-hidden">
+    <section id="why-choose-us" className="max-w-387 mx-auto p-4 md:p-6 font-sans overflow-hidden">
       {/* Header */}
       <div className="mb-10 text-left">
         <h2 className="text-3xl md:text-5xl font-semibold md:font-bold text-gray-900 leading-tight">
           Why Choose <span className="text-blue-600">CollegeSenior?</span>
         </h2>
-        <p className="text-gray-600 mt-4 max-w-3xl mx-auto lg:mx-0 text-[15px] leading-relaxed">
+        <p className="text-gray-600 mt-4 lg:max-w-3xl lg:mx-0 text-[15px] leading-relaxed">
           Here's why thousands of students and parents trust CollegeSenior for a stress-free admission journey with expert guidance, personal attention, and reliable support.
         </p>
       </div>
@@ -83,9 +108,8 @@ const WhyChooseUs = () => {
           return (
             <div
               key={index}
-              className={`flex-1 px-6 relative transition-all duration-700 ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-              }`}
+              className={`flex-1 px-6 relative transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+                }`}
               style={{ transitionDelay: `${index * 120}ms` }}
             >
               <div className="w-14 h-14 bg-blue-50 border border-blue-100 rounded-2xl flex items-center justify-center mb-6">
@@ -93,7 +117,7 @@ const WhyChooseUs = () => {
               </div>
               <h3 className="text-[17px] font-bold text-gray-800 mb-3">{card.title}</h3>
               <p className="text-[14px] text-gray-600 leading-relaxed">{card.desc}</p>
-              
+
               {index !== cards.length - 1 && (
                 <div className="absolute right-0 top-0 h-full w-px bg-gray-200" />
               )}
@@ -109,7 +133,7 @@ const WhyChooseUs = () => {
             className="flex gap-6 transition-transform duration-500 ease-in-out"
             style={{
               // Calculation accounts for the width of the card + the gap
-              transform: `translateX(calc(-${currentIndex} * (100% / 1.25 + 24px/1.25)))`,
+              transform: `translateX(calc(-${currentIndex} * (100% / 1.25 + 10px/1.25)))`,
             }}
           >
             {cards.map((card, index) => {
@@ -117,9 +141,9 @@ const WhyChooseUs = () => {
               return (
                 <div
                   key={index}
-                  className="min-w-[calc((100vw-80px)/1.25)] md:min-w-[calc((100vw-80px)/2.25)] bg-white  flex flex-col"
+                  className="min-w-[calc((100vw-80px)/1.13)] md:min-w-[calc((100vw-80px)/2.33)] bg-white snap-x flex flex-col"
                 >
-                  <div className="w-14 h-14 bg-gray-50 border border-gray-200 rounded-xl flex items-center justify-center mb-4">
+                  <div className="w-14 h-14 bg-gray-50 border border-gray-200 rounded-xl snap-start flex items-center justify-center mb-4">
                     <Icon className="w-8 h-8 text-gray-700" strokeWidth={1.5} />
                   </div>
                   <h3 className="text-[15px] font-bold text-gray-900 mb-3">{card.title}</h3>
