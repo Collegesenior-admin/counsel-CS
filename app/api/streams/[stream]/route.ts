@@ -1,6 +1,20 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
+type CourseWithColleges = {
+  id: number;
+  name: string;
+  slug: string;
+  short_name: string | null;
+  offered_at_colleges: {
+    college: {
+      id: number;
+      name: string;
+      logo_url: string | null;
+    };
+  }[];
+};
+
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ stream: string }> }
@@ -20,6 +34,7 @@ export async function GET(
         id: true,
         name: true,
         slug: true,
+        short_name: true,
         offered_at_colleges: {
           select: {
             college: {
@@ -38,11 +53,12 @@ export async function GET(
     });
 
     // Transform the data to match the expected format
-    const transformedCourses = courses.map(course => ({
+    const transformedCourses = courses.map((course: CourseWithColleges) => ({
       id: course.id,
       name: course.name,
       slug: course.slug,
-      colleges: course.offered_at_colleges.map(offering => offering.college)
+      short_name: course.short_name || course.name.split(' ').map((word: string) => word[0]).join(''),
+      colleges: course.offered_at_colleges.map((offering) => offering.college)
     }));
 
     return NextResponse.json({
