@@ -43,6 +43,48 @@ h1 {
   scrollbar-width: none;
 }
 
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: scroll-left 25s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes trusted-marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-trusted-marquee {
+  animation: trusted-marquee 22s linear infinite;
+}
+
+.animate-trusted-marquee:hover {
+  animation-play-state: paused;
+}
+
+@layer utilities {
+  .animate-spin-slow {
+    animation: spin 14s linear infinite;
+  }
+}
+
 
 /* 2. FLUID: Viewports between 720px and 960px */
 @media screen and (min-width: 720px) {
