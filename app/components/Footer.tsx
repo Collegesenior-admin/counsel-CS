@@ -1,103 +1,235 @@
-import { PhoneCall, MailMinus } from 'lucide-react';
+import Link from 'next/link';
 
-const Footer = () => {
-    return (
-        <>
-            <footer className='max-w-378 mx-auto bg-white pt-36 md:pt-40 sm:pt-52'>
-                    <div className='bg-[#001c54] relative h-220 sm:pt-5 pt-4'>
-                        <div className='max-w-full absolute md:absolute -top-45 left-0 right-0 sm:absolute sm:m-5 mx-3 my-8 md:m-10 '>
-                            <div className=" bg-[#F4F7FF] rounded-t-xl p-5 md:p-7 lg:p-7">
-                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+export default function FredFooter() {
+  return (
+    <footer className="relative bg-[#0f0f0f] overflow-hidden font-poppins max-w-387 mx-auto">
 
-                                    {/* Left Column: Branding */}
-                                    <div className="space-y-2 md:space-y-6">
-                                        <h2 className="text-2xl md:text-4xl font-bold">
-                                            Let's Connect
-                                        </h2>
-                                        <div className="space-y-1 md:space-y-2">
-                                            <p className="text-blue-500 tracking-wider text-sm">
-                                                Consult With Our Expert Consultants.
-                                            </p>
-                                            <div></div>
-                                            <p className="text-lg md:text-2xl font-medium leading-tight opacity-60">
-                                                Guidance Made Just For You.<br />
-                                            </p>
-                                            <span className="text-lg md:text-2xl font-medium leading-tight opacity-90">Trusted Industry Professionals.</span>
-                                        </div>
-                                    </div>
+      {/* GRID BACKGROUND */}
+      <div
+        className="
+          absolute inset-0 z-0 pointer-events-none max-w-387
+          [background-image:linear-gradient(to_right,#1e1e1e_1px,transparent_1px),linear-gradient(to_bottom,#1e1e1e_1px,transparent_1px)]
+          [background-size:32px_32px]
+          [mask-image:radial-gradient(ellipse_80%_80%_at_100%_100%,#000_50%,transparent_90%)]
+          [-webkit-mask-image:radial-gradient(ellipse_80%_80%_at_100%_100%,#000_50%,transparent_90%)]
+        "
+      />
 
-                                    {/* Right Column: Form */}
-                                    <form className="space-y-3 md:space-y-8">
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                            {/* Name Input */}
-                                            <div className="relative border-b-2 border-gray-300 pb-2">
-                                                <label className="block text-lg font-bold mb-2">Name</label>
-                                                <input
-                                                    type="text"
-                                                    placeholder="Your Name Here"
-                                                    className="w-full bg-transparent outline-none text-gray-600 placeholder-gray-400"
-                                                />
-                                            </div>
-                                            {/* Mobile Input */}
-                                            <div className="relative border-b-2 border-gray-300 pb-2">
-                                                <label className="block text-lg font-bold mb-2">Mobile</label>
-                                                <input
-                                                    type="tel"
-                                                    placeholder="+91 Your Number"
-                                                    className="w-full bg-transparent outline-none text-gray-600 placeholder-gray-400"
-                                                />
-                                            </div>
-                                        </div>
+      <div className="relative z-10 max-w-[1600px] mx-auto px-[60px] pt-[80px] pb-[40px] max-[1168px]:px-[40px] max-[1168px]:pt-[60px] max-[1168px]:pb-[32px] max-[699px]:px-6 max-[699px]:pt-12 max-[699px]:pb-7">
 
-                                        {/* Email Input */}
-                                        <div className="relative border-b-2 border-gray-300 pb-2">
-                                            <label className="block text-lg font-bold mb-2">Email</label>
-                                            <input
-                                                type="email"
-                                                placeholder="Your Mail ID Here"
-                                                className="w-full bg-transparent outline-none text-gray-600 placeholder-gray-400"
-                                            />
-                                        </div>
+        {/* TOP */}
+        <div className="flex gap-20 items-center max-[1168px]:flex-col max-[1168px]:gap-10 max-[1168px]:mb-12 max-[699px]:gap-9 max-[699px]:mb-8">
 
-                                        {/* Submit Button */}
-                                        <div className="flex justify-end pt-4">
-                                            <button
-                                                type="submit"
-                                                className="bg-[#0d68f2] text-white px-15 py-2 tracking-wider rounded-xl text-md hover:bg-blue-700 transition shadow-lg w-full md:w-auto"
-                                            >
-                                                Request for a Callback
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
+          {/* LEFT */}
+          <div
+            className="
+              w-[300px]
+              flex flex-col gap-6
+              max-[1168px]:w-full
+              max-[1168px]:flex-row
+              max-[1168px]:items-start
+              max-[1168px]:gap-8
+              max-[1168px]:flex-wrap
 
-                            {/* Floating Contact Bar (Blue Bar) */}
-                            <div className="bg-[#0d68f2] rounded-b-xl relative z-20 py-3 px-8 md:px-12 flex flex-col md:flex-row items-center justify-end space-x-7  text-white space-y-4 md:space-y-2">
-                                <p >
-                                    Give us a call on or mail us at
-                                </p>
+              max-[699px]:flex-col
+              max-[699px]:items-center
+              max-[699px]:text-center
+              max-[699px]:gap-5
+            "
+          >
 
-                                <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-2 md:space-x-10">
-                                    {/* Phone */}
-                                    <a href="tel:+919345623381" className="flex items-center space-x-2 hover:opacity-80 transition">
-                                        <PhoneCall size={20} />
-                                        <span>9345623381</span>
-                                    </a>
+            {/* LOGO */}
+            <div className="shrink-0">
+              <img
+                src="https://scriptens.com/wp-content/uploads/2026/05/khfvbsdfbsd.svg"
+                alt="Logo"
+                className="h-11 w-auto block"
+              />
+            </div>
 
-                                    {/* Email */}
-                                    <a href="mailto:hello@collegesenior.in" className="flex items-center space-x-2 hover:opacity-80 transition">
-                                        <MailMinus size={20} />
-                                        <span>hello@collegesenior.in</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            </footer>
-        </>
+            {/* DESCRIPTION */}
+            <p
+              className="
+                text-[14px]
+                text-[#777]
+                leading-[1.8]
+                m-0
 
-    );
-};
+                max-[1168px]:flex-1
+                max-[1168px]:min-w-[200px]
+              "
+            >
+              Helping students find the right college and secure admissions
+              across Tamil Nadu with expert guidance and smart tools.
+            </p>
 
-export default Footer;
+            {/* SOCIAL */}
+            <div className="flex gap-2 items-center max-[699px]:justify-center">
+
+              {/* FACEBOOK */}
+              <Link
+                href="#"
+                aria-label="Facebook"
+                className="w-[38px] h-[38px] rounded-full border border-[#2a2a2a] text-[#666] flex items-center justify-center transition-all duration-300 hover:bg-[#1e1e1e] hover:text-white hover:border-[#444]"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                </svg>
+              </Link>
+
+              {/* INSTAGRAM */}
+              <Link
+                href="#"
+                aria-label="Instagram"
+                className="w-[38px] h-[38px] rounded-full border border-[#2a2a2a] text-[#666] flex items-center justify-center transition-all duration-300 hover:bg-[#1e1e1e] hover:text-white hover:border-[#444]"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                  <circle cx="12" cy="12" r="4"/>
+                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+                </svg>
+              </Link>
+
+              {/* TWITTER */}
+              <Link
+                href="#"
+                aria-label="Twitter"
+                className="w-[38px] h-[38px] rounded-full border border-[#2a2a2a] text-[#666] flex items-center justify-center transition-all duration-300 hover:bg-[#1e1e1e] hover:text-white hover:border-[#444]"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L2.25 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+              </Link>
+
+              {/* LINKEDIN */}
+              <Link
+                href="#"
+                aria-label="LinkedIn"
+                className="w-[38px] h-[38px] rounded-full border border-[#2a2a2a] text-[#666] flex items-center justify-center transition-all duration-300 hover:bg-[#1e1e1e] hover:text-white hover:border-[#444]"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                  <rect x="2" y="9" width="4" height="12"/>
+                  <circle cx="4" cy="4" r="2"/>
+                </svg>
+              </Link>
+
+            </div>
+          </div>
+
+          {/* RIGHT */}
+          <div
+            className="
+              flex-1
+              grid
+              grid-cols-4
+              gap-10
+
+              max-[1168px]:w-full
+              max-[1168px]:gap-6
+
+              max-[699px]:grid-cols-1
+              max-[699px]:gap-0
+            "
+          >
+
+            {/* COLUMN */}
+            {[
+              {
+                title: 'Quick Links',
+                links: ['About Us', 'Explore Colleges', 'View Courses'],
+              },
+              {
+                title: 'Support',
+                links: ['Updates', 'Cutoff Calculator', 'Contact Us'],
+              },
+              {
+                title: 'Legal',
+                links: ['Terms & Conditions', 'Privacy Policy'],
+              },
+            ].map((col, i) => (
+              <div
+                key={i}
+                className="
+                  max-[699px]:
+                  grid
+                  max-[699px]:grid-cols-2
+                  justify-start
+                  py-5
+                  border-y
+                  border-[#1e1e1e]
+                  gap-4
+                "
+              >
+                <h4 className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#494949] mb-6 max-[1168px]:text-[13px] max-[1168px]:mb-0 max-[699px]:m-0">
+                  {col.title}
+                </h4>
+
+                <ul className="flex flex-col gap-[14px] max-[1168px]:gap-2.5">
+                  {col.links.map((link, idx) => (
+                    <li key={idx}>
+                      <Link
+                        href="#"
+                        className="text-[14px] max-[1168px]:text-[15px] text-[#999] hover:text-white transition-colors leading-[1.5]"
+                      >
+                        {link}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+
+            {/* CONTACT */}
+            <div
+              className="
+                max-[1548px]:
+                flex
+                max-[2590px]:flex-col
+                py-5
+                border-t
+                border-[#1e1e1e]
+              "
+            >
+              <h4 className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#494949] mb-6 max-[1168px]:text-[13px] max-[1168px]:mb-4">
+                Contact
+              </h4>
+
+              <ul className="flex flex-col gap-2.5">
+                <li>
+                  <Link
+                    href="tel:+919500000763"
+                    className="text-[14px] max-[699px]:text-[20px] text-[#999] hover:text-white transition-colors leading-[1.5]"
+                  >
+                    +91 95*****763
+                  </Link>
+                </li>
+
+                <li>
+                  <Link
+                    href="mailto:counselling@collegesenior.in"
+                    className="text-[14px] max-[699px]:text-[20px] text-[#999] hover:text-white transition-colors leading-[1.5]"
+                  >
+                    counselling@collegesenior.in
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+
+        {/* DIVIDER */}
+        <div className="h-px bg-[#1e1e1e] mb-8" />
+
+        {/* BOTTOM */}
+        <div className="flex justify-center">
+          <p className="text-[12px] max-[699px]:text-[11px] text-[#8b8b8b] text-center leading-[1.6]">
+            © 2026 SUVISOFT EDUCATION SERVICES PRIVATE LIMITED. All Rights Reserved.
+          </p>
+        </div>
+
+      </div>
+    </footer>
+  );
+}
