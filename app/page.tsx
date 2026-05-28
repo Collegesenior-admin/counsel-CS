@@ -13,6 +13,8 @@ import FAQSection from './components/FAQSection'
 import Footer from './components/Footer'
 import HomePageClient from './HomePageClient'
 import { prisma } from '@/lib/prisma'
+import TrustedUniversitiesSection from './components/TrustedUniversity'
+import MapSection from './components/Map';
 
 // Type definitions
 
@@ -111,39 +113,45 @@ export default async function HomePage() {
           </div>
         </section>
 
+        {/* Marquee infinite loop */}
+        <section className="w-full max-w-387 mx-auto overflow-hidden bg-[#001236] py-3">
+          <div className="marquee-track flex w-max items-center">
 
-        {/* CTA Section */}
-        <section className="max-w-387 mx-auto relative flex flex-col w-full lg:bg-[#ffd14b] md:bg-[#ffd14b] bg-linear-to-b from-[#ffd14b] p-4 md:py-3 md:px-6 items-center text-center ">
+            <div className="flex shrink-0 items-center whitespace-nowrap text-[13px] font-medium text-white">
+              <span className="mx-6">🔥 Admissions open for Fall intake! Book your free consultation today.</span>
+              <span>✦</span>
+              <span className="mx-6">🎓 95% Success Rate in Top 50 Universities worldwide.</span>
+              <span>✦</span>
+              <span className="mx-6">🌍 Guiding students from over 40+ countries.</span>
+              <span>✦</span>
+              <span className="mx-6">💡 Over $2M+ scholarships secured.</span>
+              <span>✦</span>
+              <span className="mx-6">⭐ Expert guidance from former Ivy League Admissions Officers. </span>
+              <span>✦</span>
+            </div>
 
-          <div className="relative z-10 max-w-4xl px-2 md:justify-end md:text-center">
-            <span className="text-stone-600 font-semibold my-2 text-xs md:text-base block tracking-wider">
-              Start your admission journey with confidence.
-            </span>
-            <h3 className="text-lg md:text-[16px] lg:text-xl font-semibold mb-3 tracking-[1.5px]">
-              Tamil Nadu&apos;s Most Trusted Unified College Application Platform
-            </h3>
+            <div aria-hidden="true" className="flex shrink-0 items-center whitespace-nowrap text-[13px] font-medium text-white">
+              <span className="mx-6">🔥 Admissions open for Fall intake! Book your free consultation today.</span>
+              <span>✦</span>
+              <span className="mx-6">🎓 95% Success Rate in Top 50 Universities worldwide.</span>
+              <span>✦</span>
+              <span className="mx-6">🌍 Guiding students from over 40+ countries.</span>
+              <span>✦</span>
+              <span className="mx-6">💡 Over $2M+ scholarships secured.</span>
+              <span>✦</span>
+              <span className="mx-6">⭐ Ivy League Admissions Officers.</span>
+              <span>✦</span>
+            </div>
+
           </div>
-
-          <div className="relative md:absolute md:-top-9 md:-left-3 flex justify-center">
-            <Image
-              src="/map.svg"
-              alt="Tamil Nadu Map"
-              width={670}
-              height={650}
-              className="w-64 h-64 sm:w-70 sm:h-70 md:w-65 md:h-65 lg:w-70 lg:h-70"
-            />
-          </div>
-
-          <div className="relative z-10">
-            <p className="text-md md:text-lg text-neutral-600 mt-2 mb-4 font-semibold">
-              Apply to multiple TN colleges with just one simple form.
-            </p>
-            <button data-application-button className="bg-[#0d68f2] text-white my-3 px-5 py-3 md:px-15 md:my-3 rounded-lg text-sm md:text-md font-medium hover:bg-blue-700 transition md:w-auto">
-              Start your Application
-            </button>
-          </div>
-
         </section>
+
+
+        <TrustedUniversitiesSection />
+
+        <MapSection />
+
+
 
         {/* Process Section */}
         <section className="max-w-387 mx-auto py-10 bg-[#f3f8ff]">
@@ -268,10 +276,10 @@ export default async function HomePage() {
 
 
         {/* Featured colleges */}
-        <FeaturesColleges />
+        {/* <FeaturesColleges /> */}
 
         {/* Top Performing Colleges */}
-        <TopPerformingColleges colleges={topColleges} />
+        <TopPerformingColleges />
 
         {/* Paper  */}
         <section className="max-w-337 mx-auto px-4 sm:px-6 lg:px-8">
