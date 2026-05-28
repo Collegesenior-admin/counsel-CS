@@ -1,374 +1,387 @@
 'use client';
 
-import React, { useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
-import { ChevronLeft, ChevronRight, MapPin, Mail, Globe } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 
-type CollegeType = {
-  id: number;
-  name: string;
-  slug: string;
-  city: string;
-  state: string;
-  ownership: string;
-  naac_grade: string | null;
-  nirf_ranking: number | null;
-  established: number;
-  website: string;
-  email: string;
-  logo_url: string;
-  image_urls: any;
-  description: string;
-};
+const colleges = [
+  {
+    image: 'https://scriptens.com/wp-content/uploads/2026/05/image-2733.png',
+    logo: 'https://scriptens.com/wp-content/uploads/2026/05/Frame-1000005712.png',
+    name: 'SIMATS Engineering',
+    location: 'Chennai- 602105, Tamilnadu',
+    badge: 'Est. 1986 • 16,000+ Students',
+    meta: ['NAAC A', '#1 NIRF 2024', 'Deemed University'],
+  },
+  {
+    image: 'https://scriptens.com/wp-content/uploads/2026/05/unnamed-1.webp',
+    logo: 'https://scriptens.com/wp-content/uploads/2026/05/Frame-10000057126565.png',
+    name: 'Prathyusha Engineering College',
+    location: 'Tiruvallur- 602001, Tamilnadu',
+    badge: 'Est. 1972 • 12,000+ Students',
+    meta: ['NAAC A+', '#3 NIRF 2024', 'Autonomous'],
+  },
+  {
+    image: 'https://scriptens.com/wp-content/uploads/2026/05/carousel-2.avif',
+    logo: 'https://scriptens.com/wp-content/uploads/2026/05/Frame-1000005712jnk.png',
+    name: 'Vel Tech University',
+    location: 'Avadi- 600062, Tamilnadu',
+    badge: 'Est. 1990 • 8,000+ Students',
+    meta: ['NAAC B+', '#7 NIRF 2024', 'Government'],
+  },
+];
 
-interface TopPerformingCollegesProps {
-  colleges: CollegeType[];
-}
+export default function FredColleges() {
+  const sectionRef = useRef<HTMLElement>(null);
 
-export default function TopPerformingColleges({ colleges }: TopPerformingCollegesProps) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0); // For mobile image carousel
+  const [revealed, setRevealed] = useState(false);
+  const [current, setCurrent] = useState(0);
 
-  // Safe image extractor
-  const extractImagesFromJsonb = (images: any): string[] => {
-    try {
-      if (!images) return [];
-
-      if (Array.isArray(images) && images.every(item => typeof item === 'string')) {
-        return images;
-      }
-
-      if (Array.isArray(images)) {
-        return images.map((item: any) => {
-          if (typeof item === 'string') return item;
-          if (typeof item === 'object' && item !== null) {
-            const key = Object.keys(item)[0];
-            return item[key];
-          }
-          return '';
-        }).filter(Boolean);
-      }
-
-      if (typeof images === 'string') {
-        const parsed = JSON.parse(images);
-        return extractImagesFromJsonb(parsed);
-      }
-
-      return [];
-    } catch (error) {
-      console.error('Error extracting images:', error);
-      return [];
-    }
-  };
-
-  const getMainImage = (images: string[]) => {
-    return images && images.length > 0 ? images[0] : "https://via.placeholder.com/400x300";
-  };
-
-  const getThumbnailImages = (images: string[], count: number) => {
-    if (!images || images.length <= 1) return [];
-    return images.slice(1, count + 1);
-  };
-
-  const nextCollege = () => {
-    setCurrentIndex((prev) => (prev + 1) % colleges.length);
-    setCurrentImageIndex(0); // Reset image carousel when changing college
-  };
-
-  const prevCollege = () => {
-    setCurrentIndex((prev) => (prev - 1 + colleges.length) % colleges.length);
-    setCurrentImageIndex(0); // Reset image carousel when changing college
-  };
-
-  // Mobile image carousel functions
-  const nextImage = () => {
-    const currentCollege = colleges[currentIndex];
-    const validImages = extractImagesFromJsonb(currentCollege.image_urls);
-    if (validImages.length > 1) {
-      setCurrentImageIndex((prev) => (prev + 1) % validImages.length);
-    }
-  };
-
-  const prevImage = () => {
-    const currentCollege = colleges[currentIndex];
-    const validImages = extractImagesFromJsonb(currentCollege.image_urls);
-    if (validImages.length > 1) {
-      setCurrentImageIndex((prev) => (prev - 1 + validImages.length) % validImages.length);
-    }
-  };
-
-  if (!colleges || colleges.length === 0) {
-    return (
-      <section className="bg-gray-100 md:p-4">
-        <div className="max-w-7xl mx-auto text-center py-20">
-          <p className="text-gray-500">No top performing colleges available at the moment.</p>
-        </div>
-      </section>
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          setRevealed(true);
+          observer.disconnect();
+        });
+      },
+      { threshold: 0.1 }
     );
-  }
 
-  const currentCollege = colleges[currentIndex];
-  const validImages = extractImagesFromJsonb(currentCollege.image_urls);
+    if (sectionRef.current) observer.observe(sectionRef.current);
+
+    return () => observer.disconnect();
+  }, []);
+
+  const perView =
+    typeof window !== 'undefined' && window.innerWidth <= 700 ? 1 : 2;
+
+  const next = () => {
+    if (current < colleges.length - perView) {
+      setCurrent((prev) => prev + 1);
+    }
+  };
+
+  const prev = () => {
+    if (current > 0) {
+      setCurrent((prev) => prev - 1);
+    }
+  };
 
   return (
-    <section className="bg-white my-6 p-3 md:p-4">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between mb-4 gap-2">
-          <div className='md:w-2/4 text-center'>
-            <p className="text-gray-400 font-semibold text-sm md:text-lg text-center sm:text-center md:text-left lg:text-left tracking-widest">
-              Best Colleges in town
-            </p>
-            <h2 className="text-center sm:text-center md:text-left lg:text-left sm:text-3xl md:text-[32px] lg:text-[40px] font-medium tracking-wide text-[#2D5BFF]">
-              Top Performing Colleges
-            </h2>
-          </div>
+    <section
+      ref={sectionRef}
+      className="max-w-387 mx-auto px-10 py-15 max-[991px]:px-6 max-[700px]:px-4 max-[700px]:py-12 font-[Poppins]"
+    >
+      {/* TITLE */}
+      <div
+        className={`flex gap-12 items-start mb-12 transition-all duration-700 ${
+          revealed
+            ? 'opacity-100 translate-y-0'
+            : 'opacity-0 translate-y-6'
+        } max-[991px]:flex-col max-[991px]:items-center max-[991px]:text-center max-[991px]:gap-4 max-[700px]:mb-6`}
+      >
+        {/* LEFT */}
+        <div className="basis-1/2 w-full">
+          <h2 className="text-[48px] leading-[1.2] font-extrabold text-[#111] mb-4 max-[991px]:text-[32px] max-[700px]:text-[28px]">
+            Top-Ranked Performing{' '}
+            <span className="text-[#0D68F1]">Colleges</span>
+          </h2>
 
-          <div className="md:w-2/4 mx-4 md:ml-4">
-            <p className="text-gray-500 text-center sm:text-center md:text-left lg:text-left text-sm leading-relaxed">
-              Discover the highest-ranked colleges in Tamil Nadu based on NIRF rankings.
-              These institutions offer excellent academic programs and outstanding placement records.
-            </p>
+          <div className="w-15 h-0.75 bg-[#0D68F1] rounded-xs max-[991px]:mx-auto" />
+        </div>
+
+        {/* RIGHT */}
+        <div className="flex-1 flex flex-col gap-2.5 pt-2 items-end max-[991px]:items-center max-[991px]:pt-0">
+          <p className="text-[15px] italic font-medium text-[#666] leading-[1.8] max-[991px]:text-[14px] max-[700px]:text-[13px]">
+            Discover the highest-ranked colleges in Tamil Nadu based on NIRF
+            rankings. These institutions offer excellent academic programs and
+            outstanding placement records.
+          </p>
+
+          <a
+            href="#"
+            className="inline-flex items-center gap-1.5 hover:gap-2.5 transition-all duration-300 text-[15px] font-semibold text-[#0D68F1]"
+          >
+            Start Exploring All Colleges
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      {/* DESKTOP GRID */}
+      <div className="grid grid-cols-3 gap-6 max-[1200px]:grid-cols-2 max-[991px]:hidden">
+        {colleges.map((college, i) => (
+          <CollegeCard
+            key={i}
+            college={college}
+            revealed={revealed}
+            delay={i}
+          />
+        ))}
+      </div>
+
+      {/* SLIDER */}
+      <div className="hidden max-[991px]:block">
+        <div className="overflow-hidden w-full">
+          <div
+            className="flex transition-transform duration-500 ease-[cubic-bezier(.77,0,.18,1)] gap-5 max-[700px]:gap-4"
+            style={{
+              transform: `translateX(-${
+                current *
+                (typeof window !== 'undefined' && window.innerWidth <= 700
+                  ? 100
+                  : 51)
+              }%)`,
+            }}
+          >
+            {colleges.map((college, i) => (
+              <div
+                key={i}
+                className="shrink-0 w-[calc(50%-10px)] max-[700px]:w-full"
+                style={{
+                  width:
+                    typeof window !== 'undefined' &&
+                    window.innerWidth <= 700
+                      ? '100%'
+                      : 'calc(50% - 10px)',
+                }}
+              >
+                <CollegeCard college={college} slider />
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Main Content - Using College Listing Card Structure */}
-        {/* <div className='h-180 md:h-133 lg:h-115 my-auto'> */}
-          <div className="sm:w-[80%] sm:mx-auto sm:my-auto md:w-full lg:w-full bg-white rounded-2xl shadow-md border border-gray-100 p-5 md:p-4 mb-3 flex flex-col md:flex-row lg:flex-row gap-2 md:gap-6">
-            {/* Left Side: Image Gallery Section */}
-            <div className="relative mx-auto w-full md:w-75 lg:w-75 shrink-0">
-              {/* Main Image Container */}
-              <div className="relative h-64 min-h-[80%] flex items-center rounded-xl overflow-hidden mb-3 bg-gray-200 shadow-lg">
-                {/* Desktop: Single main image */}
-                <div className="hidden md:block w-full h-full">
-                  <img
-                    src={getMainImage(validImages)}
-                    className="w-full h-full object-cover"
-                    alt={currentCollege.name}
-                  />
-                </div>
-
-                {/* Mobile: Image carousel */}
-                <div className="md:hidden w-full h-full relative">
-                  <img
-                    src={validImages[currentImageIndex] || getMainImage(validImages)}
-                    className="w-full h-full object-cover"
-                    alt={`${currentCollege.name} - Image ${currentImageIndex + 1}`}
-                  />
-                  
-                  {/* Mobile Image Navigation - Only show if more than 1 image */}
-                  {validImages.length > 1 && (
-                    <>
-                      {/* Previous Image Button */}
-                      <button
-                        onClick={prevImage}
-                        className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors z-10"
-                      >
-                        <ChevronLeft size={16} />
-                      </button>
-                      
-                      {/* Next Image Button */}
-                      <button
-                        onClick={nextImage}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors z-10"
-                      >
-                        <ChevronRight size={16} />
-                      </button>
-                      
-                      {/* Image Dots Indicator */}
-                      <div className="absolute bottom-1 left-1/2 -translate-x-1/2 flex gap-1 z-10">
-                        {validImages.map((_, index) => (
-                          <button
-                            key={index}
-                            onClick={() => setCurrentImageIndex(index)}
-                            className={`w-2 h-2 rounded-full transition-all ${
-                              index === currentImageIndex 
-                                ? 'bg-white' 
-                                : 'bg-white/50 hover:bg-white/75'
-                            }`}
-                          />
-                        ))}
-                      </div>
-                      
-                      {/* Image Counter */}
-                      <div className="absolute top-2 right-2 bg-black/50 text-white px-2 py-1 rounded text-xs z-10">
-                        {currentImageIndex + 1} / {validImages.length}
-                      </div>
-                    </>
-                  )}
-                </div>
-
-                {/* College Name Overlay */}
-                {/* <div className="absolute bottom-0 left-0 right-0 p-4 bg-linear-to-t from-black/60 to-transparent">
-                  <h4 className="text-white font-bold text-sm leading-tight">
-                    {currentCollege.name}
-                  </h4>
-                </div> */}
-              </div>
-
-              {/* Thumbnails - Hidden on mobile, shown on desktop */}
-              <div className="hidden md:grid md:grid-cols-4 gap-2 min-h-[20%]">
-                {getThumbnailImages(validImages, 3).map((imageUrl: string, i: number) => (
-                  <div key={i} className="h-15 rounded-lg overflow-hidden">
-                    <img src={imageUrl} className="w-full h-full object-cover opacity-80" alt={`thumb-${i}`} />
-                  </div>
-                ))}
-                {/* Fill remaining slots with placeholder if needed */}
-                {Array.from({ length: Math.max(0, 2 - getThumbnailImages(validImages, 3).length) }).map((_, i) => (
-                  <div key={`placeholder-${i}`} className="h-15 rounded-lg overflow-hidden bg-gray-200">
-                    <img src="https://via.placeholder.com/400x300" className="w-full h-full object-cover opacity-80" alt="placeholder" />
-                  </div>
-                ))}
-                <div className="h-15 rounded-lg bg-gray-200 flex items-center justify-center text-gray-600 text-xs font-bold">
-                  +more
-                </div>
-              </div>
-            </div>
-
-            {/* Right Side: Content Section */}
-            <div className="relative flex-1 bg-white rounded-2xl p-0 md:p-0">
-              {/* Logo and Tags */}
-              <div className="flex justify-between items-center gap-3 mb-2">
-                <div className="relative w-10 h-10 md:w-15 md:h-15 rounded-full shadow-sm bg-gray-200 flex items-center justify-center text-[10px] md:text-xs">
-                  <Image
-                    src={currentCollege.logo_url || "/placeholder-logo.svg"}
-                    width={60}
-                    height={60}
-                    alt="Logo"
-                    className='rounded-full'
-                  />
-                </div>
-
-                <div className="hidden sm:flex gap-2">
-                  <span className="bg-[#FFF3EC] text-[#D97706] px-2 md:px-3 py-1 rounded-md text-[10px] md:text-xs font-bold uppercase">
-                    {currentCollege.ownership || 'Private'}
-                  </span>
-                  <span className="bg-[#E8F5E9] text-[#2E7D32] px-2 md:px-3 py-1 rounded-md text-[10px] md:text-xs font-bold uppercase">
-                    Multiple Programs Offered
-                  </span>
-                </div>
-              </div>
-
-              {/* Title */}
-              <h3 className="flex-1 text-lg md:text-2xl font-medium text-[#0F172A] mb-1">
-                {currentCollege.name}
-              </h3>
-
-              <div className="flex flex-row md:flex-row md:items-center justify-between mb-1 md:mb-3 gap-2">
-                <p className="text-gray-500 font-medium text-sm md:text-base">
-                  {currentCollege.city}
-                </p>
-
-                <div className="flex items-center gap-1">
-                  <span className="text-yellow-400">★</span>
-                  <span className="font-bold text-sm md:text-base">4.9</span>
-                  <span className="text-gray-400 text-xs md:text-sm">(1k reviews)</span>
-                </div>
-              </div>
-
-              {/* Badges */}
-              <div className="flex gap-2 md:gap-3 mb-2 md:mb-2">
-                <span className="bg-[#E8EFFF] text-[#2D5BFF] px-3 md:px-3 py-1 md:py-1.5 rounded-full text-xs md:text-xs font-medium border border-[#2D5BFF]/10">
-                  NAAC {currentCollege.naac_grade || 'A++'}
-                </span>
-                {currentCollege.nirf_ranking && (
-                  <span className="bg-[#E7F9EE] text-[#059669] px-3 md:px-4 py-1 md:py-1.5 rounded-full text-xs md:text-xs font-medium border border-[#059669]/10">
-                    #{currentCollege.nirf_ranking} NIRF 2024
-                  </span>
-                )}
-              </div>
-
-              {/* Info Grid */}
-              <div className="flex flex-wrap gap-1 md:gap-3 mb-4 md:mb-3">
-                <div className="flex items-center gap-2 text-gray-500">
-                  <MapPin className='w-4 h-4 text-blue-300' />
-                  <span className="text-xs md:text-sm md:font-medium">{currentCollege.city || 'Tamil Nadu'}</span>
-                </div>
-                <div className="flex items-center gap-2 text-gray-500">
-                  <Globe className='w-4 h-4 text-blue-300' />
-                  <span className="text-xs md:text-sm md:font-medium">{currentCollege.website}</span>
-                </div>
-                <div className="flex items-center gap-2 text-gray-500">
-                  <Mail className='w-4 h-4 text-blue-300' />
-                  <span className="text-xs md:text-sm md:font-medium">{currentCollege.email || currentCollege.slug}</span>
-                </div>
-              </div>
-
-              {/* Description */}
-              <p className="max-h-15 text-gray-600 text-xs md:text-sm mb-4 md:mb-3 overflow-y-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                {currentCollege.description || "This top-performing college offers excellent academic programs with outstanding faculty and modern infrastructure, providing students with comprehensive education and excellent placement opportunities."}
-              </p>
-              <hr className="mb-4 md:mb-6 opacity-50" />
-              <p className="text-[11px] md:text-xs text-gray-400 mb-4 font-medium">
-                Know more about{' '}
-                <span className="text-[#2D5BFF] cursor-pointer">
-                  Courses & Fees, Admissions, Placements, Facilities, Reviews
-                </span>
-              </p>
-
-              {/* Footer Buttons */}
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                <div className='hidden md:block'>
-                  <p className="text-xs font-bold text-[#2D5BFF] mb-2 uppercase">Top Courses</p>
-                  <div className="flex -space-x-2">
-                    <div className="w-8 h-8 rounded-full border-2 border-white bg-red-400"></div>
-                    <div className="w-8 h-8 rounded-full border-2 border-white bg-blue-400"></div>
-                    <div className="w-8 h-8 rounded-full border-2 border-white bg-purple-400"></div>
-                    <div className="w-8 h-8 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-[10px] font-bold">+2</div>
-                  </div>
-                </div>
-
-                <div className="flex gap-2 w-full sm:w-auto">
-                  <button className="flex-1 sm:flex-none border-2 border-[#2D5BFF] text-[#2D5BFF] font-bold px-4 md:px-6 py-2 rounded-lg hover:bg-blue-50 transition-colors text-sm h-10 md:text-sm">
-                    Apply now
-                  </button>
-                  <Link href={`/colleges/${currentCollege.slug}`} className="flex-1 sm:flex-none">
-                    <button className="w-full bg-[#4F46E5] text-white font-semibold px-4 md:px-6 py-2 rounded-lg shadow-md hover:bg-[#4338CA] transition-colors text-sm h-10 md:text-sm">
-                      View More
-                    </button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        {/* </div> */}
-
-        {/* Carousel Navigation */}
-        <div className="flex justify-between items-center my-4 mx-3">
-          <div className="text-sm text-gray-500">
-            Showing {currentIndex + 1} of {colleges.length} top colleges
-          </div>
-          <div className="flex gap-3">
-            <button
-              onClick={prevCollege}
-              className="w-16 h-10 flex items-center justify-center border-2 border-blue-500 rounded text-blue-500 hover:bg-blue-500 hover:text-white transition-all disabled:opacity-50"
-              disabled={colleges.length <= 1}
+        {/* NAV */}
+        <div className="flex justify-end gap-2.5 mt-5">
+          <button
+            onClick={prev}
+            className={`w-11 h-11 rounded-full border-[1.5px] border-[#ddd] bg-white flex items-center justify-center transition-all ${
+              current === 0
+                ? 'opacity-30 pointer-events-none'
+                : 'hover:bg-[#f0f0f0] hover:border-[#bbb]'
+            }`}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
             >
-              <ChevronLeft size={20} />
-            </button>
-            <button
-              onClick={nextCollege}
-              className="w-16 h-10 flex items-center justify-center border-2 border-blue-500 rounded text-blue-500 hover:bg-blue-500 hover:text-white transition-all disabled:opacity-50"
-              disabled={colleges.length <= 1}
-            >
-              <ChevronRight size={20} />
-            </button>
-          </div>
-        </div>
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+          </button>
 
-        {/* Dots Indicator */}
-        <div className="flex justify-center gap-2 my-4">
-          {colleges.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`w-3 h-3 rounded-full transition-all ${index === currentIndex ? 'bg-blue-500' : 'bg-gray-300 hover:bg-gray-400'
-                }`}
-            />
-          ))}
+          <button
+            onClick={next}
+            className={`w-11 h-11 rounded-full border-[1.5px] border-[#ddd] bg-white flex items-center justify-center transition-all ${
+              current >= colleges.length - perView
+                ? 'opacity-30 pointer-events-none'
+                : 'hover:bg-[#f0f0f0] hover:border-[#bbb]'
+            }`}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </button>
         </div>
       </div>
     </section>
+  );
+}
+
+function CollegeCard({
+  college,
+  revealed,
+  delay = 0,
+  slider = false,
+}: {
+  college: {
+    image: string;
+    logo: string;
+    name: string;
+    location: string;
+    badge: string;
+    meta: string[];
+  };
+  revealed?: boolean;
+  delay?: number;
+  slider?: boolean;
+}) {
+  return (
+    <a
+      href="#"
+      className={`group block text-inherit no-underline transition-all duration-700 ${
+        revealed || slider
+          ? 'opacity-100 translate-y-0'
+          : 'opacity-0 translate-y-6'
+      }`}
+      style={{
+        transitionDelay: `${delay * 120}ms`,
+      }}
+    >
+      {/* IMAGE */}
+      <div className="relative overflow-hidden rounded-lg bg-[#e8e8e8] aspect-4/3 max-[576px]:aspect-square">
+        <Image
+          src={college.image}
+          alt={college.name}
+          fill
+          className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+        />
+
+        {/* OVERLAY */}
+        <div
+          className={`absolute inset-0 bg-linear-to-t from-[rgba(10,20,40,0.88)] via-[rgba(10,20,40,0.45)] to-transparent p-4 flex flex-col justify-between transition-opacity duration-300 ${
+            slider ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+          }`}
+        >
+          {/* TOP */}
+          <div
+            className={`transition-all duration-300 ${
+              slider
+                ? 'opacity-100 translate-y-0'
+                : 'opacity-0 -translate-y-1.5 group-hover:opacity-100 group-hover:translate-y-0'
+            }`}
+          >
+            <button className="inline-flex items-center gap-2 px-5 py-2 text-[13px] text-white rounded-[80px] border border-[rgba(255,255,255,0.3)] bg-[rgba(255,255,255,0.1)] backdrop-blur-[10px]">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#FFC720"
+                strokeWidth="2"
+              >
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+              </svg>
+
+              {college.badge}
+            </button>
+          </div>
+
+          {/* BOTTOM */}
+          <div
+            className={`flex items-end justify-between gap-3 transition-all duration-300 delay-100 ${
+              slider
+                ? 'opacity-100 translate-y-0'
+                : 'opacity-0 translate-y-1.5 group-hover:opacity-100 group-hover:translate-y-0'
+            }`}
+          >
+            <div className="flex-1 flex flex-col gap-0.75">
+              <div className="flex flex-wrap items-center gap-2 text-white text-[13px] font-medium max-[991px]:text-[14px] max-[700px]:text-[15px]">
+                {college.meta.map((item, i) => (
+                  <div key={i} className="flex items-center gap-2">
+                    <span>{item}</span>
+
+                    {i !== college.meta.length - 1 && (
+                      <span className="text-[rgba(255,255,255,0.4)]">|</span>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex flex-col gap-0.75 mt-1.5">
+                <span className="text-[11px] uppercase tracking-[0.06em] text-[rgba(255,255,255,0.7)] font-medium">
+                  Know more about
+                </span>
+
+                <span className="text-[13px] text-[#5ba3ff] leading-[1.4] font-medium">
+                  Courses & Fees, Admissions, Placements, Facilities, Reviews
+                </span>
+              </div>
+            </div>
+
+            {/* ARROWS */}
+            <div className="flex items-center shrink-0">
+              <span className="fc-chevron">›</span>
+              <span className="fc-chevron">›</span>
+              <span className="fc-chevron">›</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* BOTTOM */}
+      <div className="flex items-start gap-3 pt-3.5">
+        <div className="w-10 h-10 rounded-full bg-white overflow-hidden shrink-0 flex items-center justify-center">
+          <Image
+            src={college.logo}
+            alt={college.name}
+            width={40}
+            height={40}
+            className="object-contain w-full h-full"
+          />
+        </div>
+
+        <div className="flex flex-col gap-0.5">
+          <span className="text-[17px] font-semibold text-[#111] leading-[1.3]">
+            {college.name}
+          </span>
+
+          <span className="text-[13px] italic font-medium text-[#2F80ED] leading-[1.3]">
+            {college.location}
+          </span>
+        </div>
+      </div>
+
+      <style jsx>{`
+        .fc-chevron {
+          font-size: 28px;
+          font-weight: 300;
+          color: #fff;
+          opacity: 0;
+          animation: fcChevronChase 1.2s infinite;
+          line-height: 1;
+        }
+
+        .fc-chevron:nth-child(1) {
+          animation-delay: 0s;
+        }
+
+        .fc-chevron:nth-child(2) {
+          animation-delay: 0.2s;
+        }
+
+        .fc-chevron:nth-child(3) {
+          animation-delay: 0.4s;
+        }
+
+        @keyframes fcChevronChase {
+          0% {
+            opacity: 0.15;
+          }
+          50% {
+            opacity: 1;
+          }
+          100% {
+            opacity: 0.15;
+          }
+        }
+      `}</style>
+    </a>
   );
 }
