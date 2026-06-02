@@ -93,7 +93,7 @@ const WhyChooseUs = () => {
     <section id="why-choose-us" className="max-w-387 mx-auto p-4 md:p-6 font-sans overflow-hidden">
       {/* Header */}
       <div className="mb-10 text-left">
-        <h2 className="text-3xl md:text-5xl font-semibold md:font-bold text-gray-900 leading-tight">
+        <h2 className="text-3xl md:text-[40px] font-semibold md:font-semibold text-gray-900 leading-tight">
           Why Choose <span className="text-blue-600">CollegeSenior?</span>
         </h2>
         <p className="text-gray-600 mt-4 lg:max-w-3xl lg:mx-0 text-[15px] leading-relaxed">
