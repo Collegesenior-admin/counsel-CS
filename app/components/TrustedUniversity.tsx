@@ -48,7 +48,7 @@ export default function TrustedUniversitiesSection() {
             revealed ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
           }`}
         >
-          <h2 className="text-[28px] md:text-[22px] lg:text-[32px] text-center md:text-left font-bold text-black leading-tight tracking-wider whitespace-nowrap">
+          <h2 className="text-[28px] md:text-[22px] lg:text-[32px] text-center md:text-left font-semibold text-black leading-tight tracking-wider whitespace-nowrap">
             Trusted by <br />
             Reputable Universities
           </h2>
