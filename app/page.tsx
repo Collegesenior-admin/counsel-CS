@@ -154,9 +154,9 @@ export default async function HomePage() {
 
 
         {/* Process Section */}
-        <section className="max-w-387 mx-auto py-10 bg-[#f3f8ff]">
+       
           <Steps />
-        </section>
+    
 
         {/* TNEA Calculator */}
         <section className="max-w-387 mx-auto bg-white">
