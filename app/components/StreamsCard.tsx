@@ -163,7 +163,7 @@ export default function StreamSection() {
     return (
         <section className="relative overflow-hidden bg-linear-to-tr from-[#0B6AF3] to-[#1C4FD9] max-w-387 mx-auto px-6 py-10 md:px-12 mb-8">
             <img
-                src="streams.svg"
+                src="/streams.svg"
                 alt=""
                 className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
             />
