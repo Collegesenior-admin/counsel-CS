@@ -96,16 +96,31 @@ export default function StreamSection() {
             try {
                 const response = await fetch('/api/streams');
                 const data = await response.json();
-                setStreams(data.streams || []);
-                if (data.streams && data.streams.length > 0) {
-                    setSelectedStream(data.streams[0]);
+                const allowedStreams = [
+                    'Commerce',
+                    'Arts',
+                    'Science',
+                    'Engineering',
+                    'Pharmacy',
+                    'Management',
+                    'Research'
+                ];
+
+                const filteredStreams = (data.streams || []).filter(
+                    (stream: string) => allowedStreams.includes(stream)
+                );
+
+                setStreams(filteredStreams);
+               
+                    if (filteredStreams.length > 0) {
+                        setSelectedStream(filteredStreams[0]);
+                    }}
+            catch (error) {
+                    console.error('Error fetching streams:', error);
                 }
-            } catch (error) {
-                console.error('Error fetching streams:', error);
-            }
         };
-        fetchStreams();
-    }, []);
+            fetchStreams();
+        }, []);
 
     // Fetch courses for selected stream
     useEffect(() => {
@@ -183,7 +198,7 @@ export default function StreamSection() {
                 </div>
 
                 {/* Stream Tabs */}
-                <div className="my-6 relative flex items-center h-13">
+                <div className="my-6 relative flex justify-center items-center h-13">
                     {/* Left Arrow */}
                     <button
                         onClick={scrollLeft}
@@ -195,7 +210,7 @@ export default function StreamSection() {
                     {/* Scrollable Tabs */}
                     <div
                         ref={scrollRef}
-                        className="flex w-[75%] md:w-[85%] lg:w-[90%] mx-auto items-center gap-6 overflow-x-auto whitespace-nowrap scroll-smooth scrollbar-hide h-30"
+                        className="flex w-[75%] md:w-[85%] lg:w-[90%] mx-auto text-center justify-center items-center gap-6 overflow-x-auto whitespace-nowrap scroll-smooth scrollbar-hide h-10"
                     >
                         {streams.map((stream, index) => {
                             const isActive = stream === selectedStream;
@@ -212,7 +227,7 @@ export default function StreamSection() {
                                             <div className="absolute bottom-0 left-0 h-0.5 w-full rounded-full bg-white"></div>
                                         )}
                                     </button>
-                                    {index < streams.length - 1 && (
+                                    {index < streams.length - 0 && (
                                         <div className="h-6 w-0.5 shrink-0 bg-white/40 -ml-3 -mt-7 " />
                                     )}
                                 </div>
@@ -223,7 +238,7 @@ export default function StreamSection() {
                     {/* Right Arrow */}
                     <button
                         onClick={scrollRight}
-                        className="absolute right-0 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#0057ff] shadow-lg transition hover:scale-105"
+                        className="absolute right-0 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-md transition hover:bg-white hover:text-[#0057ff]"
                     >
                         <ChevronRight size={18} />
                     </button>
