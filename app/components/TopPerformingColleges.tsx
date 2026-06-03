@@ -234,7 +234,7 @@ function CollegeCard({
       }}
     >
       {/* IMAGE */}
-      <div className="relative overflow-hidden rounded-lg bg-[#e8e8e8] aspect-4/4 max-[576px]:aspect-square">
+      <div className="relative overflow-hidden rounded-lg bg-[#e8e8e8] aspect-4/3 max-[376px]:aspect-square">
         <Image
           src={college.image}
           alt={college.name}
