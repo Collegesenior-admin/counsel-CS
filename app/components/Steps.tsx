@@ -237,7 +237,7 @@ export default function CollegeJourney() {
                   key={i}
                   className={`w-3.5 h-3.5 rounded-full border-2 bg-white transition-all duration-300 ease-in-out self-start ${activeDesktopSteps[i] ? 'border-[#2F80ED] bg-[#2F80ED]!' : 'border-[#ddd]'
                     }`}
-                  Dino-index={i} />
+                  dino-index={i} /> 
               ))}
             </div>
           </div>
