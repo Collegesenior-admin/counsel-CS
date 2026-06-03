@@ -330,7 +330,7 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <CityGrid />
+      
 
 
         {/* Frequently Asked Questions */}
