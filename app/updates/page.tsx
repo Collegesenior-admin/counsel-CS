@@ -1,89 +1,150 @@
-import { prisma } from '@/lib/prisma'
-type UpdateType = {
-  id: number;
-  title: string;
-  slug: string;
-  content: string;
-  category: string;
-  published_date?: Date;
-  meta_title: string | null;
-  meta_description: string | null;
-  created_at: Date;
-  updated_at: Date;
-};
+
+import { prisma } from '@/lib/prisma';
 import React from 'react';
 import Header from "../components/Header";
 import Footer from '../components/Footer';
-import Link from 'next/link'
+import Link from 'next/link';
+import { Prisma } from '@prisma/client';
 
-const FeaturedInsights = async ({
-  searchParams
-}: {
-  searchParams: Promise<{ category?: string }>
-}) => {
-  const params = await searchParams;
-  const selectedCategory = params.category;
+/* ---------------- TYPES & INTERFACES ---------------- */
 
-  const categories = ["All Posts", "Admissions", "Exams", "Careers", "Placements", "College Life", "Results"];
+interface JSONContentBlock {
+  type?: string;
+  text?: string;
+  [key: string]: any;
+}
 
-  let updates: UpdateType[] = [];
+type BlogItem = {
+  id: number;
+  title: string;
+  slug: string;
+  content: Prisma.JsonValue;
+  excerpt: string | null;
+  imageUrl: string | null;
+  createdAt: Date;
+};
+
+type NewsItem = {
+  id: number;
+  title: string;
+  slug: string;
+  content: Prisma.JsonValue;
+  excerpt: string | null;
+  imageUrl: string | null;
+  category: string | null;
+  createdAt: Date;
+};
+
+/* ---------------- HELPER FUNCTIONS ---------------- */
+
+const getContentPreview = (content: Prisma.JsonValue, excerpt: string | null): string => {
+  if (excerpt) return excerpt;
 
   try {
-    updates = await prisma.updates.findMany({
-      where: {
-        // If a category is selected and it's not "All Posts", filter by it
-        category: selectedCategory && selectedCategory !== "All Posts"
-          ? selectedCategory
-          : undefined
-      },
-      orderBy: { created_at: 'desc' },
-      take: 10
+    if (Array.isArray(content)) {
+      const firstParagraph = content.find((block) => {
+        const item = block as JSONContentBlock;
+        return item?.type === 'paragraph';
+      }) as JSONContentBlock | undefined;
+
+      if (firstParagraph && firstParagraph.text) {
+        return firstParagraph.text;
+      }
+    }
+  } catch (e) {
+    console.error("Failed to parse content json", e);
+  }
+  return "Read full post for details.";
+};
+
+/* ---------------- MAIN SERVER COMPONENT ---------------- */
+
+const FeaturedInsights = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ category?: string }>;
+}) => {
+  const resolvedParams = await searchParams;
+  const selectedCategory = resolvedParams.category;
+
+  const categories = ["All Posts", "Admissions", "Exams", "Careers"];
+
+  let featuredBlogs: BlogItem[] = [];
+  let articlesNews: NewsItem[] = [];
+
+  try {
+    // 1. Fetch Blogs for the top Featured Horizontal Slider (Always fetches latest blogs, ignores category filter)
+    featuredBlogs = await prisma.blogUpdate.findMany({
+      where: { isPublished: true },
+      orderBy: { createdAt: "desc" },
+      take: 6, // Limit to top 6 featured blogs
     });
+
+    // 2. Fetch News Articles for the bottom list view based on category selection
+    const newsWhereClause =
+      selectedCategory && selectedCategory !== "All Posts"
+        ? { category: selectedCategory, isPublished: true }
+        : { isPublished: true };
+
+    articlesNews = await prisma.newsUpdate.findMany({
+      where: newsWhereClause,
+      orderBy: { createdAt: "desc" },
+      take: 10,
+    });
+
   } catch (error) {
-    console.error('Database error:', error);
+    console.error("Database query initialization error:", error);
   }
 
   return (
     <>
       <Header />
-      <section className="bg-gray-100 py-12 px-6 md:px-20 font-sans">
-        <div className="max-w-7xl mx-auto">
+
+      <section className="bg-gray-100 py-12 px-6 md:px-20 ">
+        <div className="max-w-387 mx-auto">
+
           {/* Breadcrumb & Header */}
           <nav className="text-sm text-blue-600 mb-2">Home / Updates</nav>
-          <h2 className="text-2xl font-bold text-gray-800 mb-8">Featured Insights</h2>
+          <h2 className="text-2xl font-bold text-gray-800 mb-8">
+            Featured Insights
+          </h2>
 
-          {/* Top Featured Cards */}
-          <div className="flex gap-5 md:gap-6 p-3 mb-12 overflow-x-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-            <FeaturedCard
-              title="Your College Journey Starts Here"
-              desc="Expert tips to make your application stand out"
-              img="/building.jpg"
-            />
-            <FeaturedCard
-              title="How to Write a Winning College Essay"
-              desc="A comprehensive guide to prepare and give your absolute best to it"
-              img="/writing.jpg"
-            />
-            <FeaturedCard
-              title="Navigation to Financial Aid: A complete Guide"
-              desc="Expert tips to make your application stand out"
-              img="/student.jpg"
-            />
-          </div>
+          {/* TOP SECTION: Blogs showing in Horizontal Featured Cards */}
+          {featuredBlogs.length > 0 ? (
+            <div
+              className="flex gap-5 md:gap-6 p-3 mb-12 overflow-x-scroll"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              {featuredBlogs.map((blog) => (
+                <Link key={`blog-${blog.id}`} href={`/updates/${blog.slug}`}>
+                  <FeaturedCard
+                    title={blog.title}
+                    desc={getContentPreview(blog.content, blog.excerpt)}
+                    img={blog.imageUrl || "/building.jpg"}
+                  />
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="bg-white p-6 rounded-lg text-center text-gray-400 mb-12">
+              No featured blogs available.
+            </div>
+          )}
 
-          {/* Category Filter Bar */}
+          {/* MIDDLE SECTION: Category Filter Pills */}
           <div className="flex flex-wrap gap-3 mb-10">
             {categories.map((cat) => {
-              // Check if this specific category is the one currently active
-              const isActive = selectedCategory === cat || (!selectedCategory && cat === "All Posts");
+              const isActive =
+                selectedCategory === cat ||
+                (!selectedCategory && cat === "All Posts");
 
               return (
                 <Link
                   key={cat}
                   href={cat === "All Posts" ? "/updates" : `/updates?category=${cat}`}
                   className={`px-6 py-2 rounded-lg font-medium transition ${isActive
-                      ? "bg-blue-600 text-white shadow-md" // Highlight active button
-                      : "bg-gray-200 text-gray-600 hover:bg-gray-300"
+                    ? "bg-blue-600 text-white shadow-md"
+                    : "bg-gray-200 text-gray-600 hover:bg-gray-300"
                     }`}
                 >
                   {cat}
@@ -92,95 +153,140 @@ const FeaturedInsights = async ({
             })}
           </div>
 
-          {/* Main Content Area */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* BOTTOM SECTION: Main Layout for News Articles & Sidebar */}
+          <div className=" gap-8 flex">
 
-            {/* Article List (Left side) - Now using database data */}
-            <div className="lg:col-span-2 space-y-6">
-              {updates && updates.length > 0 ? (
-                updates.map((items: UpdateType) => (
+            {/* LEFT SIDE: News Articles List */}
+            <div className="space-y-6 w-[85%]">
+              {articlesNews.length > 0 ? (
+                articlesNews.map((article: NewsItem) => (
                   <ArticleListItem
-                    key={items.id}
-                    title={items.title}
-                    category={items.category}
-                    date={new Date(items.created_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
-                    content={items.content}
-                    slug={items.slug}
+                    key={`news-${article.id}`}
+                    title={article.title}
+                    category={article.category || "General"}
+                    date={new Date(article.createdAt).toLocaleDateString(
+                      'en-US',
+                      { month: 'short', year: 'numeric' }
+                    )}
+                    previewText={getContentPreview(article.content, article.excerpt)}
+                    slug={article.slug}
                   />
                 ))
               ) : (
-                <div className="bg-white p-6 rounded-lg">
-                  <p>No updates available at the moment.</p>
+                <div className="bg-white p-6 rounded-lg shadow-sm text-center text-gray-500">
+                  <p>No news articles available under this category at the moment.</p>
                 </div>
               )}
             </div>
 
-            {/* Sidebar Form (Right side) */}
-            <aside className="bg-blue-600 max-h-150 rounded-2xl overflow-hidden shadow-xl text-white">
-              <div className="p-8">
-                <h3 className="text-2xl font-bold mb-2">Have a Quick Question?</h3>
-                <p className="text-blue-100 text-sm mb-8">
-                  Feeling overwhelmed? Get personalized guidance from one of our expert counsellors.
-                </p>
+            {/* RIGHT SIDE: Sidebar Form */}
+            <aside className="space-y-8">
+              <div className="bg-blue-600 rounded-2xl overflow-hidden shadow-xl text-white">
+                <div className="p-8">
+                  <h3 className="text-2xl font-bold mb-2">Have a Quick Question?</h3>
+                  <p className="text-blue-100 text-sm mb-8">
+                    Get personalized guidance from one of our expert counsellors.
+                  </p>
 
-                <form className="space-y-6">
-                  <SidebarInput label="Name" placeholder="Your Name Here" />
-                  <SidebarInput label="Phone Number" placeholder="+91 Your Number Here" />
-                  <SidebarInput label="Email" placeholder="Your Mail ID Here" />
+                  {/* NO onSubmit here! */}
+                  <form className="space-y-6">
+                    <SidebarInput label="Name" placeholder="Your Name Here" />
+                    <SidebarInput label="Phone Number" placeholder="+91 Your Number Here" />
+                    <SidebarInput label="Email" placeholder="Your Mail ID Here" />
 
-                  <button className="w-full bg-white text-blue-600 font-bold py-4 rounded-xl mt-4 hover:bg-blue-50 transition">
-                    Talk to an Expert
-                  </button>
-                </form>
-              </div>
-              {/* Bottom Image in Sidebar */}
-              <div className="h-32 w-full bg-gray-200 mt-4 overflow-hidden">
-                {/* <img src="/campus-footer.jpg" className="w-full h-full object-cover" alt="campus" /> */}
+                    {/* type="button" prevents the page from reloading when clicked */}
+                    <button type="button" className="w-full bg-white text-blue-600 font-bold py-4 rounded-xl mt-4 hover:bg-blue-50 transition shadow-lg">
+                      Talk to an Expert
+                    </button>
+                  </form>
+                </div>
               </div>
             </aside>
 
           </div>
         </div>
       </section>
+
       <Footer />
     </>
   );
 };
 
-// --- Sub-Components ---
+export default FeaturedInsights;
 
-const FeaturedCard = ({ title, desc }: { title: string, desc: string, img: string }) => (
-  <div className="relative w-75 h-55 rounded-lg shrink-0 md:shrink-0 lg:shrink-0 group cursor-pointer shadow-md">
-    <div className="absolute inset-0 bg-gray-200 z-10 group-hover:bg-gray-300 transition rounded-lg"></div>
-    {/* <img src={img} className="absolute inset-0 w-full h-full object-cover" alt={title} /> */}
-    <div className="absolute bottom-0 p-6 z-20 text-gray-700">
-      <h3 className="text-lg font-bold mb-2 leading-tight">{title}</h3>
-      <p className="text-xs text-gray-700 line-clamp-2">{desc}</p>
+/* ---------------- SUB-COMPONENTS ---------------- */
+
+const FeaturedCard = ({
+  title,
+  desc,
+  img,
+}: {
+  title: string;
+  desc: string;
+  img: string;
+}) => (
+  <div className="relative w-95 h-65 rounded-lg shrink-0 group cursor-pointer shadow-md overflow-hidden">
+    <div
+      className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
+      style={{ backgroundImage: `url(${img})` }}
+    />
+    <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent z-10" />
+
+    <div className="absolute bottom-0 p-6 z-20 text-white">
+      <h3 className="text-lg font-bold mb-2 drop-shadow-md">{title}</h3>
+      <p className="text-xs line-clamp-2 text-gray-200 drop-shadow-sm">{desc}</p>
     </div>
   </div>
 );
 
-const ArticleListItem = ({ title, category, date, content, slug }: { title: string, category: string, date: string, content: string, slug: string }) => (
-  <div className="bg-white p-6 rounded-2xl shadow-sm flex flex-col md:flex-row gap-6 border border-gray-100 hover:shadow-md transition">
+const ArticleListItem = ({
+  title,
+  category,
+  date,
+  previewText,
+  slug,
+}: {
+  title: string;
+  category: string;
+  date: string;
+  previewText: string;
+  slug: string;
+}) => (
+  <div className="bg-white p-6 rounded-2xl shadow-sm flex gap-6 border border-gray-100 hover:shadow-md transition">
     <div className="flex-1">
-      <p className="text-xs text-gray-400 mb-3">{category} - {date}</p>
-      <h3 className="text-lg font-bold text-gray-800 mb-3">{title}</h3>
-      <p className="text-sm text-gray-500 mb-6 leading-relaxed">
-        {content.substring(0, 120)}...
+      <p className="text-xs text-blue-600 font-semibold uppercase tracking-wider mb-3">
+        {category} — <span className="text-gray-400 font-normal normal-case">{date}</span>
       </p>
-      <Link href={`/updates/${slug}`} className="bg-gray-100 text-gray-700 px-6 py-2 rounded-lg font-bold text-sm hover:bg-gray-200">
+
+      <h3 className="text-lg font-bold text-gray-800 mb-3">
+        {title}
+      </h3>
+
+      <p className="text-sm text-gray-500 mb-6 line-clamp-2">
+        {previewText}
+      </p>
+
+      <Link
+        href={`/updates/${slug}`}
+        className="bg-gray-100 text-gray-700 px-6 py-2 rounded-lg font-bold text-sm hover:bg-gray-200 transition"
+      >
         Read More
       </Link>
     </div>
-    <div className="w-full md:w-56 h-40 rounded-xl overflow-hidden bg-gray-200">
-      {/* <img src={img} className="w-full h-full object-cover" alt={title} /> */}
-    </div>
   </div>
 );
 
-const SidebarInput = ({ label, placeholder }: { label: string, placeholder: string }) => (
+const SidebarInput = ({
+  label,
+  placeholder,
+}: {
+  label: string;
+  placeholder: string;
+}) => (
   <div className="border-b border-blue-400 pb-2">
-    <label className="block text-xs font-bold mb-1 uppercase tracking-wider">{label}</label>
+    <label className="block text-xs font-bold mb-1 uppercase tracking-wider">
+      {label}
+    </label>
     <input
       type="text"
       placeholder={placeholder}
@@ -189,4 +295,3 @@ const SidebarInput = ({ label, placeholder }: { label: string, placeholder: stri
   </div>
 );
 
-export default FeaturedInsights;
