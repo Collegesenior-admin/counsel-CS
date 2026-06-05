@@ -38,7 +38,7 @@ export default function FAQSection() {
 
   return (
     <section className="bg-white p-4 md:p-20">
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-6 items-start">
+      <div className="max-w-387 mx-auto flex flex-col lg:flex-row gap-6 items-start">
         {/* Left Side */}
         <div className="lg:w-1/2">
           <p className="text-gray-500 text-center md:text-left font-medium text-sm md:text-lg mb-2 tracking-tight">
@@ -51,7 +51,7 @@ export default function FAQSection() {
 
           {/* Image */}
           <div className="relative rounded-2xl overflow-hidden flex justify-center items-center">
-            <div className="md:w-110 h-full text-gray-600">
+            <div className="md:w-140 h-full text-gray-600">
               <img src="/faq.webp" alt="FAQ Image" className='object-fit' />
             </div>
           </div>
@@ -105,7 +105,7 @@ export default function FAQSection() {
           })}
 
           {/* CTA */}
-          <div className="bg-[#2D5BFF] rounded-xl p-3 md:p-6 text-left text-white mt-4 mb-4 md:mb-0 lg:mb-0 sm:mb-0">
+          <div className="bg-[#2D5BFF] rounded-xl p-5 md:p-6 text-left text-white mt-4 mb-4 md:mb-0 lg:mb-0 sm:mb-0">
             <h2 className="text-lg md:text-3xl mb-1">Still have questions?</h2>
             <p className="text-blue-100 mb-3 text-sm md:text-md">
               We start by understanding your interests, strengths, and future goals. Then we
