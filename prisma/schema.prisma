@@ -4,8 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  
- 
+  url      = env("DATABASE_URL")
 }
 
 model colleges {
@@ -25,7 +24,6 @@ model colleges {
   avg_package      String?
   description      String
   logo_url         String?
-  image_urls       Json?
   website          String?
   email            String?
   phone            String?
@@ -34,17 +32,18 @@ model colleges {
   created_at       DateTime                  @default(now())
   updated_at       DateTime                  @updatedAt
   structured_data  Json?
+  image_urls       Json?
   admissions       admission_details[]
   content_sections college_content[]
   course_offerings college_course_offering[]
   cutoffs          cutoffs[]
-  scholarships     scholarships[]
   facilities       facility[]
   faqs             faqs[]
   images           gallery[]
+  news             news[]
   placements       placement_stats[]
   rankings         rankings[]
-  news             news[]
+  scholarships     scholarships[]
   seo              seo_meta?
 }
 
@@ -71,15 +70,15 @@ model courses {
 }
 
 model college_course_offering {
-  id                  Int      @id @default(autoincrement())
-  college_id          Int
-  course_id           Int
-  total_fees          String?
-  eligibility         String?
-  structured_data     Json?    // Keep for backward compatibility
-  collegecourse_data  Json?    // NEW: College-specific course details
-  college             colleges @relation(fields: [college_id], references: [id], onDelete: Cascade)
-  course              courses  @relation(fields: [course_id], references: [id], onDelete: Cascade)
+  id                 Int      @id @default(autoincrement())
+  college_id         Int
+  course_id          Int
+  total_fees         String?
+  eligibility        String?
+  structured_data    Json?
+  collegecourse_data Json?
+  college            colleges @relation(fields: [college_id], references: [id], onDelete: Cascade)
+  course             courses  @relation(fields: [course_id], references: [id], onDelete: Cascade)
 
   @@unique([college_id, course_id])
   @@index([college_id])
@@ -88,10 +87,10 @@ model college_course_offering {
 
 model admission_details {
   id                Int      @id @default(autoincrement())
-  admission_data    Json?
   college_id        Int
   structured_data   Json?
   admission_process Json?
+  admission_data    Json?
   college           colleges @relation(fields: [college_id], references: [id], onDelete: Cascade)
 }
 
@@ -99,8 +98,8 @@ model cutoffs {
   id              Int      @id @default(autoincrement())
   college_id      Int
   course_id       Int?
-  cutoff_data     Json?
   structured_data Json?
+  cutoff_data     Json?
   college         colleges @relation(fields: [college_id], references: [id], onDelete: Cascade)
   course          courses? @relation(fields: [course_id], references: [id])
 
@@ -118,27 +117,27 @@ model placement_stats {
 }
 
 model scholarships {
-  id              Int         @id @default(autoincrement())
+  id               Int      @id @default(autoincrement())
+  college_id       Int
+  structured_data  Json?
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
   scholarship_data Json?
-  college_id      Int
-  college         colleges    @relation(fields: [college_id], references: [id])
-  structured_data Json?
-  created_at      DateTime    @default(now())
-  updated_at      DateTime    @updatedAt
+  college          colleges @relation(fields: [college_id], references: [id])
 }
 
 model gallery {
   id         Int      @id @default(autoincrement())
-  media_url  Json?
   category   String
   college_id Int
+  media_url  Json?
   college    colleges @relation(fields: [college_id], references: [id], onDelete: Cascade)
 }
 
 model faqs {
   id         Int      @id @default(autoincrement())
-  faq_data   Json?
   college_id Int
+  faq_data   Json?
   college    colleges @relation(fields: [college_id], references: [id], onDelete: Cascade)
 }
 
@@ -152,21 +151,20 @@ model facility {
 
 model news {
   id             Int      @id @default(autoincrement())
-  category       String   // 'Exam', 'Admission', 'Campus'
-  published_date DateTime @default(now())
   college_id     Int
-  college        colleges @relation(fields: [college_id], references: [id])
-  // This stores title, content, links, and image_url
-  news_data      Json     
+  category       String
+  published_date DateTime @default(now())
+  news_data      Json
   created_at     DateTime @default(now())
   updated_at     DateTime @updatedAt
+  college        colleges @relation(fields: [college_id], references: [id])
 }
 
 model rankings {
   id              Int      @id @default(autoincrement())
-  rank_data       Json?
   college_id      Int
   structured_data Json?
+  rank_data       Json?
   college         colleges @relation(fields: [college_id], references: [id], onDelete: Cascade)
 }
 
@@ -205,4 +203,50 @@ model updates {
   updated_at       DateTime @default(now()) @updatedAt
 
   @@index([slug])
+}
+
+model BlogUpdate {
+  id              Int      @id @default(autoincrement())
+  slug            String   @unique
+  title           String
+  excerpt         String?
+  
+  imageUrl        String?  @map("image_url")
+  bannerUrl       String?  @map("banner_url")
+  
+  author          String?  // Blogs keep author information
+  content         Json     // Flexible page blocks
+  
+  metaTitle       String?  @map("meta_title")
+  metaDescription String?  @map("meta_description")
+  metaKeywords    String?  @map("meta_keywords")
+  
+  isPublished     Boolean  @default(true) @map("is_published")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@map("blog_updates")
+}
+
+model NewsUpdate {
+  id              Int      @id @default(autoincrement())
+  slug            String   @unique
+  title           String
+  excerpt         String?
+  
+  imageUrl        String?  @map("image_url")
+  bannerUrl       String?  @map("banner_url")
+  
+  category        String?  // News/Articles keep categories (Admissions, Exams, Careers)
+  content         Json     // Flexible page blocks
+  
+  metaTitle       String?  @map("meta_title")
+  metaDescription String?  @map("meta_description")
+  metaKeywords    String?  @map("meta_keywords")
+  
+  isPublished     Boolean  @default(true) @map("is_published")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@map("news_updates")
 }
