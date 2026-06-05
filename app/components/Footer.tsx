@@ -8,14 +8,14 @@ export default function FredFooter() {
       <div
         className="
           absolute inset-0 z-0 pointer-events-none max-w-387
-          [background-image:linear-gradient(to_right,#1e1e1e_1px,transparent_1px),linear-gradient(to_bottom,#1e1e1e_1px,transparent_1px)]
-          [background-size:32px_32px]
-          [mask-image:radial-gradient(ellipse_80%_80%_at_100%_100%,#000_50%,transparent_90%)]
+          bg-[linear-gradient(to_right,#1e1e1e_1px,transparent_1px),linear-gradient(to_bottom,#1e1e1e_1px,transparent_1px)]
+          bg-size-[32px_32px]
+          mask-[radial-gradient(ellipse_80%_80%_at_100%_100%,#000_50%,transparent_90%)]
           [-webkit-mask-image:radial-gradient(ellipse_80%_80%_at_100%_100%,#000_50%,transparent_90%)]
         "
       />
 
-      <div className="relative z-10 max-w-[1600px] mx-auto px-[60px] pt-[80px] pb-[40px] max-[1168px]:px-[40px] max-[1168px]:pt-[60px] max-[1168px]:pb-[32px] max-[699px]:px-6 max-[699px]:pt-12 max-[699px]:pb-7">
+      <div className="relative z-10 max-w-400 mx-auto px-15 pt-20 pb-10 max-[1168px]:px-10 max-[1168px]:pt-15 max-[1168px]:pb-8 max-[699px]:px-6 max-[699px]:pt-12 max-[699px]:pb-7">
 
         {/* TOP */}
         <div className="flex gap-20 items-center max-[1168px]:flex-col max-[1168px]:gap-10 max-[1168px]:mb-12 max-[699px]:gap-9 max-[699px]:mb-8">
@@ -23,7 +23,7 @@ export default function FredFooter() {
           {/* LEFT */}
           <div
             className="
-              w-[300px]
+              w-75
               flex flex-col gap-6
               max-[1168px]:w-full
               max-[1168px]:flex-row
@@ -56,7 +56,7 @@ export default function FredFooter() {
                 m-0
 
                 max-[1168px]:flex-1
-                max-[1168px]:min-w-[200px]
+                max-[1168px]:min-w-50
               "
             >
               Helping students find the right college and secure admissions
@@ -70,7 +70,7 @@ export default function FredFooter() {
               <Link
                 href="#"
                 aria-label="Facebook"
-                className="w-[38px] h-[38px] rounded-full border border-[#2a2a2a] text-[#666] flex items-center justify-center transition-all duration-300 hover:bg-[#1e1e1e] hover:text-white hover:border-[#444]"
+                className="w-9.5 h-9.5 rounded-full border border-[#2a2a2a] text-[#666] flex items-center justify-center transition-all duration-300 hover:bg-[#1e1e1e] hover:text-white hover:border-[#444]"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
@@ -81,7 +81,7 @@ export default function FredFooter() {
               <Link
                 href="#"
                 aria-label="Instagram"
-                className="w-[38px] h-[38px] rounded-full border border-[#2a2a2a] text-[#666] flex items-center justify-center transition-all duration-300 hover:bg-[#1e1e1e] hover:text-white hover:border-[#444]"
+                className="w-9.5 h-9.5 rounded-full border border-[#2a2a2a] text-[#666] flex items-center justify-center transition-all duration-300 hover:bg-[#1e1e1e] hover:text-white hover:border-[#444]"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
@@ -94,7 +94,7 @@ export default function FredFooter() {
               <Link
                 href="#"
                 aria-label="Twitter"
-                className="w-[38px] h-[38px] rounded-full border border-[#2a2a2a] text-[#666] flex items-center justify-center transition-all duration-300 hover:bg-[#1e1e1e] hover:text-white hover:border-[#444]"
+                className="w-9.5 h-9.5 rounded-full border border-[#2a2a2a] text-[#666] flex items-center justify-center transition-all duration-300 hover:bg-[#1e1e1e] hover:text-white hover:border-[#444]"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L2.25 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
@@ -105,7 +105,7 @@ export default function FredFooter() {
               <Link
                 href="#"
                 aria-label="LinkedIn"
-                className="w-[38px] h-[38px] rounded-full border border-[#2a2a2a] text-[#666] flex items-center justify-center transition-all duration-300 hover:bg-[#1e1e1e] hover:text-white hover:border-[#444]"
+                className="w-9.5 h-9.5 rounded-full border border-[#2a2a2a] text-[#666] flex items-center justify-center transition-all duration-300 hover:bg-[#1e1e1e] hover:text-white hover:border-[#444]"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
@@ -165,12 +165,12 @@ export default function FredFooter() {
                   {col.title}
                 </h4>
 
-                <ul className="flex flex-col gap-[14px] max-[1168px]:gap-2.5">
+                <ul className="flex flex-col gap-3.5 max-[1168px]:gap-2.5">
                   {col.links.map((link, idx) => (
                     <li key={idx}>
                       <Link
                         href="#"
-                        className="text-[14px] max-[1168px]:text-[15px] text-[#999] hover:text-white transition-colors leading-[1.5]"
+                        className="text-[14px] max-[1168px]:text-[15px] text-[#999] hover:text-white transition-colors leading-normal"
                       >
                         {link}
                       </Link>
@@ -199,7 +199,7 @@ export default function FredFooter() {
                 <li>
                   <Link
                     href="tel:+919500000763"
-                    className="text-[14px] max-[699px]:text-[20px] text-[#999] hover:text-white transition-colors leading-[1.5]"
+                    className="text-[14px] max-[699px]:text-[20px] text-[#999] hover:text-white transition-colors leading-normal"
                   >
                     +91 95*****763
                   </Link>
@@ -208,7 +208,7 @@ export default function FredFooter() {
                 <li>
                   <Link
                     href="mailto:counselling@collegesenior.in"
-                    className="text-[14px] max-[699px]:text-[20px] text-[#999] hover:text-white transition-colors leading-[1.5]"
+                    className="text-[14px] max-[699px]:text-[20px] text-[#999] hover:text-white transition-colors leading-normal"
                   >
                     counselling@collegesenior.in
                   </Link>
