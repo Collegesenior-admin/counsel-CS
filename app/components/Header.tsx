@@ -55,22 +55,20 @@ export default function Header() {
   const getLinkStyle = (href: string) => {
     const isActive = pathname === href;
 
-    return `px-3 py-2 transition font-medium ${
-      !useGrayStyle
+    return `px-3 py-2 transition font-medium ${!useGrayStyle
         ? isActive
           ? 'text-yellow-400'
           : 'text-white hover:text-yellow-400'
         : isActive
           ? 'text-blue-600'
           : 'text-gray-700 hover:text-blue-600'
-    }`;
+      }`;
   };
 
   return (
     <header
-      className={`max-w-387 mx-auto sticky top-0 z-40 transition-colors duration-300 ${
-        useGrayStyle ? 'bg-white' : 'bg-[#0d68f2]'
-      }`}
+      className={`max-w-387 mx-auto sticky top-0 z-40 transition-colors duration-300 ${useGrayStyle ? 'bg-white' : 'bg-[#0d68f2]'
+        }`}
     >
       <div className="flex items-center justify-between px-4 lg:px-12 py-3 max-w-400 mx-auto">
 
@@ -105,22 +103,20 @@ export default function Header() {
 
             <button
               onClick={() => setIsModalOpen(true)}
-              className={`px-4 py-2 font-semibold border rounded-lg transition ${
-                !useGrayStyle
+              className={`px-4 py-2 font-semibold border rounded-lg transition ${!useGrayStyle
                   ? 'text-white border-white hover:bg-white hover:text-blue-600'
                   : 'text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white'
-              }`}
+                }`}
             >
               Apply to Enquiry
             </button>
 
             <Link
               href="/contact"
-              className={`px-6 py-2 rounded-md font-semibold transition ${
-                !useGrayStyle
+              className={`px-6 py-2 hidden min-[1380px]:block rounded-md font-semibold transition ${!useGrayStyle
                   ? 'bg-white text-[#0d68f2] hover:bg-gray-100'
                   : 'bg-blue-600 text-white hover:bg-blue-700'
-              }`}
+                }`}
             >
               Talk to Expert
             </Link>
@@ -128,9 +124,8 @@ export default function Header() {
 
           {/* Mobile Menu Button */}
           <button
-            className={`min-[1300px]:hidden p-2 transition-transform duration-300 active:scale-90 ${
-              !useGrayStyle ? 'text-white' : 'text-gray-800'
-            }`}
+            className={`min-[1300px]:hidden p-2 transition-transform duration-300 active:scale-90 ${!useGrayStyle ? 'text-white' : 'text-gray-800'
+              }`}
             onClick={() => setIsOpen(!isOpen)}
           >
             {isOpen ? <X size={32} /> : <Menu size={28} />}
@@ -166,11 +161,10 @@ export default function Header() {
 
             <button
               onClick={() => setIsModalOpen(true)}
-              className={`w-full py-3 rounded-lg font-bold border ${
-                !useGrayStyle
+              className={`w-full py-3 rounded-lg font-bold border ${!useGrayStyle
                   ? 'text-white border-white'
                   : 'text-blue-600 border-blue-600'
-              }`}
+                }`}
             >
               Apply to Colleges
             </button>
@@ -178,11 +172,10 @@ export default function Header() {
             <Link
               href="/contact"
               onClick={() => setIsOpen(false)}
-              className={`w-full py-3 text-center rounded-lg font-bold ${
-                !useGrayStyle
+              className={`w-full py-3 text-center rounded-lg font-bold ${!useGrayStyle
                   ? 'bg-white text-[#0d68f2]'
                   : 'bg-[#155DFC] text-white'
-              }`}
+                }`}
             >
               Talk to Expert
             </Link>
