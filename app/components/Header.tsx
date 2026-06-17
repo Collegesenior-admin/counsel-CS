@@ -84,7 +84,7 @@ export default function Header() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden min-[1300px]:flex space-x-6 text-lg">
+        <nav className="hidden min-[1000px]:flex space-x-6 text-lg">
           {navLinks.map((link) => (
             <Link
               key={link.name}
@@ -124,7 +124,7 @@ export default function Header() {
 
           {/* Mobile Menu Button */}
           <button
-            className={`min-[1300px]:hidden p-2 transition-transform duration-300 active:scale-90 ${!useGrayStyle ? 'text-white' : 'text-gray-800'
+            className={`min-[1000px]:hidden p-2 transition-transform duration-300 active:scale-90 ${!useGrayStyle ? 'text-white' : 'text-gray-800'
               }`}
             onClick={() => setIsOpen(!isOpen)}
           >
@@ -136,7 +136,7 @@ export default function Header() {
       {/* Mobile Menu */}
       <div
         className={`
-          min-[1300px]:hidden absolute w-full left-0 overflow-hidden transition-all duration-500 ease-in-out
+          min-[1000px]:hidden absolute w-full left-0 overflow-hidden transition-all duration-500 ease-in-out
           ${useGrayStyle ? 'bg-[#FFF5EE]' : 'bg-[#0d68f2]'}
           ${isOpen
             ? "max-h-150 opacity-100 py-8 visible"
