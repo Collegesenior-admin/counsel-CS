@@ -406,11 +406,11 @@ export default function CollegeListClient({
                     </div>
 
                     {/* Thumbnails */}
-                    <div className="grid grid-cols-4 gap-2 min-h-[20%]">
+                    <div className="grid grid-cols-3 gap-1 min-h-[15%]">
                       {getThumbnailImages(validImages, 3).map((imageUrl: string, i: number) => (
                         <div
                           key={i}
-                          className="h-15 rounded-lg overflow-hidden  cursor-pointer"
+                          className="h-25 rounded-lg overflow-hidden  cursor-pointer"
                           onClick={() => openCarousel(college.image_urls, college.name, i + 1)}
                         >
                           <img src={imageUrl} className="w-full h-full object-cover opacity-80" alt={`thumb-${i}`} />
@@ -418,12 +418,12 @@ export default function CollegeListClient({
                       ))}
                       {/* Fill remaining slots with placeholder if needed */}
                       {Array.from({ length: Math.max(0, 2 - getThumbnailImages(validImages, 3).length) }).map((_, i) => (
-                        <div key={`placeholder-${i}`} className="h-15 rounded-lg overflow-hidden bg-gray-200 hover:bg-gray-300">
+                        <div key={`placeholder-${i}`} className="h-20 w-23 rounded-lg overflow-hidden bg-gray-200 hover:bg-gray-300">
                           <img src="https://via.placeholder.com/400x300" className="w-full h-full object-cover opacity-80" alt="placeholder" />
                         </div>
                       ))}
                       <div
-                        className="h-15 rounded-lg bg-gray-200 flex items-center justify-center text-gray-600 text-xs font-bold cursor-pointer hover:bg-gray-300 transition-colors"
+                        className="h-20 rounded-lg bg-gray-200 flex items-center justify-center text-gray-600 text-xs font-bold cursor-pointer hover:bg-gray-300 transition-colors"
                         onClick={() => openCarousel(college.image_urls, college.name, 0)}
                       >
                         +more
@@ -496,7 +496,7 @@ export default function CollegeListClient({
                     <p className="max-h-30 text-gray-600 text-xs md:text-sm mb-4 md:mb-3 overflow-y-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                       {college.description || "An MBA in Marketing is a postgraduate degree focusing on marketing strategies, brand management, and consumer behavior, equipping students with skills for roles like Brand Manager, Sales Manager, or Market Research Analyst..."}
                     </p>
-                    <hr className="mb-4 md:mb-6 opacity-50" />
+                    <hr className="mb-4 opacity-50" />
                     <p className="text-[10px] md:text-xs text-gray-400 mb-4 font-medium">
                       Know more about{' '}
                       <span className="text-[#2D5BFF] cursor-pointer">
@@ -508,7 +508,7 @@ export default function CollegeListClient({
                     <div className="flex flex-col sm:flex-row justify-end items-start sm:items-center gap-4">
                      
 
-                      <div className="flex gap-2 w-full sm:w-auto mb-5">
+                      <div className="flex gap-2 w-full sm:w-auto ">
                         <button className="flex-1 sm:flex-none border-2 border-[#2D5BFF] text-[#2D5BFF] font-bold px-4 md:px-6 py-2 rounded-lg hover:bg-blue-50 transition-colors text-xs md:text-sm">
                           Apply now
                         </button>
