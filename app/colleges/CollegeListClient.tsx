@@ -19,7 +19,7 @@ type CollegeType = {
   email: string;
   phone: string;
   logo_url: string;
-  image_urls: Array<{ [key: string]: string }> | null; // Updated to reflect JSONB array format
+  image_urls: Array<{ [key: string]: string }> | null;
   overview: string;
   description: string;
   meta_title: string;
@@ -62,6 +62,8 @@ export default function CollegeListClient({
   const [carouselInitialIndex, setCarouselInitialIndex] = useState(0);
   const { isTriggered, hasSubmitted } = useScrollTrigger(0.7);
 
+
+
   // Lock scroll when filter sidebar is open on mobile
   useScrollLock(isFilterOpen);
 
@@ -83,32 +85,31 @@ export default function CollegeListClient({
     searchQuery: currentParams.search || '',
     sortBy: currentParams.sort || 'ranking'
   };
-  // Safe image extractor
+  // Safe image extractor updated for a flat JSON Object layout
   const extractImagesFromJsonb = (images: any): string[] => {
     try {
       if (!images) return [];
 
-      // If it's already an array of strings
-      if (Array.isArray(images) && images.every(item => typeof item === 'string')) {
-        return images;
-      }
+      let targetArray = images;
 
-      // If it's an array of objects like [{"image1":"url"},{"image2":"url"}]
-      if (Array.isArray(images)) {
-        return images.map((item: any) => {
-          if (typeof item === 'string') return item;
-          if (typeof item === 'object' && item !== null) {
-            const key = Object.keys(item)[0];
-            return item[key];
-          }
-          return '';
-        }).filter(Boolean);
-      }
-
-      // If it's a string, try to parse it
+      // If NextJS/Supabase passed it as a raw string, parse it into an array
       if (typeof images === 'string') {
-        const parsed = JSON.parse(images);
-        return extractImagesFromJsonb(parsed);
+        targetArray = JSON.parse(images);
+      }
+
+      // Loop over the [ {image1: url}, {image2: url} ] structure
+      if (Array.isArray(targetArray)) {
+        return targetArray
+          .map((item: any) => {
+            if (typeof item === 'string') return item; // fallback string link
+            if (typeof item === 'object' && item !== null) {
+              const keys = Object.keys(item);
+              // Extract the value belonging to the first key (e.g. item["image1"])
+              return keys.length > 0 ? item[keys[0]] : '';
+            }
+            return '';
+          })
+          .filter(Boolean); // Removes empty values from the final array
       }
 
       return [];
@@ -130,6 +131,8 @@ export default function CollegeListClient({
     setCarouselInitialIndex(initialIndex);
     setIsCarouselOpen(true);
   };
+
+
 
 
 
@@ -178,6 +181,7 @@ export default function CollegeListClient({
       router.push(`/colleges?${params.toString()}`, { scroll: false });
     });
   };
+
 
   return (
 
@@ -371,8 +375,18 @@ export default function CollegeListClient({
 
 
               // Returns the first image or a placeholder if none
-              const getMainImage = (images: string[]) => {
-                return images && images.length > 0 ? images[0] : "https://via.placeholder.com/400x300";
+              const getMainImage = (images: string[]): string => {
+                if (!images || images.length === 0) return 'https://via.placeholder.com/400x300';
+
+                const firstImage = images[0];
+
+                // If it's already a full HTTP address from our clean parser, use it exactly as it is!
+                if (firstImage.startsWith('http://') || firstImage.startsWith('https://')) {
+                  return firstImage;
+                }
+
+                // Fallback if your helper handles relative names elsewhere
+                return `https://hpxcrsrghorymasufwem.supabase.co/storage/v1/object/public/college-images/${firstImage}`;
               };
 
               // Returns all thumbnails, excluding the first one (or first N images)
@@ -382,16 +396,16 @@ export default function CollegeListClient({
               };
 
               return (
-                <div key={college.id} className="bg-white rounded-2xl shadow-md border border-gray-100 p-4 md:p-4 mb-3 flex flex-col md:flex-row lg:flex-row gap-2 md:gap-6">
+                <div key={college.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 md:p-4 mb-4 flex flex-col md:flex-row lg:flex-row gap-2 md:gap-6">
                   {/* Left Side: Image Gallery Section */}
                   <div className="relative mx-auto w-full sm:w-[60%] md:w-75 lg:w-75 shrink-0">
                     <div
                       className="relative h-64 min-h-[80%] flex items-center rounded-xl overflow-hidden mb-3 bg-gray-200 cursor-pointer"
-                      onClick={() => openCarousel(college.image_urls, college.name, 0)}
+                      onClick={() => openCarousel(validImages, college.name, 0)}
                     >
                       <img
                         src={getMainImage(validImages)}
-                        className="w-full h-full object-cover "
+                        className="w-full h-full object-cover"
                         alt={college.name}
                       />
                       <div className="absolute bottom-0 left-0 right-0 p-4 bg-linear-to-t from-black/60 to-transparent">
@@ -400,34 +414,62 @@ export default function CollegeListClient({
                         </h4>
                       </div>
                       {/* View Gallery Overlay */}
-                      <div className="absolute inset-0  bg-opacity-0 hover:bg-opacity-90 transition-all flex items-center justify-center">
-
-                      </div>
+                      <div className="absolute inset-0 bg-opacity-0 hover:bg-opacity-90 transition-all flex items-center justify-center"></div>
                     </div>
 
-                    {/* Thumbnails */}
-                    <div className="grid grid-cols-3 gap-1 min-h-[15%]">
-                      {getThumbnailImages(validImages, 3).map((imageUrl: string, i: number) => (
-                        <div
-                          key={i}
-                          className="h-25 rounded-lg overflow-hidden  cursor-pointer"
-                          onClick={() => openCarousel(college.image_urls, college.name, i + 1)}
-                        >
-                          <img src={imageUrl} className="w-full h-full object-cover opacity-80" alt={`thumb-${i}`} />
-                        </div>
-                      ))}
-                      {/* Fill remaining slots with placeholder if needed */}
-                      {Array.from({ length: Math.max(0, 2 - getThumbnailImages(validImages, 3).length) }).map((_, i) => (
-                        <div key={`placeholder-${i}`} className="h-20 w-23 rounded-lg overflow-hidden bg-gray-200 hover:bg-gray-300">
-                          <img src="https://via.placeholder.com/400x300" className="w-full h-full object-cover opacity-80" alt="placeholder" />
-                        </div>
-                      ))}
-                      <div
-                        className="h-20 rounded-lg bg-gray-200 flex items-center justify-center text-gray-600 text-xs font-bold cursor-pointer hover:bg-gray-300 transition-colors"
-                        onClick={() => openCarousel(college.image_urls, college.name, 0)}
-                      >
-                        +more
-                      </div>
+                    {/* Thumbnails Grid (3 Columns Only) */}
+                    <div className="grid grid-cols-3 gap-1 min-h-[10%]">
+                      {getThumbnailImages(validImages, 3).map((imageUrl: string, i: number) => {
+                        const isThirdGrid = i === 2;
+
+                        return (
+                          <div
+                            key={i}
+                            className="relative h-20 rounded-lg overflow-hidden cursor-pointer"
+                            onClick={() => openCarousel(validImages, college.name, i + 1)}
+                          >
+                            <img
+                              src={imageUrl}
+                              className="w-full h-full object-cover opacity-80"
+                              alt={`thumb-${i}`}
+                            />
+
+                            {/* Apply +more overlay to the 3rd grid item */}
+                            {isThirdGrid && (
+                              <div className="absolute inset-0 bg-black/60 flex items-center justify-center text-white text-xs font-bold transition-colors hover:bg-black/75">
+                                +more
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+
+                      {/* Fill remaining slots with placeholder if fewer than 3 images exist */}
+                      {Array.from({ length: Math.max(0, 3 - getThumbnailImages(validImages, 3).length) }).map((_, i) => {
+                        const currentGridIndex = getThumbnailImages(validImages, 3).length + i;
+                        const isThirdGrid = currentGridIndex === 2;
+
+                        return (
+                          <div
+                            key={`placeholder-${i}`}
+                            className="relative h-20 rounded-lg overflow-hidden bg-gray-200 cursor-pointer"
+                            onClick={() => openCarousel(validImages, college.name, 0)}
+                          >
+                            <img
+                              src="https://via.placeholder.com/400x300"
+                              className="w-full h-full object-cover opacity-50"
+                              alt="placeholder"
+                            />
+
+                            {/* Apply +more overlay to the placeholder if it occupies the 3rd slot */}
+                            {isThirdGrid && (
+                              <div className="absolute inset-0 bg-black/60 flex items-center justify-center text-white text-xs font-bold">
+                                +more
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
 
@@ -493,7 +535,7 @@ export default function CollegeListClient({
                     </div>
 
                     {/* Description */}
-                    <p className="max-h-30 text-gray-600 text-xs md:text-sm mb-4 md:mb-3 overflow-y-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                    <p className="max-h-20 text-gray-600 text-xs md:text-sm mb-4 md:mb-3 overflow-y-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                       {college.description || "An MBA in Marketing is a postgraduate degree focusing on marketing strategies, brand management, and consumer behavior, equipping students with skills for roles like Brand Manager, Sales Manager, or Market Research Analyst..."}
                     </p>
                     <hr className="mb-4 opacity-50" />
@@ -506,7 +548,7 @@ export default function CollegeListClient({
 
                     {/* Footer Buttons */}
                     <div className="flex flex-col sm:flex-row justify-end items-start sm:items-center gap-4">
-                     
+
 
                       <div className="flex gap-2 w-full sm:w-auto ">
                         <button className="flex-1 sm:flex-none border-2 border-[#2D5BFF] text-[#2D5BFF] font-bold px-4 md:px-6 py-2 rounded-lg hover:bg-blue-50 transition-colors text-xs md:text-sm">
