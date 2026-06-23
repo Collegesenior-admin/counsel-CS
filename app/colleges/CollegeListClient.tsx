@@ -396,9 +396,9 @@ export default function CollegeListClient({
               };
 
               return (
-                <div key={college.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 md:p-4 mb-4 flex flex-col md:flex-row lg:flex-row gap-2 md:gap-6">
+                <div key={college.id} className=" bg-white rounded-2xl shadow-sm border border-gray-100 p-4 md:p-4 mb-4 flex flex-col md:flex-row lg:flex-row gap-2 md:gap-6">
                   {/* Left Side: Image Gallery Section */}
-                  <div className="relative mx-auto w-full sm:w-[60%] md:w-75 lg:w-75 shrink-0">
+                  <div className=" mx-auto w-full sm:w-[60%] md:w-75 lg:w-75 shrink-0">
                     <div
                       className="relative h-64 min-h-[80%] flex items-center rounded-xl overflow-hidden mb-3 bg-gray-200 cursor-pointer"
                       onClick={() => openCarousel(validImages, college.name, 0)}
@@ -418,14 +418,14 @@ export default function CollegeListClient({
                     </div>
 
                     {/* Thumbnails Grid (3 Columns Only) */}
-                    <div className="grid grid-cols-3 gap-1 min-h-[10%]">
+                    <div className="hidden min-[640px]:grid grid-cols-3 gap-1 min-h-[10%]">
                       {getThumbnailImages(validImages, 3).map((imageUrl: string, i: number) => {
                         const isThirdGrid = i === 2;
 
                         return (
                           <div
                             key={i}
-                            className="relative h-20 rounded-lg overflow-hidden cursor-pointer"
+                            className="relative h-18 rounded-lg overflow-hidden cursor-pointer"
                             onClick={() => openCarousel(validImages, college.name, i + 1)}
                           >
                             <img
@@ -436,7 +436,7 @@ export default function CollegeListClient({
 
                             {/* Apply +more overlay to the 3rd grid item */}
                             {isThirdGrid && (
-                              <div className="absolute inset-0 bg-black/60 flex items-center justify-center text-white text-xs font-bold transition-colors hover:bg-black/75">
+                              <div className="absolute inset-0 bg-black/10 h-18 items-center justify-center text-white text-xs font-bold transition-colors hover:bg-black/75">
                                 +more
                               </div>
                             )}
