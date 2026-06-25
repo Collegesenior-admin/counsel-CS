@@ -13,6 +13,8 @@ export const metadata: Metadata = {
   }
 };
 
+const ITEMS_PER_PAGE = 10; // Adjust items per page here
+
 export default async function CoursesPage({
   searchParams,
 }: {
@@ -22,9 +24,11 @@ export default async function CoursesPage({
     level?: string;
     duration?: string;
     sort?: string;
+    page?: string; // Added page param
   }>;
 }) {
   const params = await searchParams;
+  const currentPage = Number(params.page) || 1;
 
   try {
     // 1. Fetch courses and filter data in parallel
@@ -58,21 +62,16 @@ export default async function CoursesPage({
       
       // Fetch unique filter values
       Promise.all([
-        // Get unique streams
         prisma.courses.findMany({
           select: { stream: true },
           distinct: ['stream'],
           orderBy: { stream: 'asc' }
         }),
-        
-        // Get unique levels
         prisma.courses.findMany({
           select: { level: true },
           distinct: ['level'],
           orderBy: { level: 'asc' }
         }),
-        
-        // Get unique durations
         prisma.courses.findMany({
           select: { duration: true },
           distinct: ['duration'],
@@ -90,8 +89,45 @@ export default async function CoursesPage({
       durations: durations.map((d: { duration: string | null }) => d.duration).filter(Boolean)
     };
 
-    // 3. Serialization (Ensuring Date objects don't break Client Components)
-    const serializedCourses = JSON.parse(JSON.stringify(courses));
+    // --- CUSTOM SORTING ENGINE BASED ON YOUR DROPDOWN SPECS ---
+    let processedCourses = [...courses];
+
+    if (params.sort === 'default' || !params.sort) {
+      processedCourses.sort((a, b) => {
+        const countA = a.offered_at_colleges?.length || 0;
+        const countB = b.offered_at_colleges?.length || 0;
+        return countB - countA; 
+      });
+    } else if (params.sort === 'rank_low') {
+      processedCourses.sort((a, b) => {
+        const bestRankA = a.offered_at_colleges?.reduce((min:number, cur:any) => 
+          cur.college?.nirf_ranking && cur.college.nirf_ranking < min ? cur.college.nirf_ranking : min, 999
+        ) || 999;
+
+        const bestRankB = b.offered_at_colleges?.reduce((min:number, cur:any) => 
+          cur.college?.nirf_ranking && cur.college.nirf_ranking < min ? cur.college.nirf_ranking : min, 999
+        ) || 999;
+
+        return bestRankA - bestRankB;
+      });
+    } else if (params.sort === 'package_high') {
+      processedCourses.sort((a, b) => {
+        const pkgA = (a as any).avg_package || 0;
+        const pkgB = (b as any).avg_package || 0;
+        return pkgB - pkgA;
+      });
+    }
+
+    // --- CALCULATE PAGINATION STATISTICS ---
+    const totalItems = processedCourses.length;
+    const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE) || 1;
+    
+    // In-memory pagination calculation to account for custom JS sorting routines
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const paginatedCourses = processedCourses.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+
+    // 3. Serialization
+    const serializedCourses = JSON.parse(JSON.stringify(paginatedCourses));
     const serializedFilterOptions = JSON.parse(JSON.stringify(filterOptions));
 
     return (
@@ -99,12 +135,13 @@ export default async function CoursesPage({
         initialCourses={serializedCourses}
         currentParams={params}
         filterOptions={serializedFilterOptions}
+        totalPages={totalPages} // Sent total pages down
+        totalItems={totalItems} // Sent total unfiltered matching count down
       />
     );
   } catch (error) {
     console.error('Database error in courses page:', error);
     
-    // Return fallback UI when database fails
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center p-8">
