@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Header from "../../components/Header";
 import Footer from '../../components/Footer';
@@ -27,8 +26,8 @@ type UnifiedDetailItem = {
   title: string;
   content: Prisma.JsonValue;
   createdAt: Date;
-  category?: string | null; // Optional because Blogs don't have this
-  author?: string | null;   // Blogs have authors
+  category?: string | null;
+  author?: string | null;
   type: 'blog' | 'news';
 };
 
@@ -40,7 +39,6 @@ const UpdateDetailPage = async ({ params }: { params: Promise<{ slug: string }> 
   let update: UnifiedDetailItem | null = null;
 
   try {
-    // 1. Attempt to find the slug inside the Blog table first
     const blogData = await prisma.blogUpdate.findUnique({
       where: { slug: slug, isPublished: true }
     });
@@ -54,7 +52,6 @@ const UpdateDetailPage = async ({ params }: { params: Promise<{ slug: string }> 
         type: 'blog'
       };
     } else {
-      // 2. If not found in blogs, check the News table
       const newsData = await prisma.newsUpdate.findUnique({
         where: { slug: slug, isPublished: true }
       });
@@ -73,12 +70,10 @@ const UpdateDetailPage = async ({ params }: { params: Promise<{ slug: string }> 
     console.error("Database detail query exception:", error);
   }
 
-  // If slug doesn't exist in either table, route to 404
   if (!update) {
     notFound();
   }
 
-  // Safe categorization fallbacks for layout strings
   const displayCategory = update.type === 'news' ? (update.category || "General") : "Blogs";
 
   return (
@@ -120,7 +115,7 @@ const UpdateDetailPage = async ({ params }: { params: Promise<{ slug: string }> 
 
                         case 'paragraph':
                           return (
-                            <p key={index} className="text-lg leading-relaxed text-gray-600">
+                            <p key={index} className="text-md leading-relaxed text-gray-600">
                               {block.text}
                             </p>
                           );
@@ -179,7 +174,7 @@ const UpdateDetailPage = async ({ params }: { params: Promise<{ slug: string }> 
                           return (
                             <div key={index} className="my-8 p-6 border border-gray-200 rounded-2xl bg-gray-50/50 text-center">
                               <p className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4">
-                                📊 Chart: {block.title || "Statistics Data Breakdown"}
+                                Chart: {block.title || "Statistics Data Breakdown"}
                               </p>
                               <div className="flex items-end justify-center gap-6 h-40 pt-4">
                                 {block.data?.map((dataPoint, i) => (
