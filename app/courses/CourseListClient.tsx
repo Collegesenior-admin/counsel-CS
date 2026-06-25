@@ -1,11 +1,15 @@
 'use client';
 import { useState, useTransition, useEffect } from 'react';
-import { BriefcaseBusiness, IndianRupee, Settings2 } from 'lucide-react';
+import { BriefcaseBusiness, IndianRupee, Settings2, Search, Loader2, CalendarClock, ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from "next/image"
-import Link from 'next/link';
+import NextLink from 'next/link';
 import Headers from '../components/Header';
 import Footer from '../components/Footer';
 import { useScrollLock } from '../hooks/useScrollLock';
+import { useRouter, useSearchParams } from 'next/navigation';
+import EnquiryFormModal from '../components/EnquiryFormModal';
+import { useScrollTrigger } from '../hooks/useScrollTrigger';
+
 type CourseType = {
   id: number;
   name: string;
@@ -40,13 +44,7 @@ type CollegeType = {
   created_at: Date;
   updated_at: Date;
 };
-import { useRouter, useSearchParams } from 'next/navigation';
-import { Search, Loader2, ChevronLeftCircle, ChevronRightCircle, CalendarClock } from 'lucide-react';
-import EnquiryFormModal from '../components/EnquiryFormModal';
-import { useScrollTrigger } from '../hooks/useScrollTrigger';
 
-
-// Define the type to include the colleges associated with each course
 type CourseWithColleges = CourseType & {
   avg_fees?: string;
   course_type?: string;
@@ -56,7 +54,6 @@ type CourseWithColleges = CourseType & {
   }[];
 };
 
-// 2. Update the Props to include currentParams and filterOptions
 interface Props {
   initialCourses: CourseWithColleges[];
   currentParams: {
@@ -65,15 +62,18 @@ interface Props {
     level?: string;
     duration?: string;
     sort?: string;
+    page?: string; // Added parameter matching server signature
   };
   filterOptions: {
     streams: string[];
     levels: string[];
     durations: string[];
   };
+  totalPages: number; // New Prop
+  totalItems: number;   // New Prop
 }
 
-export default function CourseListClient({ initialCourses, currentParams, filterOptions }: Props) {
+export default function CourseListClient({ initialCourses, currentParams, filterOptions, totalPages, totalItems }: Props) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
@@ -83,12 +83,12 @@ export default function CourseListClient({ initialCourses, currentParams, filter
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { isTriggered, hasSubmitted } = useScrollTrigger(0.7);
 
-  // Update search query when URL parameters change
+  const currentPage = Number(currentParams.page) || 1;
+
   useEffect(() => {
     setSearchQuery(currentParams.search || '');
   }, [currentParams.search]);
 
-  // Lock scroll when filter sidebar is open on mobile
   useScrollLock(isFilterOpen);
 
   useEffect(() => {
@@ -97,10 +97,10 @@ export default function CourseListClient({ initialCourses, currentParams, filter
     }
   }, [isTriggered, hasSubmitted]);
 
-  // Scroll to top when component mounts
+  // Scroll to layout top on page change execution block
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentPage]);
 
   const hiddenFields = {
     stream: currentParams.stream || 'All',
@@ -110,6 +110,13 @@ export default function CourseListClient({ initialCourses, currentParams, filter
     sortBy: currentParams.sort || 'newest'
   };
 
+  // Central Router utility mutation layout helper logic
+  const navigateWithUpdatedParams = (updatedParams: URLSearchParams) => {
+    startTransition(() => {
+      router.push(`/courses?${updatedParams.toString()}`, { scroll: false });
+    });
+  };
+
   const updateFilter = (key: string, value: string) => {
     const params = new URLSearchParams(searchParams.toString());
     if (params.get(key) === value) {
@@ -117,9 +124,16 @@ export default function CourseListClient({ initialCourses, currentParams, filter
     } else {
       params.set(key, value);
     }
-    startTransition(() => {
-      router.push(`/courses?${params.toString()}`, { scroll: false });
-    });
+    // Rule: Whenever query parameters change, reset back safely to Page 1
+    params.delete('page'); 
+    navigateWithUpdatedParams(params);
+  };
+
+  const handlePageChange = (newPage: number) => {
+    if (newPage < 1 || newPage > totalPages) return;
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('page', newPage.toString());
+    navigateWithUpdatedParams(params);
   };
 
   const resetFilters = () => {
@@ -127,7 +141,6 @@ export default function CourseListClient({ initialCourses, currentParams, filter
       router.push('/courses');
     });
   };
-
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -138,17 +151,14 @@ export default function CourseListClient({ initialCourses, currentParams, filter
     } else {
       params.delete('search');
     }
-
-    startTransition(() => {
-      router.push(`/courses?${params.toString()}`);
-    });
+    params.delete('page'); // Reset pagination upon execution matching searches
+    navigateWithUpdatedParams(params);
   };
 
   return (
     <div className="relative min-h-screen bg-gray-100">
       <Headers />
 
-      {/* --- LOADING SPINNER --- */}
       {isPending && (
         <div className="fixed inset-0 z-100 flex flex-col items-center justify-center bg-white/60">
           <div className="p-5 bg-white rounded-2xl flex flex-col items-center border border-gray-100 shadow-xl">
@@ -162,8 +172,6 @@ export default function CourseListClient({ initialCourses, currentParams, filter
       <div className='md:m-3'>
         <section className="max-w-375 mx-auto bg-linear-to-tr from-blue-500 to-indigo-600 md:rounded-2xl lg:rounded-2xl text-white relative overflow-hidden">
           <div className="max-w-375 flex">
-
-            {/* Content */}
             <div className="relative z-20 w-full lg:w-2/3 p-6">
               <p className="text-sm opacity-80 mb-3 lg:mb-38">Home / Courses</p>
               <h2 className="text-2xl md:text-3xl mt-3 md:mt-25 font-semibold">Find Your Perfect Courses</h2>
@@ -175,8 +183,6 @@ export default function CourseListClient({ initialCourses, currentParams, filter
                 <input type="text" placeholder="Search for courses..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="grow p-2 outline-none placeholder-blue-700 bg-transparent" />
               </form>
             </div>
-
-            {/* Hero Image */}
             <div className="absolute lg:relative right-0 bottom-0 lg:w-1/3 flex justify-end pointer-events-none">
               <Image src="/coursehero.png" alt="Hero" width={500} height={500} className="w-60 md:w-60 lg:w-70 z-0 md:z-10" />
             </div>
@@ -192,25 +198,16 @@ export default function CourseListClient({ initialCourses, currentParams, filter
         </button>
       </div>
 
-      {/* Main */}
-
+      {/* Main Grid Layout Container */}
       <main className="max-w-387 p-3 mx-auto md:px-4 md:py-4 flex flex-col lg:flex-row gap-6">
-        {/* Mobile Overlay Background */}
-        {isFilterOpen && (
-          <div
-            className="fixed inset-0 bg-black/40 z-40 lg:hidden"
-            onClick={() => setIsFilterOpen(false)}
-          />
-        )}
+        {isFilterOpen && <div className="fixed inset-0 bg-black/40 z-40 lg:hidden" onClick={() => setIsFilterOpen(false)} />}
 
         {/* Filters Sidebar */}
-        <aside className={`fixed sm:fixed md:fixed inset-0 z-40  lg:relative lg:z-10 w-80 lg:h-auto sm:h-auto bg-gray-50 p-3 overflow-y-scroll transition-transform duration-300 lg:translate-x-0 lg:w-1/4 lg:block lg:bg-transparent lg:p-0
-          ${isFilterOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'} `} style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+        <aside className={`fixed sm:fixed md:fixed inset-0 z-40 lg:relative lg:z-10 w-80 lg:h-auto sm:h-auto bg-gray-50 p-3 overflow-y-scroll transition-transform duration-300 lg:translate-x-0 lg:w-1/4 lg:block lg:bg-transparent lg:p-0 ${isFilterOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'} `} style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           <div className="flex justify-between items-center mb-6 lg:mb-4">
             <h3 className="font-bold text-lg">Filters</h3>
             <div className="flex items-center gap-4">
               <button onClick={resetFilters} className="text-indigo-600 text-sm font-semibold">Reset</button>
-              {/* Close Button for Mobile */}
               <button onClick={() => setIsFilterOpen(false)} className="lg:hidden p-2 bg-white rounded-full shadow-sm text-gray-600">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -264,165 +261,157 @@ export default function CourseListClient({ initialCourses, currentParams, filter
                 </div>
               );
             })}
-
-            {/* Mobile Apply Button */}
-            <button
-              onClick={() => setIsFilterOpen(false)}
-              className="w-full lg:hidden bg-indigo-600 text-white py-4 rounded-xl font-bold shadow-lg mt-4"
-            >
+            <button onClick={() => setIsFilterOpen(false)} className="w-full lg:hidden bg-indigo-600 text-white py-4 rounded-xl font-bold shadow-lg mt-4">
               Show Results
             </button>
           </div>
-
         </aside>
 
-
-
-        {/* Results Section */}
-        <section className="w-full lg:w-3/4">
-          <div className="@max-xs:flex-1 sm:flex md:flex lg:flex justify-between items-center mb-6 mx-2">
-            <div>
-              <h3 className="font-bold text-lg text-gray-800 mb-2">
-                Showing {initialCourses.length || 'All'} Courses
-              </h3>
-              {currentParams.search && (
-                <p className="text-sm text-gray-600">
-                  Search results for: <span className="font-semibold text-blue-600">"{currentParams.search}"</span>
-                  <button 
-                    onClick={() => {
-                      const params = new URLSearchParams(searchParams.toString());
-                      params.delete('search');
-                      router.push(`/courses?${params.toString()}`);
-                    }}
-                    className="ml-2 text-red-500 hover:text-red-700 text-xs underline"
-                  >
-                    Clear search
-                  </button>
-                </p>
-              )}
-            </div>
-
-            {/* --- SORTING DROPDOWN --- */}
-            <div className="relative group">
-              <select
-                className="bg-white border border-gray-200 text-sm rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-indigo-500"
-
-                onChange={(e) => updateFilter('sort', e.target.value)}
-              >
-                <option value="default">Sort by: Default</option>
-                <option value="fees_low">Fees: Low to High</option>
-                <option value="rank_low">NIRF Rank: High to Low</option>
-                <option value="package_high">Avg Package: High to Low</option>
-              </select>
-              {/* <ChevronDown className="absolute right-3 top-2.5 w-4 h-4 text-gray-400 pointer-events-none" /> */}
-            </div>
-          </div>
-
-          {initialCourses.length === 0 ? (
-            <div className="text-center py-20 bg-white rounded-2xl border border-dashed border-gray-300">
-              <h3 className="text-xl font-semibold text-gray-600">No courses found.</h3>
-              <button onClick={resetFilters} className="mt-4 text-indigo-600 underline">Clear all filters</button>
-            </div>
-          ) : (
-            initialCourses.map((course) => (
-              <div key={course.id} className="p-5 mb-6 border border-gray-200 lg:m-4 rounded-xl shadow-md bg-white">
-                <h2 className="text-xl sm:text-xl md:text-2xl font-medium md:font-medium mb-3 bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                  {course.name || 'N/A'} </h2>
-                {/* Stats */}
-                <div className="flex flex-wrap gap-2 md:gap-6 lg:gap-8 mb-3 text-gray-500 font-medium">
-                  <div className="flex items-center gap-2">
-                    <CalendarClock className='w-5 h-5 text-blue-600' strokeWidth={1} />
-                    <span className="text-sm">{course.duration || 'N/A'}</span>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <IndianRupee className='w-5 h-5 text-blue-600' strokeWidth={1} />
-                    <span className="text-sm">
-                      {course.avg_fees || 'N/A'} <span className="text-gray-400 font-medium">(Avg)</span>
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <BriefcaseBusiness className='w-5 h-5 text-blue-600' strokeWidth={1} />
-                    <span className="text-sm">
-                      {course.course_type || 'Full Time'}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Description */}
-                <p className="max-h-26 text-gray-600 leading-relaxed mb-4 text-sm overflow-y-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                  {course.description || 'An MBA in Marketing is a postgraduate degree focusing on marketing strategies, brand management, and consumer behavior, equipping students with skills for roles like Brand Manager, Sales Manager, or Market Research Analyst.'}
-
-                </p>
-
-                {/* Header */}
-                <div className="flex justify-between items-center mt-8 mb-3">
-                  <h3 className="text-blue-600 font-medium text-md">Colleges Offering this Course</h3>
-
-                </div>
-
-                {/* Nested Horizontal College Scroll */}
-                <div className="flex grid-cols-3 md:grid-cols-3 sm:grid-cols-3 gap-6 overflow-x-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                  {course.offered_at_colleges.length === 0 && (
-                    <div className="flex justify-center items-center w-full py-3">
-                      <p className=" text-center justify-center text-gray-400 italic text-sm">No colleges found for this course.</p>
-                    </div>
-                  )}
-                  {course.offered_at_colleges.map((item) => (
-                    <div
-                      key={item.college.id}
-                      className="w-70 md:w-75 lg:w-80 bg-white shrink-0 p-3 rounded-xl border border-blue-100 shadow-sm flex flex-col"
+        {/* Results Listings Column */}
+        <section className="w-full lg:w-3/4 flex flex-col justify-between">
+          <div>
+            <div className="sm:flex md:flex lg:flex justify-between items-center mb-6 mx-2">
+              <div>
+                <h3 className="font-bold text-lg text-gray-800 mb-2">
+                  Showing {totalItems} Matching Courses
+                </h3>
+                {currentParams.search && (
+                  <p className="text-sm text-gray-600">
+                    Search results for: <span className="font-semibold text-blue-600">"{currentParams.search}"</span>
+                    <button 
+                      onClick={() => {
+                        const params = new URLSearchParams(searchParams.toString());
+                        params.delete('search');
+                        params.delete('page');
+                        navigateWithUpdatedParams(params);
+                      }}
+                      className="ml-2 text-red-500 hover:text-red-700 text-xs underline"
                     >
-                      {/* Top Section */}
-                      <div className="flex justify-between items-start mb-2">
-                        <h4 className="font-medium text-gray-600 text-md w-2/3 min-h-18">
-                          {item.college.name}
-                        </h4>
+                      Clear search
+                    </button>
+                  </p>
+                )}
+              </div>
 
-                        <Image
-                          src={item.college.logo_url || '/hero-corner.svg'}
-                          alt="College logo"
-                          width={600}
-                          height={600}
-                          className="w-12 h-12 md:w-9 md:h-9 lg:w-18 lg:h-18 opacity-80 object-contain"
-                        />
+              <div className="relative group">
+                <select
+                  className="bg-white border border-gray-200 text-sm rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-indigo-500"
+                  value={currentParams.sort || 'default'}
+                  onChange={(e) => updateFilter('sort', e.target.value)}
+                >
+                  <option value="default">Sort by: Default</option>
+                  <option value="fees_low">Fees: Low to High</option>
+                  <option value="rank_low">NIRF Rank: High to Low</option>
+                  <option value="package_high">Avg Package: High to Low</option>
+                </select>
+              </div>
+            </div>
+
+            {initialCourses.length === 0 ? (
+              <div className="text-center py-20 bg-white rounded-2xl border border-dashed border-gray-300">
+                <h3 className="text-xl font-semibold text-gray-600">No courses found on this page.</h3>
+                <button onClick={resetFilters} className="mt-4 text-indigo-600 underline">Clear all filters</button>
+              </div>
+            ) : (
+              initialCourses.map((course) => (
+                <div key={course.id} className="p-5 mb-6 border border-gray-200 lg:m-4 rounded-xl shadow-md bg-white">
+                  <h2 className="text-xl sm:text-xl md:text-2xl font-medium md:font-medium mb-3 bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                    {course.name || 'N/A'}
+                  </h2>
+                  <div className="flex flex-wrap gap-2 md:gap-6 lg:gap-8 mb-3 text-gray-500 font-medium">
+                    <div className="flex items-center gap-2">
+                      <CalendarClock className='w-5 h-5 text-blue-600' strokeWidth={1} />
+                      <span className="text-sm">{course.duration || 'N/A'}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <IndianRupee className='w-5 h-5 text-blue-600' strokeWidth={1} />
+                      <span className="text-sm">
+                        {course.avg_fees || 'N/A'} <span className="text-gray-400 font-medium">(Avg)</span>
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <BriefcaseBusiness className='w-5 h-5 text-blue-600' strokeWidth={1} />
+                      <span className="text-sm">{course.course_type || 'Full Time'}</span>
+                    </div>
+                  </div>
+
+                  <p className="max-h-26 text-gray-600 leading-relaxed mb-4 text-sm overflow-y-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                    {course.description || 'Course Overview Description detail records placeholder layout textual setup details.'}
+                  </p>
+
+                  <div className="flex justify-between items-center mt-8 mb-3">
+                    <h3 className="text-blue-600 font-medium text-md">Colleges Offering this Course</h3>
+                  </div>
+
+                  <div className="flex gap-6 overflow-x-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                    {course.offered_at_colleges.length === 0 && (
+                      <div className="flex justify-center items-center w-full py-3">
+                        <p className="text-center text-gray-400 italic text-sm">No colleges found for this course.</p>
                       </div>
-
-                      {/* Bottom Section */}
-                      <div className="mt-auto">
-                        <p className="text-blue-500 text-sm mb-3">
-                          {item.college.city}
-                        </p>
-
-                        <div className="flex gap-2">
-                          <Link
-                            href={`/colleges/${item.college.slug}?courses&fees&courseId=${course.id}`}
-                            className="flex-1 py-2 border border-blue-600 text-blue-600 rounded-lg font-semibold text-md text-center"
-                          >
-                            View
-                          </Link>
-
-                          <button className="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold text-md shadow-md">
-                            Apply now
-                          </button>
+                    )}
+                    {course.offered_at_colleges.map((item) => (
+                      <div key={item.college.id} className="w-70 md:w-75 lg:w-80 bg-white shrink-0 p-3 rounded-xl border border-blue-100 shadow-sm flex flex-col">
+                        <div className="flex justify-between items-start mb-2">
+                          <h4 className="font-medium text-gray-600 text-md w-2/3 min-h-18">
+                            {item.college.name}
+                          </h4>
+                          <Image src={item.college.logo_url || '/hero-corner.svg'} alt="College logo" width={60} height={60} className="w-12 h-12 opacity-80 object-contain" />
+                        </div>
+                        <div className="mt-auto">
+                          <p className="text-blue-500 text-sm mb-3">{item.college.city}</p>
+                          <div className="flex gap-2">
+                            <NextLink href={`/colleges/${item.college.slug}?courses&fees&courseId=${course.id}`} className="flex-1 py-2 border border-blue-600 text-blue-600 rounded-lg font-semibold text-md text-center">
+                              View
+                            </NextLink>
+                            <button className="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold text-md shadow-md">
+                              Apply now
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
+              ))
+            )}
+          </div>
+
+          {/* --- NEW PAGINATION CONTROL UI BAR --- */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-center gap-2 mt-8 mb-4 border-t border-gray-200 pt-6">
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage <= 1 || isPending}
+                className="p-2 border border-gray-300 rounded-lg bg-white shadow-xs text-gray-700 hover:bg-gray-50 disabled:opacity-40 disabled:hover:bg-white transition flex items-center justify-center"
+                aria-label="Previous Page"
+              >
+                <ChevronLeft size={18} />
+              </button>
+
+              <div className="flex items-center gap-1 text-sm font-medium px-2 text-gray-700">
+                <span>Page</span>
+                <span className="text-indigo-600 font-bold bg-indigo-5 px-2.5 py-1 rounded-md border border-indigo-100">
+                  {currentPage}
+                </span>
+                <span>of</span>
+                <span className="font-semibold text-gray-900">{totalPages}</span>
               </div>
-            )
-            ))}
+
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage >= totalPages || isPending}
+                className="p-2 border border-gray-300 rounded-lg bg-white shadow-xs text-gray-700 hover:bg-gray-50 disabled:opacity-40 disabled:hover:bg-white transition flex items-center justify-center"
+                aria-label="Next Page"
+              >
+                <ChevronRight size={18} />
+              </button>
+            </div>
+          )}
         </section>
       </main>
+
       <Footer />
-      <EnquiryFormModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        sourcePage="Course Listing"
-        hiddenFields={hiddenFields}
-      />
+      <EnquiryFormModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} sourcePage="Course Listing" hiddenFields={hiddenFields} />
     </div>
   );
 }
