@@ -355,7 +355,7 @@ export default function CollegeListClient({
               onChange={(e) => handleSort(e.target.value)}
               className="bg-white border border-gray-200 text-sm rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-indigo-500"
             >
-              <option value="default">Sort by: Default</option>
+              <option value="">Sort by: Default</option>
               <option value="fees_low">Fees: Low to High</option>
               <option value="rank_low">NIRF Rank: High to Low</option>
               <option value="package_high">Avg Package: High to Low</option>
@@ -436,7 +436,7 @@ export default function CollegeListClient({
 
                             {/* Apply +more overlay to the 3rd grid item */}
                             {isThirdGrid && (
-                              <div className="absolute inset-0 bg-black/10 h-18 items-center justify-center text-white text-xs font-bold transition-colors hover:bg-black/75">
+                              <div className="absolute inset-0 bg-black/40 h-full flex items-center justify-center text-white text-xs font-bold transition-colors hover:bg-black/55">
                                 +more
                               </div>
                             )}
@@ -452,13 +452,13 @@ export default function CollegeListClient({
                         return (
                           <div
                             key={`placeholder-${i}`}
-                            className="relative h-20 rounded-lg overflow-hidden bg-gray-200 cursor-pointer"
+                            className="relative h-18 rounded-lg overflow-hidden bg-gray-200 cursor-pointer"
                             onClick={() => openCarousel(validImages, college.name, 0)}
                           >
                             <img
                               src="https://via.placeholder.com/400x300"
                               className="w-full h-full object-cover opacity-50"
-                              alt="placeholder"
+                              alt="Campus"
                             />
 
                             {/* Apply +more overlay to the placeholder if it occupies the 3rd slot */}
