@@ -100,7 +100,7 @@ const FeaturedInsights = async ({
     <>
       <Header />
 
-      <section className="bg-gray-100 py-12 px-6 md:px-20 ">
+      <section className="bg-white py-6 px-4 md:px-6 ">
         <div className="max-w-387 mx-auto">
 
           {/* Breadcrumb & Header */}
@@ -154,10 +154,10 @@ const FeaturedInsights = async ({
           </div>
 
           {/* BOTTOM SECTION: Main Layout for News Articles & Sidebar */}
-          <div className=" gap-8 flex">
+          <div className="gap-8 md:flex">
 
             {/* LEFT SIDE: News Articles List */}
-            <div className="space-y-6 w-[85%]">
+            <div className="space-y-6 w-[85%] mb-4">
               {articlesNews.length > 0 ? (
                 articlesNews.map((article: NewsItem) => (
                   <ArticleListItem
@@ -225,7 +225,7 @@ const FeaturedCard = ({
   desc: string;
   img: string;
 }) => (
-  <div className="relative w-95 h-65 rounded-lg shrink-0 group cursor-pointer shadow-md overflow-hidden">
+  <div className="relative w-95 h-60 rounded-lg shrink-0 group cursor-pointer shadow-md overflow-hidden">
     <div
       className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
       style={{ backgroundImage: `url(${img})` }}
