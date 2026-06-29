@@ -157,7 +157,7 @@ const FeaturedInsights = async ({
           <div className="gap-8 md:flex">
 
             {/* LEFT SIDE: News Articles List */}
-            <div className="space-y-6 w-[85%] mb-4">
+            <div className="space-y-6 w-full md:w-[85%] mb-4">
               {articlesNews.length > 0 ? (
                 articlesNews.map((article: NewsItem) => (
                   <ArticleListItem
