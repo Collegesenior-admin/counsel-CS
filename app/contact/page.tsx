@@ -25,13 +25,13 @@ export default function ContactSection() {
 
       </div>
       <Header />
-      <section className="relative bg-gray-100 py-16 px-6 md:px-20 overflow-hidden">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+      <section className="relative bg-white py-8 px-6 md:px-10 overflow-hidden">
+        <div className="max-w-340 mx-auto grid grid-cols-1 lg:flex gap-8 items-start">
 
           {/* Left Side: Contact Information */}
-          <div className="relative z-10">
+          <div className="relative z-10 lg:w-[60%]">
             <span className="text-blue-600 text-sm font-medium">Home / Contact</span>
-            <h2 className="text-2xl md:text-3xl font-bold text-[#0D6EFD] mt-4 leading-tight">
+            <h2 className="text-2xl md:text-2xl font-bold text-[#0D6EFD] mt-4 lg:w-150 leading-tight">
               We Are Always Ready To Help You And Answer Your Questions
             </h2>
             <p className="text-gray-500 mt-4 max-w-md">
@@ -45,33 +45,33 @@ export default function ContactSection() {
               </svg>
             </div>
 
-            <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-y-10 gap-x-4">
+            <div className="mt-12 grid grid-cols-2 md:grid-cols-2 gap-y-10 gap-x-8 ">
               {/* Phone */}
               <div>
-                <h3 className="text-xl font-bold text-gray-800 mb-4">Phone</h3>
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">Phone</h3>
                 <p className="text-gray-600 font-medium">+91 93456 23381</p>
                 <p className="text-gray-600 font-medium">+91 93456 23381</p>
-              </div>
-
-              {/* Address */}
-              <div>
-                <h3 className="text-xl font-bold text-gray-800 mb-4">Address</h3>
-                <p className="text-gray-600 font-medium leading-relaxed">
-                  3/476, Valayapathi Salai, JJ Nagar,<br />
-                  Street, Mogappair, Chennai, Tamil<br />
-                  Nadu 600037
-                </p>
               </div>
 
               {/* Email */}
               <div>
-                <h3 className="text-xl font-bold text-gray-800 mb-4">Email</h3>
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">Email</h3>
                 <p className="text-gray-600 font-medium">Team@Collegesenior.In</p>
               </div>
+              {/* Address */}
+              <div>
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">Address</h3>
+                <p className="text-gray-600 font-medium leading-relaxed">
+                  3/476, Valayapathi Salai, JJ Nagar,
+                  Street, Mogappair, Chennai, Tamil
+                  Nadu 600037
+                </p>
+              </div>
+
 
               {/* Social Network */}
               <div>
-                <h3 className="text-xl font-bold text-gray-800 mb-4">Social Network</h3>
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">Social Network</h3>
                 <div className="flex space-x-4">
                   {/* Icons would go here */}
                   <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
@@ -83,37 +83,51 @@ export default function ContactSection() {
           </div>
 
           {/* Right Side: Contact Form Card */}
-          <div className="bg-[#0D6EFD] rounded-[30px] p-8 md:p-12 shadow-2xl">
-            <h2 className="text-2xl font-bold text-white mb-8">Get In Touch</h2>
+          <div className="bg-[#0D6EFD] lg:w-[40%] min-[450]:w-100 md:w-140 mx-auto rounded-[10px] p-8 md:p-6 shadow-lg">
+            <h2 className="text-xl font-bold text-white mb-8">Get In Touch</h2>
 
             <form className="space-y-8">
               {/* Name Input */}
-              <div className="relative border-b border-blue-300 pb-2">
-                <label className="block text-white font-bold sm:text-sm md:text-lg mb-1">Name</label>
+              <div className="flex gap-4 w-full mb-10">
+                <div className="relative border-b border-blue-300 w-full">
+                  {/* <label className="block text-white font-semibold sm:text-sm md:text-md mb-3">Name</label> */}
+                  <input
+                    type="text"
+                    placeholder="Name"
+                    className="w-full bg-transparent text-blue-100 placeholder-blue-200 outline-none text-sm"
+                  />
+                </div>
+
+                {/* Email Input */}
+
+                <div className="relative border-b border-blue-300 w-full">
+                  {/* <label className="block text-white font-semibold sm:text-sm md:text-md mb-3">Email</label> */}
+                  <input
+                    type="email"
+                    placeholder="Eamil"
+                    className="w-full bg-transparent text-blue-100 placeholder-blue-200 outline-none text-sm"
+                  />
+                </div>
+              </div>
+
+
+              <div className="relative border-b border-blue-300 mb-10">
+                {/* <label className="block text-white font-semibold sm:text-sm md:text-md mb-3">Name</label> */}
                 <input
                   type="text"
-                  placeholder="Your Name Here"
+                  placeholder="City"
                   className="w-full bg-transparent text-blue-100 placeholder-blue-200 outline-none text-sm"
                 />
               </div>
 
-              {/* Email Input */}
-              <div className="relative border-b border-blue-300 pb-2">
-                <label className="block text-white font-bold sm:text-sm md:text-lg mb-1">Email</label>
-                <input
-                  type="email"
-                  placeholder="Your Mail ID Here"
-                  className="w-full bg-transparent text-blue-100 placeholder-blue-200 outline-none text-sm"
-                />
-              </div>
 
               {/* Message Input */}
-              <div className="relative border-b border-blue-300 pb-2">
-                <label className="block text-white font-bold sm:text-sm md:text-lg mb-1">Message</label>
+              <div className="relative mb-0">
+                {/* <label className="block text-white font-semibold sm:text-sm md:text-md mb-3">Message</label> */}
                 <textarea
-                  placeholder="Your Message Here"
+                  placeholder="Message"
                   rows={1}
-                  className="w-full bg-transparent text-blue-100 placeholder-blue-200 outline-none text-sm resize-none"
+                  className="w-full bg-transparent border rounded-md h-30 mb-3 p-2 border-blue-300 text-blue-100 placeholder-blue-200 outline-none text-sm resize-none"
                 />
               </div>
 
@@ -121,7 +135,7 @@ export default function ContactSection() {
               <div className="pt-4">
                 <button
                   type="submit"
-                  className="w-full bg-white text-[#0D6EFD] font-bold py-4 rounded-xl hover:bg-blue-50 transition-colors duration-300 shadow-lg"
+                  className="w-full bg-white text-[#0D6EFD] font-semibold py-2.5 rounded-md hover:bg-blue-50 transition-colors duration-300 shadow-lg"
                 >
                   Talk to an Expert
                 </button>
@@ -133,8 +147,8 @@ export default function ContactSection() {
       </section>
       <FAQ />
       <Footer />
-      <EnquiryFormModal 
-        isOpen={isModalOpen} 
+      <EnquiryFormModal
+        isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         sourcePage="Contact Page"
       />
