@@ -110,7 +110,7 @@ const CourseDetailView: React.FC<CourseDetailViewProps> = ({
       </button>
 
       {/* Table of Contents - Collapsible */}
-      <section className="bg-white p-6 rounded-2xl border border-gray-200">
+      <section className="bg-white p-3 md:p-6 rounded-2xl border border-gray-200">
         <button
           onClick={() => setIsTOCExpanded(!isTOCExpanded)}
           className="w-full flex items-center justify-between"
@@ -135,33 +135,33 @@ const CourseDetailView: React.FC<CourseDetailViewProps> = ({
       </section>
 
       {/* Course Header */}
-      <section className="bg-white p-8 rounded-2xl">
-        <h2 className="text-xl font-bold mb-2">{course.short_name} at {collegeName}</h2>
+      <section className="bg-white p-3 md:p-6 rounded-2xl">
+        <h2 className="text-lg md:text-xl font-bold mb-2">{course.short_name} at {collegeName}</h2>
         <p className="text-gray-600 mb-4">{course.description}</p>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="p-4 bg-slate-50 rounded-xl border border-slate-100">
             <p className="text-[10px] text-gray-400 uppercase font-bold">Duration</p>
-            <p className="text-lg font-bold">{course.duration}</p>
+            <p className="text-md md:text-lg font-bold">{course.duration}</p>
           </div>
           <div className="p-4 bg-slate-50 rounded-xl border border-slate-100">
             <p className="text-[10px] text-gray-400 uppercase font-bold">Type</p>
-            <p className="text-lg font-bold">{course.course_type || 'Full Time'}</p>
+            <p className="text-md md:text-lg font-bold">{course.course_type || 'Full Time'}</p>
           </div>
           <div className="p-4 bg-slate-50 rounded-xl border border-slate-100">
             <p className="text-[10px] text-gray-400 uppercase font-bold">Total Fees</p>
-            <p className="text-lg font-bold text-blue-600">{courseData?.fee_structure?.total || selectedCourse.total_fees || 'TBA'}</p>
+            <p className="text-md md:text-lg font-bold text-blue-600">{courseData?.fee_structure?.total || selectedCourse.total_fees || 'TBA'}</p>
           </div>
           <div className="p-4 bg-slate-50 rounded-xl border border-slate-100">
             <p className="text-[10px] text-gray-400 uppercase font-bold">Avg Salary</p>
-            <p className="text-lg font-bold text-green-600">{course.avg_salary || 'N/A'}</p>
+            <p className="text-md md:text-lg font-bold text-green-600">{course.avg_salary || 'N/A'}</p>
           </div>
         </div>
       </section>
 
       {/* Overview */}
       {courseData?.overview && (
-        <section id="course-overview" className="bg-white p-8 rounded-2xl">
-          <h2 className="text-xl font-bold mb-4">{course.short_name} in {collegeName} Overview</h2>
+        <section id="course-overview" className="bg-white p-3 md:p-6 rounded-2xl">
+          <h2 className="text-lg md:text-xl font-bold mb-4">{course.short_name} in {collegeName} Overview</h2>
           <p className="text-gray-600 leading-relaxed mb-6">{courseData.overview}</p>
 
           {courseData.highlights && courseData.highlights.length > 0 && (
@@ -194,8 +194,8 @@ const CourseDetailView: React.FC<CourseDetailViewProps> = ({
       )}
 
       {/* Course Highlights - Redesigned */}
-      <section id="course-details" className="bg-white p-8 rounded-2xl">
-        <h2 className="text-xl font-bold mb-6">{course.short_name} at {collegeName} Highlights</h2>
+      <section id="course-details" className="bg-white p-3 md:p-6 rounded-2xl">
+        <h2 className="text-lg md:text-xl font-bold mb-6">{course.short_name} at {collegeName} Highlights</h2>
         <div className="overflow-x-auto rounded-xl border border-gray-300 mb-6">
           <table className="w-full border-collapse">
             <tbody>
@@ -267,8 +267,8 @@ const CourseDetailView: React.FC<CourseDetailViewProps> = ({
 
       {/* Fee Structure */}
       {courseData?.fee_structure && (
-        <section id="fee-structure" className="bg-white p-8 rounded-2xl">
-          <h2 className="text-xl font-bold mb-3">Fee Structure for {course.short_name} at {collegeName}</h2>
+        <section id="fee-structure" className="bg-white p-3 md:p-6 rounded-2xl">
+          <h2 className="text-lg md:text-xl font-bold mb-3">Fee Structure for {course.short_name} at {collegeName}</h2>
           <p className="text-gray-700 leading-relaxed mb-6">The fees structure for {course.short_name} at {collegeName} is approximately {courseData.fee_structure.total?.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}  for the full {course.duration?.split(' ')[0] || '4'}-years program. This includes tuition fees, semester-wise institute charges, and other academic expenses. Additional hostel and mess charges may apply if the student opts for on-campus accommodation.</p>
           <div className="overflow-x-auto rounded-xl border border-gray-300">
             <table className="w-full border-collapse">
@@ -316,8 +316,8 @@ const CourseDetailView: React.FC<CourseDetailViewProps> = ({
       )}
 
       {/* Eligibility & Admission - Redesigned */}
-      <section id="eligibility" className="bg-white p-8 rounded-2xl">
-        <h2 className="text-xl font-bold mb-6">Eligibility & Admission for {course.short_name} in {collegeName}</h2>
+      <section id="eligibility" className="bg-white p-3 md:p-6 rounded-2xl">
+        <h2 className="text-lg md:text-xl font-bold mb-6">Eligibility & Admission for {course.short_name} in {collegeName}</h2>
         <p className="text-gray-700 leading-relaxed mb-6">The eligibility criteria for {course.short_name} at {collegeName} require candidates to have a minimum of {courseData?.eligibility_details?.split(' ')[0] || '60%'} in {courseData?.eligibility_details?.split(' ').slice(1).join(' ') || 'Mathematics, Physics, and Chemistry'} at the Class 12 level or equivalent.
           The selection process is based on {courseData?.selection_criteria || 'Merit-based'}, followed by the official counselling procedure conducted by the respective authorities.
           The admission process involves completing the {courseData?.admission_process?.[0]?.title || 'Application Form'}, appearing for the {courseData?.admission_process?.[1]?.title || 'Entrance Exam'}, and successfully participating in the counselling and seat allotment process.
@@ -373,8 +373,8 @@ const CourseDetailView: React.FC<CourseDetailViewProps> = ({
 
       {/* Placement & Career - Redesigned */}
       {courseData?.career_prospects && (
-        <section id="placement" className="bg-white p-8 rounded-2xl">
-          <h2 className="text-xl font-bold mb-6">Placement & Career Prospects for {course.short_name} in {collegeName}</h2>
+        <section id="placement" className="bg-white p-3 md:p-6 rounded-2xl">
+          <h2 className="text-lg md:text-xl font-bold mb-6">Placement & Career Prospects for {course.short_name} in {collegeName}</h2>
           <p className="text-gray-700 leading-relaxed mb-6">The placement and career prospects for {course.name} at {collegeName} are strong, with an average salary range of {courseData.career_prospects.salary_range} offered to graduates.
             Students are recruited for roles, across leading organizations in sectors including {courseData.career_prospects.top_sectors?.join(', ') || 'Technology and Analytics'}.
             Through the course, students develop industry-relevant skills such as {courseData.skills_gained?.join(', ') || 'Problem-solving and Analytical Skills'}, which prepare them for careers in technology, analytics, and problem-solving roles across diverse domains.</p>
@@ -434,16 +434,16 @@ const CourseDetailView: React.FC<CourseDetailViewProps> = ({
 
       {/* FAQs */}
       {courseData?.faqs && courseData.faqs.length > 0 && (
-        <section id="course-faqs" className="bg-white p-8 rounded-2xl">
-          <h2 className="text-xl font-bold mb-6">Frequently Asked Questions for {course.short_name}</h2>
-          <div className="space-y-4">
+        <section id="course-faqs" className="bg-white p-3 md:p-6 rounded-2xl">
+          <h2 className="text-lgz md:text-xl font-bold mb-6">Frequently Asked Questions for {course.short_name}</h2>
+          <div className="space-y-2">
             {courseData.faqs.map((faq, idx) => (
               <details
                 key={idx}
                 className="group bg-slate-50 rounded-xl border border-transparent hover:border-blue-100 transition-all"
               >
-                <summary className="list-none flex items-center justify-between p-4 cursor-pointer outline-none">
-                  <p className="font-bold text-sm text-gray-800">{faq.q}</p>
+                <summary className="list-none flex items-center justify-between p-2 cursor-pointer outline-none">
+                  <p className="font-bold text-sm w-[95%] text-gray-800">{faq.q}</p>
                   <Icons.Plus size={16} className="text-blue-500 transition-transform group-open:rotate-45" />
                 </summary>
                 <div className="px-4 pb-4">
@@ -456,8 +456,8 @@ const CourseDetailView: React.FC<CourseDetailViewProps> = ({
       )}
 
       {/* Other Courses - Redesigned */}
-      <section id="related-courses" className="bg-white p-8 rounded-2xl">
-        <h2 className="text-xl font-bold mb-6">Other Popular Courses at {collegeName}</h2>
+      <section id="related-courses" className="bg-white p-3 md:p-6 rounded-2xl">
+        <h2 className="text-lg md:text-xl font-bold mb-6">Other Popular Courses at {collegeName}</h2>
         <div className="grid md:grid-cols-3 gap-4">
           {otherCourses.slice(0, 6).map((offering) => (
             <Link
@@ -481,8 +481,8 @@ const CourseDetailView: React.FC<CourseDetailViewProps> = ({
       </section>
 
       {/* Explore by Streams - Redesigned */}
-      <section id="explore-streams" className="bg-white p-8 rounded-2xl">
-        <h2 className="text-xl font-bold mb-6">Explore Courses by Stream at {collegeName}</h2>
+      <section id="explore-streams" className="bg-white p-3 md:p-6 rounded-2xl">
+        <h2 className="text-lg md:text-xl font-bold mb-6">Explore Courses by Stream at {collegeName}</h2>
         <div className="space-y-6">
           {Object.entries(coursesByStream).map(([stream, courses]) => (
             <div key={stream} className="p-5 bg-slate-50 rounded-xl border border-gray-200">
@@ -495,7 +495,7 @@ const CourseDetailView: React.FC<CourseDetailViewProps> = ({
                   <Link
                     key={offering.id}
                     href={`?courses&fees&courseId=${offering.course.id}`}
-                    className="p-3 bg-white border border-gray-200 rounded-lg hover:border-blue-300 hover:shadow-sm transition text-center"
+                    className="p-3 bg-white border border-gray-200 rounded-lg hover:border-blue-300 hover:shadow-sm transition md:text-center"
                   >
                     <p className="font-medium text-gray-800 text-xs">{offering.course.name}</p>
                   </Link>
