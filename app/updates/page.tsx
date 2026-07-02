@@ -100,7 +100,7 @@ const FeaturedInsights = async ({
     <>
       <Header />
 
-      <section className="bg-white py-6 px-4 md:px-6 ">
+      <section className="max-w-387 mx-auto bg-white py-6 px-4 md:px-6 ">
         <div className="max-w-387 mx-auto">
 
           {/* Breadcrumb & Header */}
@@ -132,7 +132,7 @@ const FeaturedInsights = async ({
           )}
 
           {/* MIDDLE SECTION: Category Filter Pills */}
-          <div className="flex flex-wrap gap-3 mb-10">
+          <div className="flex shrink-0 overflow-x-scroll gap-3 mb-10 scroll-smooth scrollbar-hide">
             {categories.map((cat) => {
               const isActive =
                 selectedCategory === cat ||
@@ -142,7 +142,7 @@ const FeaturedInsights = async ({
                 <Link
                   key={cat}
                   href={cat === "All Posts" ? "/updates" : `/updates?category=${cat}`}
-                  className={`px-6 py-2 rounded-lg font-medium transition ${isActive
+                  className={`px-6 py-2 rounded-lg font-medium transition flex shrink-0 ${isActive
                     ? "bg-blue-600 text-white shadow-md"
                     : "bg-gray-200 text-gray-600 hover:bg-gray-300"
                     }`}
@@ -157,7 +157,7 @@ const FeaturedInsights = async ({
           <div className="gap-8 md:flex">
 
             {/* LEFT SIDE: News Articles List */}
-            <div className="space-y-6 w-full md:w-[85%] mb-4">
+            <div className="space-y-6 w-full md:w-[85%] mb-4 p-3">
               {articlesNews.length > 0 ? (
                 articlesNews.map((article: NewsItem) => (
                   <ArticleListItem
@@ -225,7 +225,7 @@ const FeaturedCard = ({
   desc: string;
   img: string;
 }) => (
-  <div className="relative w-95 h-60 rounded-lg shrink-0 group cursor-pointer shadow-md overflow-hidden">
+  <div className="relative w-85 md:w-95 h-60 rounded-lg shrink-0 group cursor-pointer shadow-md overflow-hidden">
     <div
       className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
       style={{ backgroundImage: `url(${img})` }}
@@ -252,7 +252,7 @@ const ArticleListItem = ({
   previewText: string;
   slug: string;
 }) => (
-  <div className="bg-white p-6 rounded-2xl shadow-sm flex gap-6 border border-gray-100 hover:shadow-md transition">
+  <div className="bg-white p-5 rounded-2xl shadow-sm flex gap-6 border border-gray-100 hover:shadow-md transition">
     <div className="flex-1">
       <p className="text-xs text-blue-600 font-semibold uppercase tracking-wider mb-3">
         {category} — <span className="text-gray-400 font-normal normal-case">{date}</span>
