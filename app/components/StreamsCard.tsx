@@ -210,7 +210,7 @@ export default function StreamSection() {
                     {/* Scrollable Tabs */}
                     <div
                         ref={scrollRef}
-                        className="flex w-[75%] md:w-[85%] lg:w-[90%] mx-auto text-center justify-center items-center gap-6 overflow-x-auto whitespace-nowrap scroll-smooth scrollbar-hide h-10"
+                        className="flex w-[75%] md:w-[85%] lg:w-[90%] mx-auto text-center lg:justify-center items-center gap-6 overflow-x-auto whitespace-nowrap scroll-smooth scrollbar-hide h-10"
                     >
                         {streams.map((stream, index) => {
                             const isActive = stream === selectedStream;
