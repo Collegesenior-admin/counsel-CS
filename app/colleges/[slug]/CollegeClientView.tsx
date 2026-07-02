@@ -26,7 +26,6 @@ import SimilarCollegesSection from './_components/SimilarCollegesSection';
 import TableOfContents from './_components/TableOfContents';
 import EnquiryFormModal from '@/app/components/EnquiryFormModal';
 import TabEnquiryForm from '@/app/components/TabEnquiryForm';
-import { JsonArray } from '@prisma/client/runtime/library';
 
 interface SimilarCollege {
   id: number;
