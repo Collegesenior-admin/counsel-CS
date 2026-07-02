@@ -282,13 +282,13 @@ export default async function HomePage() {
         <TopPerformingColleges />
 
         {/* Paper  */}
-        <section className="max-w-337 mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative bg-primary rounded-3xl overflow-hidden">
+        <section className="max-w-387 mx-auto md:px-12 mb-8 lg:px-8">
+          <div className="relative bg-primary md:rounded-3xl overflow-hidden">
 
-            <div className="flex flex-col lg:flex-row items-center justify-between px-7 md:px-18">
+            <div className="flex flex-col lg:flex-row items-center justify-between px-7 md:px-10">
 
               {/* LEFT CONTENT */}
-              <div className="max-w-3xl text-left pt-7 mb-4">
+              <div className="max-w-full text-left pt-7 mb-4">
                 <p className="text-white text-sm font-medium sm:text-base flex items-center leading-5.5 mb-6">
                   Apply to your preferred colleges across Tamil Nadu with just one application.
                   Our trusted unified platform lets you connect to multiple institutions quickly
@@ -330,7 +330,7 @@ export default async function HomePage() {
           </div>
         </section>
 
-      
+        {/* <CityGrid /> */}
 
 
         {/* Frequently Asked Questions */}
