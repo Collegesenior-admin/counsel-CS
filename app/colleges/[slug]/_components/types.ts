@@ -17,7 +17,7 @@ export type CollegeWithRelations = {
     email: string;
     phone: string;
     logo_url: string;
-    image_url: string;
+    image_urls: string;
     banner_url: string;
     overview: string;
     description: string;
