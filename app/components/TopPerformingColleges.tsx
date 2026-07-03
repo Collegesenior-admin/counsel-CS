@@ -77,7 +77,7 @@ export default function FredColleges() {
   return (
     <section
       ref={sectionRef}
-      className="max-w-387 mx-auto px-10 py-15 max-[991px]:px-6 max-[700px]:px-4 max-[700px]:py-12 font-[Poppins]"
+      className="max-w-387 mx-auto p-10 max-[991px]:px-6 max-[700px]:px-4 max-[700px]:py-8"
     >
       {/* TITLE */}
       <div
