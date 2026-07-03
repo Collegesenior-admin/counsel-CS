@@ -103,9 +103,9 @@ const CourseDetailView: React.FC<CourseDetailViewProps> = ({
       {/* Back Button */}
       <button
         onClick={handleBack}
-        className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium transition mb-4"
+        className="flex items-center gap-2 text-blue-600 hover:text-blue-700 text-md lg:text-xl font-medium transition mb-4"
       >
-        <ArrowLeft size={20} />
+        <ArrowLeft size={18} />
         Back
       </button>
 
@@ -115,19 +115,19 @@ const CourseDetailView: React.FC<CourseDetailViewProps> = ({
           onClick={() => setIsTOCExpanded(!isTOCExpanded)}
           className="w-full flex items-center justify-between"
         >
-          <h3 className="font-bold text-lg">Table of Contents</h3>
+          <h3 className="font-bold text-md lg:text-xl">Table of Contents</h3>
           {isTOCExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
         </button>
 
         {isTOCExpanded && (
-          <ul className="space-y-2 text-sm text-gray-600 mt-4">
+          <ul className="space-y-2 text-md lg:text-xl text-gray-600 mt-4">
             {tocItems.map((item, idx) => (
-              <li key={idx}>
+              <li key={idx} className='flex'>
                 <span className="text-blue-600 mt-1">•</span>
                 <button onClick={() => {
                   const ids = ['course-overview', 'course-details', 'fee-structure', 'eligibility', 'placement', 'course-faqs', 'related-courses', 'explore-streams'];
                   document.getElementById(ids[idx])?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }} className="hover:text-blue-600 transition ml-2">{item}</button>
+                }} className="hover:text-blue-600 transition ml-2 text-sm lg:text-md text-left">{item}</button>
               </li>
             ))}
           </ul>
@@ -136,12 +136,12 @@ const CourseDetailView: React.FC<CourseDetailViewProps> = ({
 
       {/* Course Header */}
       <section className="bg-white p-3 md:p-6 rounded-2xl">
-        <h2 className="text-lg md:text-xl font-bold mb-2">{course.short_name} at {collegeName}</h2>
-        <p className="text-gray-600 mb-4">{course.description}</p>
+        <h2 className="text-md lg:text-xl font-bold mb-3">{course.short_name} at {collegeName}</h2>
+        <p className="text-gray-600 text-sm lg:text-md mb-4">{course.description}</p>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="p-4 bg-slate-50 rounded-xl border border-slate-100">
             <p className="text-[10px] text-gray-400 uppercase font-bold">Duration</p>
-            <p className="text-md md:text-lg font-bold">{course.duration}</p>
+            <p className="text-sm lg:text-md font-bold">{course.duration}</p>
           </div>
           <div className="p-4 bg-slate-50 rounded-xl border border-slate-100">
             <p className="text-[10px] text-gray-400 uppercase font-bold">Type</p>
@@ -149,11 +149,11 @@ const CourseDetailView: React.FC<CourseDetailViewProps> = ({
           </div>
           <div className="p-4 bg-slate-50 rounded-xl border border-slate-100">
             <p className="text-[10px] text-gray-400 uppercase font-bold">Total Fees</p>
-            <p className="text-md md:text-lg font-bold text-blue-600">{courseData?.fee_structure?.total || selectedCourse.total_fees || 'TBA'}</p>
+            <p className="text-sm lg:text-md font-bold text-blue-600">{courseData?.fee_structure?.total || selectedCourse.total_fees || 'TBA'}</p>
           </div>
           <div className="p-4 bg-slate-50 rounded-xl border border-slate-100">
             <p className="text-[10px] text-gray-400 uppercase font-bold">Avg Salary</p>
-            <p className="text-md md:text-lg font-bold text-green-600">{course.avg_salary || 'N/A'}</p>
+            <p className="text-sm lg:text-md font-bold text-green-600">{course.avg_salary || 'N/A'}</p>
           </div>
         </div>
       </section>
@@ -161,15 +161,15 @@ const CourseDetailView: React.FC<CourseDetailViewProps> = ({
       {/* Overview */}
       {courseData?.overview && (
         <section id="course-overview" className="bg-white p-3 md:p-6 rounded-2xl">
-          <h2 className="text-lg md:text-xl font-bold mb-4">{course.short_name} in {collegeName} Overview</h2>
-          <p className="text-gray-600 leading-relaxed mb-6">{courseData.overview}</p>
+          <h2 className="text-md lg:text-xl font-bold mb-3">{course.short_name} in {collegeName} Overview</h2>
+          <p className="text-gray-600 text-sm lg:text-md leading-relaxed mb-6">{courseData.overview}</p>
 
           {courseData.highlights && courseData.highlights.length > 0 && (
             <div className="mt-6">
-              <h3 className="font-bold text-md mb-3">Course Highlights</h3>
+              <h3 className="text-md lg:text-xl font-bold mb-3">Course Highlights</h3>
               <div className="grid md:grid-cols-2 gap-3">
                 {courseData.highlights.map((highlight, idx) => (
-                  <div key={idx} className="flex items-center gap-2 text-gray-700 text-sm">
+                  <div key={idx} className="flex items-center gap-2 text-gray-700 text-sm lg:text-md">
                     <CheckCircle2 size={16} className="text-green-500 shrink-0" />
                     {highlight}
                   </div>
@@ -180,10 +180,10 @@ const CourseDetailView: React.FC<CourseDetailViewProps> = ({
 
           {courseData.specializations && courseData.specializations.length > 0 && (
             <div className="mt-6">
-              <h3 className="font-bold text-md mb-3">Specializations Offered</h3>
+              <h3 className="text-md lg:text-xl font-bold mb-3">Specializations Offered</h3>
               <div className="flex flex-wrap gap-2">
                 {courseData.specializations.map((spec, idx) => (
-                  <span key={idx} className="px-4 py-2 bg-blue-50 text-blue-700 rounded-lg text-sm font-medium">
+                  <span key={idx} className="px-4 py-2 bg-blue-50 text-blue-700 rounded-lg text-sm lg:text-md font-medium">
                     {spec}
                   </span>
                 ))}
@@ -195,33 +195,33 @@ const CourseDetailView: React.FC<CourseDetailViewProps> = ({
 
       {/* Course Highlights - Redesigned */}
       <section id="course-details" className="bg-white p-3 md:p-6 rounded-2xl">
-        <h2 className="text-lg md:text-xl font-bold mb-6">{course.short_name} at {collegeName} Highlights</h2>
+        <h2 className="text-md lg:text-xl font-bold mb-3">{course.short_name} at {collegeName} Highlights</h2>
         <div className="overflow-x-auto rounded-xl border border-gray-300 mb-6">
           <table className="w-full border-collapse">
             <tbody>
               <tr className="border-b border-gray-300 hover:bg-gray-50">
                 <td className="px-4 py-3 text-sm font-bold text-gray-700">Duration</td>
-                <td className="px-4 py-3 text-sm text-gray-600">{course.duration}</td>
+                <td className="px-4 py-3 text-sm lg:text-md text-gray-600">{course.duration}</td>
               </tr>
               <tr className="border-b border-gray-300 hover:bg-gray-50">
                 <td className="px-4 py-3 text-sm font-bold text-gray-700">Course Type</td>
-                <td className="px-4 py-3 text-sm text-gray-600">{course.course_type || 'Full Time'}</td>
+                <td className="px-4 py-3 text-sm lg:text-md text-gray-600">{course.course_type || 'Full Time'}</td>
               </tr>
               <tr className="border-b border-gray-300 hover:bg-gray-50">
                 <td className="px-4 py-3 text-sm font-bold text-gray-700">Stream</td>
-                <td className="px-4 py-3 text-sm text-gray-600">{course.stream}</td>
+                <td className="px-4 py-3 text-sm lg:text-md text-gray-600">{course.stream}</td>
               </tr>
               <tr className="border-b border-gray-300 hover:bg-gray-50">
                 <td className="px-4 py-3 text-sm font-bold text-gray-700">Level</td>
-                <td className="px-4 py-3 text-sm text-gray-600">{course.level || 'N/A'}</td>
+                <td className="px-4 py-3 text-sm lg:text-md text-gray-600">{course.level || 'N/A'}</td>
               </tr>
               <tr className="border-b border-gray-300 hover:bg-gray-50">
                 <td className="px-4 py-3 text-sm font-bold text-gray-700">Total Fees</td>
-                <td className="px-4 py-3 text-sm font-bold text-blue-600">{courseData?.fee_structure?.total || selectedCourse.total_fees || 'TBA'}</td>
+                <td className="px-4 py-3 text-sm lg:text-md font-bold text-blue-600">{courseData?.fee_structure?.total || selectedCourse.total_fees || 'TBA'}</td>
               </tr>
               <tr className="hover:bg-gray-50">
                 <td className="px-4 py-3 text-sm font-bold text-gray-700">Avg Salary</td>
-                <td className="px-4 py-3 text-sm font-bold text-green-600">{course.avg_salary || 'N/A'}</td>
+                <td className="px-4 py-3 text-sm lg:text-md font-bold text-green-600">{course.avg_salary || 'N/A'}</td>
               </tr>
             </tbody>
           </table>
@@ -231,10 +231,10 @@ const CourseDetailView: React.FC<CourseDetailViewProps> = ({
         <div className="grid md:grid-cols-2 gap-4">
           {course.entrance_exams && course.entrance_exams.length > 0 && (
             <div className="p-4 bg-slate-50 rounded-xl border border-gray-200">
-              <h3 className="font-bold text-md mb-3 text-gray-800">Entrance Exams</h3>
+              <h3 className="text-md lg:text-xl font-bold mb-3">Entrance Exams</h3>
               <div className="flex flex-wrap gap-2">
                 {course.entrance_exams.map((exam, idx) => (
-                  <span key={idx} className="px-3 py-1.5 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">
+                  <span key={idx} className="px-3 py-1.5 bg-blue-100 text-blue-700 rounded-full text-xs lg:text-sm font-medium">
                     {exam}
                   </span>
                 ))}
@@ -244,22 +244,22 @@ const CourseDetailView: React.FC<CourseDetailViewProps> = ({
 
           {courseData?.exam_pattern && (
             <div className="p-4 bg-slate-50 rounded-xl border border-gray-200">
-              <h3 className="font-bold text-md mb-3 text-gray-800">Exam Pattern</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">{courseData.exam_pattern}</p>
+              <h3 className="text-md lg:text-xl font-bold mb-3">Exam Pattern</h3>
+              <p className="text-gray-600 text-sm lg:text-md leading-relaxed">{courseData.exam_pattern}</p>
             </div>
           )}
 
           {courseData?.infrastructure && (
             <div className="p-4 bg-slate-50 rounded-xl border border-gray-200">
-              <h3 className="font-bold text-md mb-3 text-gray-800">Infrastructure</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">{courseData.infrastructure}</p>
+              <h3 className="text-md lg:text-xl font-bold mb-3">Infrastructure</h3>
+              <p className="text-gray-600 text-sm lg:text-md leading-relaxed">{courseData.infrastructure}</p>
             </div>
           )}
 
           {courseData?.projects_internships && (
             <div className="p-4 bg-slate-50 rounded-xl border border-gray-200">
-              <h3 className="font-bold text-md mb-3 text-gray-800">Projects & Internships</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">{courseData.projects_internships}</p>
+              <h3 className="text-md lg:text-xl font-bold mb-3">Projects & Internships</h3>
+              <p className="text-gray-600 text-sm lg:text-md leading-relaxed">{courseData.projects_internships}</p>
             </div>
           )}
         </div>
@@ -268,8 +268,8 @@ const CourseDetailView: React.FC<CourseDetailViewProps> = ({
       {/* Fee Structure */}
       {courseData?.fee_structure && (
         <section id="fee-structure" className="bg-white p-3 md:p-6 rounded-2xl">
-          <h2 className="text-lg md:text-xl font-bold mb-3">Fee Structure for {course.short_name} at {collegeName}</h2>
-          <p className="text-gray-700 leading-relaxed mb-6">The fees structure for {course.short_name} at {collegeName} is approximately {courseData.fee_structure.total?.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}  for the full {course.duration?.split(' ')[0] || '4'}-years program. This includes tuition fees, semester-wise institute charges, and other academic expenses. Additional hostel and mess charges may apply if the student opts for on-campus accommodation.</p>
+          <h2 className="text-md lg:text-xl font-bold mb-3">Fee Structure for {course.short_name} at {collegeName}</h2>
+          <p className="text-gray-700 text-sm lg:text-md leading-relaxed mb-6">The fees structure for {course.short_name} at {collegeName} is approximately {courseData.fee_structure.total?.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}  for the full {course.duration?.split(' ')[0] || '4'}-years program. This includes tuition fees, semester-wise institute charges, and other academic expenses. Additional hostel and mess charges may apply if the student opts for on-campus accommodation.</p>
           <div className="overflow-x-auto rounded-xl border border-gray-300">
             <table className="w-full border-collapse">
               <thead>
@@ -282,31 +282,31 @@ const CourseDetailView: React.FC<CourseDetailViewProps> = ({
                 {courseData.fee_structure.year_1 && (
                   <tr className="border-b border-gray-300 hover:bg-gray-50">
                     <td className="px-4 py-3 text-sm text-gray-700">Year 1</td>
-                    <td className="px-4 py-3 text-sm font-bold text-right">{courseData.fee_structure.year_1}</td>
+                    <td className="px-4 py-3 text-sm font-semibold text-right">{courseData.fee_structure.year_1}</td>
                   </tr>
                 )}
                 {courseData.fee_structure.year_2 && (
                   <tr className="border-b border-gray-300 hover:bg-gray-50">
                     <td className="px-4 py-3 text-sm text-gray-700">Year 2</td>
-                    <td className="px-4 py-3 text-sm font-bold text-right">{courseData.fee_structure.year_2}</td>
+                    <td className="px-4 py-3 text-sm font-semibold text-right">{courseData.fee_structure.year_2}</td>
                   </tr>
                 )}
                 {courseData.fee_structure.year_3 && (
                   <tr className="border-b border-gray-300 hover:bg-gray-50">
                     <td className="px-4 py-3 text-sm text-gray-700">Year 3</td>
-                    <td className="px-4 py-3 text-sm font-bold text-right">{courseData.fee_structure.year_3}</td>
+                    <td className="px-4 py-3 text-sm font-semibold text-right">{courseData.fee_structure.year_3}</td>
                   </tr>
                 )}
                 {courseData.fee_structure.year_4 && (
                   <tr className="border-b border-gray-300 hover:bg-gray-50">
                     <td className="px-4 py-3 text-sm text-gray-700">Year 4</td>
-                    <td className="px-4 py-3 text-sm font-bold text-right">{courseData.fee_structure.year_4}</td>
+                    <td className="px-4 py-3 text-sm font-semibold text-right">{courseData.fee_structure.year_4}</td>
                   </tr>
                 )}
                 {courseData.fee_structure.total && (
                   <tr className="bg-blue-50">
                     <td className="px-4 py-3 text-sm font-bold text-gray-800">Total Course Fees</td>
-                    <td className="px-4 py-3 text-lg font-bold text-blue-600 text-right">{courseData.fee_structure.total}</td>
+                    <td className="px-4 py-3 text-sm lg:text-lg font-semibold text-blue-600 text-right">{courseData.fee_structure.total}</td>
                   </tr>
                 )}
               </tbody>
@@ -317,46 +317,46 @@ const CourseDetailView: React.FC<CourseDetailViewProps> = ({
 
       {/* Eligibility & Admission - Redesigned */}
       <section id="eligibility" className="bg-white p-3 md:p-6 rounded-2xl">
-        <h2 className="text-lg md:text-xl font-bold mb-6">Eligibility & Admission for {course.short_name} in {collegeName}</h2>
-        <p className="text-gray-700 leading-relaxed mb-6">The eligibility criteria for {course.short_name} at {collegeName} require candidates to have a minimum of {courseData?.eligibility_details?.split(' ')[0] || '60%'} in {courseData?.eligibility_details?.split(' ').slice(1).join(' ') || 'Mathematics, Physics, and Chemistry'} at the Class 12 level or equivalent.
+        <h2 className="text-md lg:text-xl font-bold mb-3">Eligibility & Admission for {course.short_name} in {collegeName}</h2>
+        <p className="text-gray-700 text-sm lg:text-md leading-relaxed mb-6">The eligibility criteria for {course.short_name} at {collegeName} require candidates to have a minimum of {courseData?.eligibility_details?.split(' ')[0] || '60%'} in {courseData?.eligibility_details?.split(' ').slice(1).join(' ') || 'Mathematics, Physics, and Chemistry'} at the Class 12 level or equivalent.
           The selection process is based on {courseData?.selection_criteria || 'Merit-based'}, followed by the official counselling procedure conducted by the respective authorities.
           The admission process involves completing the {courseData?.admission_process?.[0]?.title || 'Application Form'}, appearing for the {courseData?.admission_process?.[1]?.title || 'Entrance Exam'}, and successfully participating in the counselling and seat allotment process.
           Additionally, {courseData?.scholarship_info || 'Merit-based'} scholarships are available, offering financial support to {courseData?.eligibility_details || 'Students meeting specific criteria'}, subject to institute norms.</p>
         <div className="grid md:grid-cols-2 gap-4 mb-6">
           {(courseData?.eligibility_details || selectedCourse.eligibility) && (
             <div className="p-5 bg-blue-50 rounded-xl border border-blue-100">
-              <h3 className="font-bold text-gray-800 mb-2 flex items-center gap-2">
+              <h3 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
                 <CheckCircle2 size={18} className="text-blue-600" />
                 Eligibility Criteria
               </h3>
-              <p className="text-gray-700 text-sm leading-relaxed">{courseData?.eligibility_details || selectedCourse.eligibility}</p>
+              <p className="text-gray-700 text-sm lg:text-md leading-relaxed">{courseData?.eligibility_details || selectedCourse.eligibility}</p>
             </div>
           )}
 
           {courseData?.selection_criteria && (
             <div className="p-5 bg-green-50 rounded-xl border border-green-100">
-              <h3 className="font-bold text-gray-800 mb-2 flex items-center gap-2">
+              <h3 className="text-md lg:text-xl font-semibold mb-3 flex items-center gap-2">
                 <CheckCircle2 size={18} className="text-green-600" />
                 Selection Process
               </h3>
-              <p className="text-gray-700 text-sm leading-relaxed">{courseData.selection_criteria}</p>
+              <p className="text-gray-700 text-sm lg:text-md leading-relaxed">{courseData.selection_criteria}</p>
             </div>
           )}
         </div>
 
         {courseData?.admission_process && courseData.admission_process.length > 0 && (
           <div className="mt-6">
-            <h3 className="font-bold text-lg mb-4">Admission Process</h3>
+            <h3 className="text-md lg:text-xl font-bold mb-3">Admission Process</h3>
             <div className="grid md:grid-cols-2 gap-4">
               {courseData.admission_process.map((step) => (
                 <div key={step.step} className="p-4 bg-slate-50 rounded-xl border border-gray-200">
-                  <div className="flex items-center gap-3 mb-2">
+                  <div className="flex items-center gap-3 mb-3">
                     <div className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500 text-white text-sm font-bold shrink-0">
                       {step.step}
                     </div>
-                    <h4 className="font-bold text-md text-gray-800">{step.title}</h4>
+                    <h4 className="font-semibold text-md text-gray-800">{step.title}</h4>
                   </div>
-                  <p className="text-gray-600 text-sm leading-relaxed ml-11">{step.description}</p>
+                  <p className="text-gray-600 text-sm lg:text-md leading-relaxed ml-11">{step.description}</p>
                 </div>
               ))}
             </div>
@@ -365,8 +365,8 @@ const CourseDetailView: React.FC<CourseDetailViewProps> = ({
 
         {courseData?.scholarship_info && (
           <div className="mt-6 p-5 bg-amber-50 rounded-xl border border-amber-100">
-            <h3 className="font-bold text-md mb-2 text-gray-800">Scholarship Information</h3>
-            <p className="text-gray-700 text-sm leading-relaxed">{courseData.scholarship_info}</p>
+            <h3 className="text-md lg:text-xl font-bold mb-3">Scholarship Information</h3>
+            <p className="text-gray-700 text-sm lg:text-md leading-relaxed">{courseData.scholarship_info}</p>
           </div>
         )}
       </section>
@@ -374,24 +374,24 @@ const CourseDetailView: React.FC<CourseDetailViewProps> = ({
       {/* Placement & Career - Redesigned */}
       {courseData?.career_prospects && (
         <section id="placement" className="bg-white p-3 md:p-6 rounded-2xl">
-          <h2 className="text-lg md:text-xl font-bold mb-6">Placement & Career Prospects for {course.short_name} in {collegeName}</h2>
-          <p className="text-gray-700 leading-relaxed mb-6">The placement and career prospects for {course.name} at {collegeName} are strong, with an average salary range of {courseData.career_prospects.salary_range} offered to graduates.
+          <h2 className="text-md lg:text-xl font-bold mb-3">Placement & Career Prospects for {course.short_name} in {collegeName}</h2>
+          <p className="text-gray-700 text-sm lg:text-md leading-relaxed mb-6">The placement and career prospects for {course.name} at {collegeName} are strong, with an average salary range of {courseData.career_prospects.salary_range} offered to graduates.
             Students are recruited for roles, across leading organizations in sectors including {courseData.career_prospects.top_sectors?.join(', ') || 'Technology and Analytics'}.
             Through the course, students develop industry-relevant skills such as {courseData.skills_gained?.join(', ') || 'Problem-solving and Analytical Skills'}, which prepare them for careers in technology, analytics, and problem-solving roles across diverse domains.</p>
           <div className="grid md:grid-cols-3 gap-6 mb-6">
             {courseData.career_prospects.salary_range && (
               <div className="p-6 bg-linear-to-br from-green-50 to-emerald-50 rounded-xl border border-green-100 text-center">
-                <p className="text-sm text-gray-600 mb-2">Average Salary Range</p>
+                <p className="text-sm lg:text-md text-gray-600 mb-3">Average Salary Range</p>
                 <p className="text-lg font-bold text-green-600">{courseData.career_prospects.salary_range}</p>
               </div>
             )}
 
             {courseData.career_prospects.job_roles && (
               <div className="md:col-span-2 p-6 bg-blue-50 rounded-xl border border-blue-100">
-                <h3 className="font-bold text-md text-gray-800 mb-3">Top Job Roles</h3>
+                <h3 className="text-md lg:text-xl font-bold mb-3">Top Job Roles</h3>
                 <div className="grid grid-cols-2 gap-2">
                   {courseData.career_prospects.job_roles.map((role, idx) => (
-                    <div key={idx} className="flex items-center gap-2 text-gray-700 text-sm">
+                    <div key={idx} className="flex items-center gap-2 text-gray-700 text-sm lg:text-md">
                       <CheckCircle2 size={14} className="text-blue-600 shrink-0" />
                       {role}
                     </div>
@@ -403,10 +403,10 @@ const CourseDetailView: React.FC<CourseDetailViewProps> = ({
 
           {courseData.career_prospects.top_sectors && (
             <div className="mb-6">
-              <h3 className="font-bold text-md text-gray-800 mb-3">Top Hiring Sectors</h3>
+              <h3 className="text-md lg:text-xl font-bold mb-3">Top Hiring Sectors</h3>
               <div className="flex flex-wrap gap-2">
                 {courseData.career_prospects.top_sectors.map((sector, idx) => (
-                  <span key={idx} className="px-4 py-2 bg-slate-100 text-gray-700 rounded-full text-sm font-medium border border-gray-200">
+                  <span key={idx} className="px-4 py-2 bg-slate-100 text-gray-700 rounded-full text-sm lg:text-md font-medium border border-gray-200">
                     {sector}
                   </span>
                 ))}
@@ -416,7 +416,7 @@ const CourseDetailView: React.FC<CourseDetailViewProps> = ({
 
           {courseData.skills_gained && courseData.skills_gained.length > 0 && (
             <div>
-              <h3 className="font-bold text-md mb-3 flex items-center gap-2">
+              <h3 className="text-md lg:text-xl font-bold mb-3 flex items-center gap-2">
                 <TrendingUp size={18} className="text-blue-600" />
                 Skills You&apos;ll Gain
               </h3>
@@ -435,7 +435,7 @@ const CourseDetailView: React.FC<CourseDetailViewProps> = ({
       {/* FAQs */}
       {courseData?.faqs && courseData.faqs.length > 0 && (
         <section id="course-faqs" className="bg-white p-3 md:p-6 rounded-2xl">
-          <h2 className="text-lgz md:text-xl font-bold mb-6">Frequently Asked Questions for {course.short_name}</h2>
+          <h2 className="text-md lg:text-xl font-bold mb-3">Frequently Asked Questions for {course.short_name}</h2>
           <div className="space-y-2">
             {courseData.faqs.map((faq, idx) => (
               <details
@@ -443,11 +443,11 @@ const CourseDetailView: React.FC<CourseDetailViewProps> = ({
                 className="group bg-slate-50 rounded-xl border border-transparent hover:border-blue-100 transition-all"
               >
                 <summary className="list-none flex items-center justify-between p-2 cursor-pointer outline-none">
-                  <p className="font-bold text-sm w-[95%] text-gray-800">{faq.q}</p>
+                  <p className="font-semibold text-sm lg:text-md w-[95%] text-gray-800">{faq.q}</p>
                   <Icons.Plus size={16} className="text-blue-500 transition-transform group-open:rotate-45" />
                 </summary>
                 <div className="px-4 pb-4">
-                  <p className="text-gray-600 text-sm leading-relaxed border-t border-gray-200 pt-3">{faq.a}</p>
+                  <p className="text-gray-600 text-sm lg:text-md leading-relaxed border-t border-gray-200 pt-3">{faq.a}</p>
                 </div>
               </details>
             ))}
@@ -457,7 +457,7 @@ const CourseDetailView: React.FC<CourseDetailViewProps> = ({
 
       {/* Other Courses - Redesigned */}
       <section id="related-courses" className="bg-white p-3 md:p-6 rounded-2xl">
-        <h2 className="text-lg md:text-xl font-bold mb-6">Other Popular Courses at {collegeName}</h2>
+        <h2 className="text-md lg:text-xl font-bold mb-3">Other Popular Courses at {collegeName}</h2>
         <div className="grid md:grid-cols-3 gap-4">
           {otherCourses.slice(0, 6).map((offering) => (
             <Link
@@ -482,11 +482,11 @@ const CourseDetailView: React.FC<CourseDetailViewProps> = ({
 
       {/* Explore by Streams - Redesigned */}
       <section id="explore-streams" className="bg-white p-3 md:p-6 rounded-2xl">
-        <h2 className="text-lg md:text-xl font-bold mb-6">Explore Courses by Stream at {collegeName}</h2>
+        <h2 className="text-md lg:text-xl font-bold mb-3">Explore Courses by Stream at {collegeName}</h2>
         <div className="space-y-6">
           {Object.entries(coursesByStream).map(([stream, courses]) => (
             <div key={stream} className="p-5 bg-slate-50 rounded-xl border border-gray-200">
-              <h3 className="font-bold text-md text-gray-800 mb-4 flex items-center gap-2">
+              <h3 className="text-md lg:text-xl font-bold mb-3 flex items-center gap-2">
                 <GraduationCap size={18} className="text-blue-600" />
                 {stream} Courses ({courses.length})
               </h3>
