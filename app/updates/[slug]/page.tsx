@@ -79,29 +79,29 @@ const UpdateDetailPage = async ({ params }: { params: Promise<{ slug: string }> 
   return (
     <>
       <Header />
-      <section className="bg-gray-100 py-12 px-6 md:px-20 font-sans min-h-screen">
-        <div className="max-w-7xl mx-auto">
+      <section className="bg-gray-100 p-2 md:px-20 font-sans min-h-screen">
+        <div className="max-w-387 mx-auto">
 
           {/* Breadcrumb Section */}
           <nav className="text-sm text-blue-600 mb-4 font-medium">
             Home / Updates / {displayCategory}
           </nav>
 
-          <div className="flex gap-8">
+          <div className="md:flex gap-8">
 
             {/* LEFT SIDE: Content Presentation Module */}
-            <article className="w-[85%]">
-              <div className="bg-white rounded-3xl p-8 md:p-10 shadow-sm border border-gray-100">
+            <article className="md:w-[85%] mb-4">
+              <div className="bg-white rounded-3xl p-4 md:p-6 shadow-sm border border-gray-100">
 
                 <span className="inline-block bg-blue-100 text-blue-600 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-6">
                   {displayCategory}
                 </span>
 
-                <h2 className="text-3xl md:text-3xl font-semibold text-gray-900 mb-6 leading-tight">
+                <h2 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-6 leading-tight">
                   {update.title}
                 </h2>
 
-                <div className="flex items-center text-gray-400 text-sm mb-8 pb-8 border-b border-gray-200 gap-2">
+                <div className="flex items-center text-gray-400 text-sm pb-5 border-b border-gray-200 gap-2">
                   <Calendar size={18} /><span>  {new Date(update.createdAt).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
                   <User size={18} />{update.author && <span> By {update.author}</span>}
                   <Timer size={18} /><span> 5 min read</span>
@@ -115,7 +115,7 @@ const UpdateDetailPage = async ({ params }: { params: Promise<{ slug: string }> 
 
                         case 'paragraph':
                           return (
-                            <p key={index} className="text-md leading-relaxed text-gray-600">
+                            <p key={index} className="text-sm lg:text-md leading-relaxed text-gray-600">
                               {block.text}
                             </p>
                           );
@@ -131,7 +131,7 @@ const UpdateDetailPage = async ({ params }: { params: Promise<{ slug: string }> 
                         case 'quote':
                           return (
                             <blockquote key={index} className="border-l-4 border-blue-600 pl-4 my-6 italic text-gray-600 bg-gray-50 p-4 rounded-r-xl">
-                              <p className="text-lg">"{block.text}"</p>
+                              <p className="text-sm lg:text-md">"{block.text}"</p>
                               {block.author && <cite className="block text-sm font-bold text-gray-400 mt-2 not-italic">— {block.author}</cite>}
                             </blockquote>
                           );
@@ -151,9 +151,9 @@ const UpdateDetailPage = async ({ params }: { params: Promise<{ slug: string }> 
                             <div key={index} className="my-6 overflow-x-auto border border-gray-200 rounded-xl">
                               <table className="w-full text-left border-collapse">
                                 <thead>
-                                  <tr className="bg-gray-50 border-b border-gray-200">
+                                  <tr className="bg-gray-50 border-b border-gray-200 w-90">
                                     {block.headers?.map((head, i) => (
-                                      <th key={i} className="p-4 font-bold text-gray-700 text-sm uppercase">{head}</th>
+                                      <th key={i} className="p-3 min-w-50 font-bold text-gray-700 text-sm uppercase">{head}</th>
                                     ))}
                                   </tr>
                                 </thead>
@@ -161,7 +161,7 @@ const UpdateDetailPage = async ({ params }: { params: Promise<{ slug: string }> 
                                   {block.rows?.map((row, rowIndex) => (
                                     <tr key={rowIndex} className="border-b border-gray-100 hover:bg-gray-50/50">
                                       {row.map((cell, cellIndex) => (
-                                        <td key={cellIndex} className="p-4 text-sm text-gray-600">{cell}</td>
+                                        <td key={cellIndex} className="p-3 min-w-50 text-sm text-gray-600">{cell}</td>
                                       ))}
                                     </tr>
                                   ))}
@@ -173,7 +173,7 @@ const UpdateDetailPage = async ({ params }: { params: Promise<{ slug: string }> 
                         case 'graph':
                           return (
                             <div key={index} className="my-8 p-6 border border-gray-200 rounded-2xl bg-gray-50/50 text-center">
-                              <p className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4">
+                              <p className="text-sm lg:text-md font-bold text-gray-500 uppercase tracking-wider mb-4">
                                 Chart: {block.title || "Statistics Data Breakdown"}
                               </p>
                               <div className="flex items-end justify-center gap-6 h-40 pt-4">
