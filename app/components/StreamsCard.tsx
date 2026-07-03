@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { BriefcaseBusiness, ChevronLeft, ChevronRight, HeartPulse, PencilRuler, Stethoscope, TestTubes, Palette, Calculator, Utensils, GraduationCap, Building2, Laptop, Wrench, Microscope, TrendingUp, Users, BookOpen, Briefcase } from 'lucide-react';
+import { BriefcaseBusiness, ChevronLeft, ChevronRight, HeartPulse, PencilRuler, Stethoscope, TestTubes, Palette, Utensils, GraduationCap, Building2, Laptop, Microscope, BookOpen } from 'lucide-react';
 
 interface Course {
     id: number;
@@ -18,119 +18,33 @@ interface Course {
 }
 
 interface StreamData {
-    stream: string;
     courses: Course[];
 }
 
-const streamIcons: Record<string, any> = {
-    // Engineering & Technology
-    'Engineering': PencilRuler,
-    'Technology': Laptop,
-    'Computer Science': Laptop,
-    'Information Technology': Laptop,
-    'Mechanical Engineering': Wrench,
-    'Civil Engineering': Building2,
-    'Electrical Engineering': Calculator,
-
-    // Science & Research
-    'Science': TestTubes,
-    'Physics': TestTubes,
-    'Chemistry': Microscope,
-    'Biology': Microscope,
-    'Mathematics': Calculator,
-    'Research': TestTubes,
-
-    // Medical & Health
-    'Medical': Stethoscope,
-    'Medicine': Stethoscope,
-    'Health Sciences': HeartPulse,
-    'Nursing': HeartPulse,
-    'Pharmacy': HeartPulse,
-    'Dental': Stethoscope,
-
-    // Business & Management
-    'Management': BriefcaseBusiness,
-    'Business': Briefcase,
-    'MBA': BriefcaseBusiness,
-    'Commerce': TrendingUp,
-    'Finance': TrendingUp,
-    'Economics': TrendingUp,
-    'Accounting': Calculator,
-
-    // Arts & Design
-    'Arts': Palette,
-    'Design': Palette,
-    'Fine Arts': Palette,
-    'Fashion Design': Palette,
-    'Architecture': Building2,
-
-    // Hospitality & Services
-    'Hotel Management': Utensils,
-    'Hospitality': Utensils,
-    'Tourism': Users,
-    'Catering': Utensils,
-
-    // Education & Liberal Arts
-    'Education': GraduationCap,
-    'Liberal Arts': BookOpen,
-    'Humanities': BookOpen,
-    'Literature': BookOpen,
-    'Philosophy': BookOpen,
-
-    // Commerce & Banking
-    'Commerce & Banking': TrendingUp,
-    'Banking': TrendingUp,
-    'Insurance': TrendingUp,
-};
+// Display label → DB stream values to merge
+const STREAM_GROUPS: { label: string; icon: any; dbValues: string[] }[] = [
+    { label: 'Engineering',         icon: PencilRuler,      dbValues: ['Engineering', 'Technology', 'Computer Science', 'Information Technology'] },
+    { label: 'Management',          icon: BriefcaseBusiness,dbValues: ['Management', 'Business', 'MBA', 'Commerce', 'Finance', 'Economics'] },
+    { label: 'Computer Science',    icon: Laptop,           dbValues: ['Computer Science', 'Computer Applications', 'BCA', 'MCA'] },
+    { label: 'Pharmacy',            icon: HeartPulse,       dbValues: ['Pharmacy', 'Pharmaceutical Sciences'] },
+    { label: 'Physiotherapy',       icon: HeartPulse,       dbValues: ['Physiotherapy', 'Physical Therapy', 'Rehabilitation'] },
+    { label: 'Arts & Science',      icon: TestTubes,        dbValues: ['Science', 'Arts', 'Mathematics', 'Physics', 'Chemistry', 'Biology', 'Humanities', 'Liberal Arts'] },
+    { label: 'Education',           icon: GraduationCap,    dbValues: ['Education', 'Teaching', 'B.Ed'] },
+    { label: 'Law',                 icon: BookOpen,         dbValues: ['Law', 'Legal Studies', 'LLB'] },
+];
 
 export default function StreamSection() {
     const scrollRef = useRef<HTMLDivElement>(null);
-    const [streams, setStreams] = useState<string[]>([]);
-    const [selectedStream, setSelectedStream] = useState<string>('');
+    const [selectedGroup, setSelectedGroup] = useState(STREAM_GROUPS[0]);
     const [streamData, setStreamData] = useState<StreamData | null>(null);
     const [loading, setLoading] = useState(true);
 
-    // Fetch streams on component mount
     useEffect(() => {
-        const fetchStreams = async () => {
-            try {
-                const response = await fetch('/api/streams');
-                const data = await response.json();
-                const allowedStreams = [
-                    'Commerce',
-                    'Arts',
-                    'Science',
-                    'Engineering',
-                    'Pharmacy',
-                    'Management',
-                    'Research'
-                ];
-
-                const filteredStreams = (data.streams || []).filter(
-                    (stream: string) => allowedStreams.includes(stream)
-                );
-
-                setStreams(filteredStreams);
-
-                if (filteredStreams.length > 0) {
-                    setSelectedStream(filteredStreams[0]);
-                }
-            }
-            catch (error) {
-                console.error('Error fetching streams:', error);
-            }
-        };
-        fetchStreams();
-    }, []);
-
-    // Fetch courses for selected stream
-    useEffect(() => {
-        if (!selectedStream) return;
-
         const fetchStreamData = async () => {
             setLoading(true);
             try {
-                const response = await fetch(`/api/streams/${encodeURIComponent(selectedStream)}`);
+                const param = encodeURIComponent(selectedGroup.dbValues.join(','));
+                const response = await fetch(`/api/streams/${param}`);
                 const data = await response.json();
                 setStreamData(data);
             } catch (error) {
@@ -140,44 +54,13 @@ export default function StreamSection() {
             }
         };
         fetchStreamData();
-    }, [selectedStream]);
+    }, [selectedGroup]);
 
-    const scrollLeft = () => {
-        if (scrollRef.current) {
-            scrollRef.current.scrollBy({
-                left: -250,
-                behavior: "smooth",
-            });
-        }
-    };
-
-    const scrollRight = () => {
-        if (scrollRef.current) {
-            scrollRef.current.scrollBy({
-                left: 250,
-                behavior: "smooth",
-            });
-        }
-    };
-
-    const getStreamIcon = (stream: string) => {
-        // Try exact match first
-        let IconComponent = streamIcons[stream];
-
-        // If no exact match, try partial matching
-        if (!IconComponent) {
-            const streamKey = Object.keys(streamIcons).find(key =>
-                stream.toLowerCase().includes(key.toLowerCase()) ||
-                key.toLowerCase().includes(stream.toLowerCase())
-            );
-            IconComponent = streamKey ? streamIcons[streamKey] : GraduationCap;
-        }
-
-        return <IconComponent size={18} />;
-    };
+    const scrollLeft = () => scrollRef.current?.scrollBy({ left: -250, behavior: 'smooth' });
+    const scrollRight = () => scrollRef.current?.scrollBy({ left: 250, behavior: 'smooth' });
 
     return (
-        <section className="relative overflow-hidden bg-linear-to-tr from-[#0B6AF3] to-[#1C4FD9] max-w-387 mx-auto p-6 md:px-12 mb-8">
+        <section className="relative overflow-hidden bg-linear-to-tr from-[#0B6AF3] to-[#1C4FD9] max-w-387 mx-auto p-6 md:px-6 mb-8">
             <img
                 src="/streams.svg"
                 alt="streams"
@@ -211,23 +94,23 @@ export default function StreamSection() {
                         ref={scrollRef}
                         className="flex w-[75%] md:w-[85%] lg:w-[90%] mx-auto text-center lg:justify-center items-center gap-6 overflow-x-auto whitespace-nowrap scroll-smooth scrollbar-hide h-10"
                     >
-                        {streams.map((stream, index) => {
-                            const isActive = stream === selectedStream;
+                        {STREAM_GROUPS.map((group, index) => {
+                            const isActive = group.label === selectedGroup.label;
+                            const Icon = group.icon;
                             return (
-                                <div key={stream}>
+                                <div key={group.label}>
                                     <button
-                                        onClick={() => setSelectedStream(stream)}
-                                        className={`relative flex shrink-0 items-center gap-2 pb-1.5 text-sm font-medium md:text-base transition-colors ${isActive ? 'text-white' : 'text-white/85 hover:text-white'
-                                            }`}
+                                        onClick={() => setSelectedGroup(group)}
+                                        className={`relative flex shrink-0 items-center gap-2 pb-1.5 text-sm font-medium md:text-base transition-colors ${isActive ? 'text-white' : 'text-white/85 hover:text-white'}`}
                                     >
-                                        {getStreamIcon(stream)}
-                                        <span>{stream}</span>
+                                        <Icon size={18} />
+                                        <span>{group.label}</span>
                                         {isActive && (
                                             <div className="absolute bottom-0 left-0 h-0.5 w-full rounded-full bg-white"></div>
                                         )}
                                     </button>
-                                    {index < streams.length - 0 && (
-                                        <div className="h-6 w-0.5 shrink-0 bg-white/40 -ml-3 -mt-7 " />
+                                    {index < STREAM_GROUPS.length - 1 && (
+                                        <div className="h-6 w-0.5 shrink-0 bg-white/40 -ml-3 -mt-7" />
                                     )}
                                 </div>
                             );
@@ -244,14 +127,14 @@ export default function StreamSection() {
                 </div>
 
                 {/* Highlight Banner */}
-                <div className="mt-6 flex flex-col lg:block lg:text-center items-start justify-evenly gap-4 rounded-xl bg-white/13 px-5 py-5 backdrop-blur-md">
+                <div className="mt-6 flex flex-col md:block md:text-center md:w-full items-start justify-evenly gap-4 rounded-xl bg-white/13 px-5 py-5 backdrop-blur-md">
 
-                    <p className="text-lg font-medium text-white md:text-2xl leading-7">
-                        Right Now You Are Seeing Top/Popular Courses Of {selectedStream}
+                    <p className="text-lg font-medium text-white md:text-xl lg:text-2xl leading-7">
+                        Right Now You Are Seeing Top/Popular Courses Of {selectedGroup.label}
                     </p>
-                    <div className='flex flex-row lg:block w-full justify-between items-center'>
+                    <div className='flex flex-row md:block w-full justify-between items-center'>
 
-                        <p className="mt-2 text-sm text-white/80 md:text-base lg:my-3">
+                        <p className="mt-2 text-sm text-white/80 md:text-base md:my-3">
                             To know more about other courses explore the whole catalog of courses
                         </p>
 
