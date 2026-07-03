@@ -138,7 +138,7 @@ export default function EnquiryFormModal({ isOpen, onClose, sourcePage = 'Genera
       onClick={handleClose}
     >
       <div
-        className={`bg-white rounded-2xl shadow-2xl  px-3 max-w-sm w-full max-h-[85vh] overflow-y-auto transition-all duration-300 transform ${isVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
+        className={`bg-white rounded-2xl shadow-2xl px-3 max-w-sm w-full max-h-[85vh] overflow-y-auto transition-all duration-300 transform ${isVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
           }`}
         onClick={(e) => e.stopPropagation()}
       >
