@@ -13,6 +13,9 @@ type CourseWithColleges = {
       logo_url: string | null;
     };
   }[];
+  _count: {
+    offered_at_colleges: number;
+  };
 };
 
 export async function GET(
@@ -21,11 +24,11 @@ export async function GET(
 ) {
   try {
     const { stream: streamParam } = await params;
-    const stream = decodeURIComponent(streamParam);
+    const streamValues = decodeURIComponent(streamParam).split(',').map(s => s.trim());
 
-    const courses = await prisma.courses.findMany({
+    const courses: CourseWithColleges[] = await prisma.courses.findMany({
       where: {
-        stream: { equals: stream, mode: 'insensitive' },
+        stream: { in: streamValues, mode: 'insensitive' },
         offered_at_colleges: {
           some: {} // Only courses offered at colleges
         }
@@ -44,25 +47,29 @@ export async function GET(
                 logo_url: true
               }
             }
-          },
-          take: 5 // Limit to first 5 colleges per course
+          }
+        },
+        _count: {
+          select: { offered_at_colleges: true }
         }
       },
-      orderBy: { name: 'asc' },
-      take: 12 // Limit to top 12 courses
+      take: 50
     });
 
     // Transform the data to match the expected format
-    const transformedCourses = courses.map((course: CourseWithColleges) => ({
+    const transformedCourses = courses
+      .sort((a, b) => b._count.offered_at_colleges - a._count.offered_at_colleges)
+      .slice(0, 12)
+      .map((course) => ({
       id: course.id,
       name: course.name,
       slug: course.slug,
       short_name: course.short_name || course.name.split(' ').map((word: string) => word[0]).join(''),
-      colleges: course.offered_at_colleges.map((offering) => offering.college)
+      colleges: course.offered_at_colleges.slice(0, 5).map((offering) => offering.college),
+      collegeCount: course._count.offered_at_colleges
     }));
 
     return NextResponse.json({
-      stream,
       courses: transformedCourses
     });
   } catch (error) {
