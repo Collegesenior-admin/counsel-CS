@@ -179,7 +179,7 @@ export default function StreamSection() {
     return (
         <section className="relative overflow-hidden bg-linear-to-tr from-[#0B6AF3] to-[#1C4FD9] max-w-387 mx-auto p-6 md:px-12 mb-8">
             <img
-                src="/Streams.svg"
+                src="/streams.svg"
                 alt="streams"
                 className="absolute inset-0 scale-115 w-full h-full object-cover pointer-events-none select-none"
             />
@@ -244,14 +244,14 @@ export default function StreamSection() {
                 </div>
 
                 {/* Highlight Banner */}
-                <div className="mt-6 flex flex-col items-start justify-evenly gap-4 rounded-xl bg-white/13 px-5 py-5 backdrop-blur-md lg:flex-row lg:items-center">
+                <div className="mt-6 flex flex-col lg:block lg:text-center items-start justify-evenly gap-4 rounded-xl bg-white/13 px-5 py-5 backdrop-blur-md">
 
                     <p className="text-lg font-medium text-white md:text-2xl leading-7">
                         Right Now You Are Seeing Top/Popular Courses Of {selectedStream}
                     </p>
-                    <div className='flex flex-row w-full justify-between items-center'>
+                    <div className='flex flex-row lg:block w-full justify-between items-center'>
 
-                        <p className="mt-2 text-sm text-white/80 md:text-base">
+                        <p className="mt-2 text-sm text-white/80 md:text-base lg:my-3">
                             To know more about other courses explore the whole catalog of courses
                         </p>
 
@@ -265,7 +265,7 @@ export default function StreamSection() {
                     </div>
                     <Link
                         href="/courses"
-                        className="hidden md:block rounded-xl bg-white px-8 py-3 text-sm font-semibold text-[#0057ff] transition hover:scale-105 whitespace-nowrap"
+                        className="hidden md:block w-50 mx-auto lg:mt-4 rounded-xl bg-white px-8 py-3 text-sm font-semibold text-[#0057ff] transition hover:scale-105 whitespace-nowrap"
                     >
                         Explore all courses
                     </Link>
