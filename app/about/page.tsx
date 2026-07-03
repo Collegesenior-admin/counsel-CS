@@ -228,8 +228,8 @@ export default function HomePage() {
 
           </div>
         </section >
-        <section className="bg-white py-6 md:py-16 w-full font-poppins">
-          <div className="max-w-355 ml-8 md:ml-21 px-5">
+        <section className="bg-white py-3 md:py-16 w-full font-poppins">
+          <div className="max-w-355 ml-3 md:ml-21">
             <h2 className="text-2xl md:text-3xl font-bold text-[#1A1A1A] mb-8">
               What Our Happy Students Say...
             </h2>
@@ -237,7 +237,7 @@ export default function HomePage() {
             {/* Cards Container */}
             <div className="flex gap-5 overflow-x-scroll pb-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
               {/* Card 1 */}
-              <div className="shrink-0 w-80 sm:w-87.5 md:w-100 min-h-95 rounded-xl p-8 bg-[#235EE7] text-white flex flex-col">
+              <div className="shrink-0 w-75 sm:w-87.5 md:w-100 min-h-95 rounded-xl p-5 md:p-8 bg-[#235EE7] text-white flex flex-col">
                 <div className="mb-5">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -252,19 +252,21 @@ export default function HomePage() {
                     />
                   </svg>
                 </div>
-                <p className="text-sm md:text-base leading-relaxed mb-auto">
-                  Geetha provides a lot of information about college and courses
-                  that will help me move to the next step in my career. Thank you,
-                  mam, her way of speaking is very nice and friendly.
-                </p>
-                <div className="mt-6">
-                  <h4 className="text-lg font-bold mb-1">Priya Dharshini</h4>
-                  <p className="text-sm opacity-90">Student at Crescent University</p>
+                <div className="flex flex-col justify-between h-full">
+                  <p className="text-sm md:text-base leading-relaxed">
+                    Geetha provides a lot of information about college and courses
+                    that will help me move to the next step in my career. Thank you,
+                    mam, her way of speaking is very nice and friendly.
+                  </p>
+                  <div className="mt-6">
+                    <h4 className="text-lg font-bold mb-1">Priya Dharshini</h4>
+                    <p className="text-sm opacity-90">Student at Crescent University</p>
+                  </div>
                 </div>
               </div>
 
               {/* Card 2 */}
-              <div className="shrink-0 w-80 sm:w-87.5 md:w-100 min-h-95 rounded-xl p-8 bg-[#235EE7] text-white flex flex-col">
+              <div className="shrink-0 w-75 sm:w-87.5 md:w-100 min-h-95 rounded-xl p-5 md:p-8 bg-[#235EE7] text-white flex flex-col">
                 <div className="mb-5">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -279,19 +281,21 @@ export default function HomePage() {
                     />
                   </svg>
                 </div>
-                <p className="text-sm md:text-base leading-relaxed mb-auto">
-                  Geetha provides a lot of information about college and courses
-                  that will help me move to the next step in my career. Thank you,
-                  mam, her way of speaking is very nice and friendly.
-                </p>
-                <div className="mt-6">
-                  <h4 className="text-lg font-bold mb-1">Sharmitha Naren</h4>
-                  <p className="text-sm opacity-90">Student at SRM Eshwari</p>
+                <div className="flex flex-col justify-between h-full">
+                  <p className="text-sm md:text-base leading-relaxed">
+                    Geetha provides a lot of information about college and courses
+                    that will help me move to the next step in my career. Thank you,
+                    mam, her way of speaking is very nice and friendly.
+                  </p>
+                  <div className="mt-6">
+                    <h4 className="text-lg font-bold mb-1">Sharmitha Naren</h4>
+                    <p className="text-sm opacity-90">Student at SRM Eshwari</p>
+                  </div>
                 </div>
               </div>
 
               {/* Card 3 */}
-              <div className="shrink-0 w-80 md:w-100 min-h-95 rounded-xl p-8 bg-[#235EE7] text-white flex flex-col">
+              <div className="shrink-0 w-75 md:w-100 min-h-95 rounded-xl p-5 md:p-8 bg-[#235EE7] text-white flex flex-col">
                 <div className="mb-5">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -306,20 +310,22 @@ export default function HomePage() {
                     />
                   </svg>
                 </div>
-                <p className="text-sm md:text-base leading-relaxed mb-auto">
-                  Geetha provides a lot of information about college and courses
-                  that will help me move to the next step in my career. Thank you,
-                  mam, her way of speaking is very nice and friendly. I was confused
-                  at that time and Tasneem Banu mam helped me.
-                </p>
-                <div className="mt-6">
-                  <h4 className="text-lg font-bold mb-1">Aarthi</h4>
-                  <p className="text-sm opacity-90">Student at SRM University</p>
+                <div className="flex flex-col justify-between h-full">
+                  <p className="text-sm md:text-base leading-relaxed">
+                    Geetha provides a lot of information about college and courses
+                    that will help me move to the next step in my career. Thank you,
+                    mam, her way of speaking is very nice and friendly. I was confused
+                    at that time and Tasneem Banu mam helped me.
+                  </p>
+                  <div className="mt-6">
+                    <h4 className="text-lg font-bold mb-1">Aarthi</h4>
+                    <p className="text-sm opacity-90">Student at SRM University</p>
+                  </div>
                 </div>
               </div>
 
               {/* Card 4 */}
-              <div className="shrink-0 w-80 sm:w-87.5 md:w-100 min-h-95 rounded-xl p-8 bg-[#235EE7] text-white flex flex-col">
+              <div className="shrink-0 w-75 sm:w-87.5 md:w-100 min-h-95 rounded-xl p-5 md:p-8 bg-[#235EE7] text-white flex flex-col">
                 <div className="mb-5">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -334,14 +340,17 @@ export default function HomePage() {
                     />
                   </svg>
                 </div>
-                <p className="text-sm md:text-base leading-relaxed mb-auto">
-                  Geetha provides a lot of information about college and courses
-                  that will help me move to the next step in my career. Thank you,
-                  mam, her way of speaking is very nice and friendly.
-                </p>
-                <div className="mt-6">
-                  <h4 className="text-lg font-bold mb-1">Priya Dharshini</h4>
-                  <p className="text-sm opacity-90">Student at Crescent University</p>
+                <div className="flex flex-col justify-between h-full">
+
+                  <p className="text-sm md:text-base leading-relaxed">
+                    Geetha provides a lot of information about college and courses
+                    that will help me move to the next step in my career. Thank you,
+                    mam, her way of speaking is very nice and friendly.
+                  </p>
+                  <div className="mt-6">
+                    <h4 className="text-lg font-bold mb-1">Priya Dharshini</h4>
+                    <p className="text-sm opacity-90">Student at Crescent University</p>
+                  </div>
                 </div>
               </div>
             </div>
