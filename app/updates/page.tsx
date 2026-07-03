@@ -1,4 +1,3 @@
-
 import { prisma } from '@/lib/prisma';
 import React from 'react';
 import Header from "../components/Header";
@@ -100,7 +99,7 @@ const FeaturedInsights = async ({
     <>
       <Header />
 
-      <section className="max-w-387 mx-auto bg-white py-6 px-4 md:px-6 ">
+      <section className="max-w-387 mx-auto bg-white p-3 md:px-6 ">
         <div className="max-w-387 mx-auto">
 
           {/* Breadcrumb & Header */}
@@ -112,7 +111,7 @@ const FeaturedInsights = async ({
           {/* TOP SECTION: Blogs showing in Horizontal Featured Cards */}
           {featuredBlogs.length > 0 ? (
             <div
-              className="flex gap-5 md:gap-6 p-3 mb-12 overflow-x-scroll"
+              className="flex gap-5 md:gap-6 mb-12 overflow-x-scroll"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
               {featuredBlogs.map((blog) => (
@@ -157,7 +156,7 @@ const FeaturedInsights = async ({
           <div className="gap-8 md:flex">
 
             {/* LEFT SIDE: News Articles List */}
-            <div className="space-y-6 w-full md:w-[85%] mb-4 p-3">
+            <div className="space-y-6 w-full md:w-[85%] mb-4">
               {articlesNews.length > 0 ? (
                 articlesNews.map((article: NewsItem) => (
                   <ArticleListItem
@@ -225,7 +224,7 @@ const FeaturedCard = ({
   desc: string;
   img: string;
 }) => (
-  <div className="relative w-85 md:w-95 h-60 rounded-lg shrink-0 group cursor-pointer shadow-md overflow-hidden">
+  <div className="relative w-80 md:w-95 h-60 rounded-lg shrink-0 group cursor-pointer shadow-md overflow-hidden">
     <div
       className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
       style={{ backgroundImage: `url(${img})` }}
@@ -252,7 +251,7 @@ const ArticleListItem = ({
   previewText: string;
   slug: string;
 }) => (
-  <div className="bg-white p-5 rounded-2xl shadow-sm flex gap-6 border border-gray-100 hover:shadow-md transition">
+  <div className="bg-white p-3 rounded-2xl shadow-sm flex gap-6 border border-gray-100 hover:shadow-md transition">
     <div className="flex-1">
       <p className="text-xs text-blue-600 font-semibold uppercase tracking-wider mb-3">
         {category} — <span className="text-gray-400 font-normal normal-case">{date}</span>
