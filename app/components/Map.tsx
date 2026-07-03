@@ -66,7 +66,7 @@ const FredHeroBanner: React.FC = () => {
 
               {/* Spinning Circle */}
               <svg
-                className="fred-circle-svg absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-full h-full overflow-hidden animate-[spin_14s_linear_infinite]"
+                className="fred-circle-svg absolute top-[43%] left-1/3 -translate-x-1/2 -translate-y-1/2 w-full h-full overflow-hidden animate-[spin_14s_linear_infinite]"
                 viewBox="0 0 300 300"
                 xmlns="http://www.w3.org/2000/svg"
               >
@@ -93,7 +93,7 @@ const FredHeroBanner: React.FC = () => {
                 alt="Tamil Nadu"
                 width={360}
                 height={360}
-                className="fred-map-img absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 max-[575]:w-60 min-[574]:w-65 md:w-60 h-auto border z-10"
+                className="fred-map-img absolute top-[43%] left-1/3 -translate-x-1/2 -translate-y-1/2 max-[575]:w-60 min-[574]:w-65 md:w-60 h-auto border z-10"
                 priority
               />
             </div>
