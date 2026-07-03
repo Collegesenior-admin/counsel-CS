@@ -37,7 +37,7 @@ export default function FAQSection() {
   ];
 
   return (
-    <section className="max-w-387 mx-auto bg-white p-4 md:py-15 px-10">
+    <section className="max-w-387 mx-auto bg-white p-3 md:py-15 md:px-10">
       <div className="max-w-387 mx-auto flex flex-col lg:flex-row gap-6 items-start">
         {/* Left Side */}
         <div className="lg:w-1/2">
@@ -50,7 +50,7 @@ export default function FAQSection() {
           </h2>
 
           {/* Image */}
-          <div className="relative rounded-2xl overflow-hidden flex justify-center items-center">
+          <div className="relative rounded-2xl overflow-hidden flex justify-left items-center">
             <div className="md:w-140 h-full text-gray-600">
               <img src="/faq.webp" alt="FAQ Image" className='object-fit' />
             </div>
