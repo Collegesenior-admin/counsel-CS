@@ -60,7 +60,7 @@ export default function StreamSection() {
     const scrollRight = () => scrollRef.current?.scrollBy({ left: 250, behavior: 'smooth' });
 
     return (
-        <section className="relative overflow-hidden bg-linear-to-tr from-[#0B6AF3] to-[#1C4FD9] max-w-387 mx-auto p-6 md:px-6 mb-8">
+        <section className="relative overflow-hidden bg-linear-to-tr from-[#0B6AF3] to-[#1C4FD9] max-w-387 mx-auto p-6 md:px-9 mb-8">
             <img
                 src="/streams.svg"
                 alt="streams"
