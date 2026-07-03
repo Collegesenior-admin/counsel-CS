@@ -282,21 +282,21 @@ export default async function HomePage() {
         <TopPerformingColleges />
 
         {/* Paper  */}
-        <section className="max-w-387 mx-auto md:px-12 mb-8 lg:px-8">
+        <section className="max-w-387 mx-auto md:px-12 mb-4 md:mb-6 lg:px-8 overflow-hidden">
           <div className="relative bg-primary md:rounded-3xl overflow-hidden">
 
-            <div className="flex flex-col lg:flex-row items-center justify-between px-7 md:px-10">
+            <div className="flex flex-col lg:flex-row items-center justify-between px-3 md:px-10">
 
               {/* LEFT CONTENT */}
               <div className="max-w-full text-left pt-7 mb-4">
-                <p className="text-white text-sm font-medium sm:text-base flex items-center leading-5.5 mb-6">
+                <h2 className="text-white text-sm font-medium sm:text-base flex items-center leading-5.5 mb-6">
                   Apply to your preferred colleges across Tamil Nadu with just one application.
                   Our trusted unified platform lets you connect to multiple institutions quickly
                   and effortlessly via a single simple form, helping you confidently secure
                   the right college.
-                </p>
+                </h2>
 
-                <button className="bg-white text-gray-900 text-sm tracking-wide font-medium px-3 md:px-6 py-1.5 md:py-3 rounded-lg transition duration-200">
+                <button className="rounded-xl bg-white px-8 py-3 text-sm font-semibold text-[#0057ff] transition hover:scale-105">
                   Request for a Callback
                 </button>
               </div>
@@ -305,23 +305,23 @@ export default async function HomePage() {
               <div className="relative w-auto max-w-sm sm:max-w-lg flex justify-end lg:justify-end">
 
                 {/* Glow Circle */}
-                <div className="absolute w-84 h-84 sm:w-82 sm:h-82 bg-white/40 rounded-full blur-3xl"></div>
+                <div className="absolute w-84 h-84 sm:w-84 sm:h-84 bg-white/40 rounded-full blur-3xl"></div>
 
                 {/* Papers Container */}
-                <div className="relative w-74 sm:w-82 h-40 sm:h-58">
+                <div className="relative w-82 h-55 sm:h-68">
 
                   {/* Back Paper */}
                   <img
                     src="/paperbg.svg"
                     alt="background paper"
-                    className="absolute top-4 left-6 bottom-0 w-full h-full object-contain opacity-90"
+                    className="absolute top-9 left-15 sm:left-6 bottom-0 w-full h-full object-contain opacity-90"
                   />
 
                   {/* Front Paper */}
                   <img
                     src="/paper.png"
                     alt="main paper"
-                    className="absolute top-0 left-0 w-full h-full object-contain"
+                    className="absolute top-4 left-12 sm:left-0 w-full h-full object-contain"
                   />
 
                 </div>
