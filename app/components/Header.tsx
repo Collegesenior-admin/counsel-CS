@@ -137,7 +137,7 @@ export default function Header() {
       <div
         className={`
           min-[1000px]:hidden absolute w-full left-0 overflow-hidden transition-all duration-500 ease-in-out
-          ${useGrayStyle ? 'bg-[#FFF5EE]' : 'bg-[#0d68f2]'}
+          ${useGrayStyle ? 'bg-white' : 'bg-[#0d68f2]'}
           ${isOpen
             ? "max-h-150 opacity-100 py-8 visible"
             : "max-h-0 opacity-0 py-0 invisible"}
