@@ -111,16 +111,17 @@ export default function StreamSection() {
                 );
 
                 setStreams(filteredStreams);
-               
-                    if (filteredStreams.length > 0) {
-                        setSelectedStream(filteredStreams[0]);
-                    }}
-            catch (error) {
-                    console.error('Error fetching streams:', error);
+
+                if (filteredStreams.length > 0) {
+                    setSelectedStream(filteredStreams[0]);
                 }
+            }
+            catch (error) {
+                console.error('Error fetching streams:', error);
+            }
         };
-            fetchStreams();
-        }, []);
+        fetchStreams();
+    }, []);
 
     // Fetch courses for selected stream
     useEffect(() => {
@@ -176,9 +177,9 @@ export default function StreamSection() {
     };
 
     return (
-        <section className="relative overflow-hidden bg-linear-to-tr from-[#0B6AF3] to-[#1C4FD9] max-w-387 mx-auto px-6 py-10 md:px-12 mb-8">
+        <section className="relative overflow-hidden bg-linear-to-tr from-[#0B6AF3] to-[#1C4FD9] max-w-387 mx-auto p-6 md:px-12 mb-8">
             <img
-                src="/streams.svg"
+                src="/Streams.svg"
                 alt="streams"
                 className="absolute inset-0 scale-115 w-full h-full object-cover pointer-events-none select-none"
             />
@@ -243,18 +244,28 @@ export default function StreamSection() {
                 </div>
 
                 {/* Highlight Banner */}
-                <div className="mt-6 flex flex-col items-start justify-between gap-6 rounded-xl bg-white/13 px-5 py-5 backdrop-blur-md lg:flex-row lg:items-center">
-                    <div>
-                        <p className="text-lg font-medium text-white md:text-2xl leading-7">
-                            Right Now You Are Seeing Top/Popular Courses Of {selectedStream}
-                        </p>
+                <div className="mt-6 flex flex-col items-start justify-evenly gap-4 rounded-xl bg-white/13 px-5 py-5 backdrop-blur-md lg:flex-row lg:items-center">
+
+                    <p className="text-lg font-medium text-white md:text-2xl leading-7">
+                        Right Now You Are Seeing Top/Popular Courses Of {selectedStream}
+                    </p>
+                    <div className='flex flex-row w-full justify-between items-center'>
+
                         <p className="mt-2 text-sm text-white/80 md:text-base">
                             To know more about other courses explore the whole catalog of courses
                         </p>
+
+                        <div className='block md:hidden bg-white rounded-full p-1 text-[#0057ff]'>
+                            <Link
+                                href="/courses"
+                            >
+                                <ChevronRight size={20} />
+                            </Link>
+                        </div>
                     </div>
                     <Link
                         href="/courses"
-                        className="rounded-xl bg-white px-8 py-3 text-sm font-semibold text-[#0057ff] transition hover:scale-105 whitespace-nowrap"
+                        className="hidden md:block rounded-xl bg-white px-8 py-3 text-sm font-semibold text-[#0057ff] transition hover:scale-105 whitespace-nowrap"
                     >
                         Explore all courses
                     </Link>
