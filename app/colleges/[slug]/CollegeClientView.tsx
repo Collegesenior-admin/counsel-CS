@@ -302,29 +302,25 @@ export default function CollegeClientView({ college, similarColleges }: { colleg
     thumbnail?: string; // Only used for videos
   }
 
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+
+  const SCROLL_THRESHOLD = 300;
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > lastScrollY && window.scrollY > -50) {
-        setIsVisible(true); // Scrolling down
-      } else {
-        setIsVisible(false);  // Scrolling up
-      }
-      setLastScrollY(window.scrollY);
+      const currentScrollY = window.scrollY;
+      setIsVisible(currentScrollY > SCROLL_THRESHOLD);
     };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
-
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <div className="max-w-387 mx-auto bg-white min-h-screen m-0 p-0">
       <Header />
 
-      <div className={`fixed bottom-0 w-full bg-white shadow-md z-50 transition-transform duration-500 ${isVisible ? 'translate-y-0' : 'translate-y-full'
+      <div className={`fixed bottom-0 w-full bg-white shadow-[0_-5px_8px_-1px_rgba(0,0,0,0.1)] z-50 transition-transform duration-500 ${isVisible ? 'translate-y-0' : 'translate-y-full'
         }`}>
         <div className="flex justify-center gap-4">
 
@@ -346,17 +342,17 @@ export default function CollegeClientView({ college, similarColleges }: { colleg
       </div>
       {/* 1. HERO SECTION */}
       <section className="bg-white px-3 md:px-6 lg:px-8">
+            {/* TOP BAR */}
+            <div className="flex flex-wrap items-center justify-between gap-2 my-3">
+              <nav className="text-[10px] md:text-xs text-gray-400 font-medium uppercase tracking-wider">
+                Home / Colleges / {college.slug}
+              </nav>
+            </div>
         <div className="max-w-450 mx-auto flex flex-col-reverse lg:flex-row items-stretch">
 
           {/* LEFT SIDE */}
           <div className="w-full lg:w-2/4 flex flex-col justify-center py-4 md:py-6 lg:py-8">
 
-            {/* TOP BAR */}
-            <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-              <nav className="text-[10px] md:text-xs text-gray-400 font-medium uppercase tracking-wider">
-                Home / Colleges / {college.slug}
-              </nav>
-            </div>
 
             {/* COLLEGE INFO */}
             <div className='flex flex-row-reverse justify-between'>
@@ -735,12 +731,12 @@ export default function CollegeClientView({ college, similarColleges }: { colleg
                         <div key={index} className="group relative aspect-video md:aspect-square rounded-2xl overflow-hidden bg-slate-100 border border-gray-100">
 
                           {/* Render Image or Video Thumbnail */}
-                          {/* <img
-                                                        src={item.type === 'image' ? item.thumbnail : item.url}
-                                                        alt={item.caption}
-                                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                                    /> */}
-                          {/* <video src=""></video> */}
+                          <img
+                            src={item.type === 'image' ? item.thumbnail : item.url}
+                            alt={item.caption}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          />
+                          {/* <video src=""></video>
 
                           {/* Play Icon Overlay for Videos */}
                           {item.type === 'video' && (
