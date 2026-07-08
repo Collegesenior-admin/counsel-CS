@@ -2,10 +2,10 @@
 
 export default function Loader() {
   const words = [
-    "Collecting",
     "Syllabus",
     "Fee Structure",
     "Eligibility",
+    "Placements",
     "Scholarships",
     "Almost Ready...",
   ];
