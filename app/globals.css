@@ -133,3 +133,39 @@ h1 {
 .animate-fadeIn {
   animation: fadeIn 0.4s ease;
 }
+
+
+@keyframes loaderSpin {
+  0% {
+    transform: translateY(0);
+  }
+
+  16.66% {
+    transform: translateY(-40px);
+  }
+
+  33.33% {
+    transform: translateY(-80px);
+  }
+
+  50% {
+    transform: translateY(-120px);
+  }
+
+  66.66% {
+    transform: translateY(-160px);
+  }
+
+  83.33% {
+    transform: translateY(-200px);
+  }
+
+  100% {
+    transform: translateY(-240px);
+  }
+}
+
+.loader-words {
+  animation: loaderSpin 4s infinite;
+  transition: transform 3s ease-in-out;
+}
