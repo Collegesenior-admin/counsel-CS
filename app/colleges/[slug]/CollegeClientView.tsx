@@ -469,14 +469,14 @@ export default function CollegeClientView({ college, similarColleges }: { colleg
           {activeTab === 'courses' && (
             <>
               <div className="bg-green-50 border border-green-200 rounded-lg p-2 lg:p-4 mb-3 lg:mb-6">
-                <div className="text-center justify-center lg:flex lg:justify-between items-center">
+                <div className="text-center lg:text-left justify-center lg:flex lg:justify-between items-center">
                   <div>
-                    <h3 className="text-md font-medium text-green-900">Get Course & Fee Details</h3>
-                    <p className="text-green-700 text-xs m-2">Get complete course information, fees structure, and admission guidance</p>
+                    <h3 className="text-md font-medium  text-green-900">Get Course & Fee Details</h3>
+                    <p className="text-green-700 text-xs my-2">Get complete course information, fees structure, and admission guidance</p>
                   </div>
                   <button
                     onClick={() => openTabEnquiryForm('Courses & Fees')}
-                    className="text-sm lg:text-md bg-green-600 text-white m-1 p-1.5 lg:px-4 lg:py-2 rounded-lg font-medium hover:bg-green-700 transition"
+                    className="text-sm lg:text-md bg-green-600 text-white m-1 px-3 py-2 lg:px-4 lg:py-2 rounded-lg font-medium hover:bg-green-700 transition"
                   >
                     Get Details
                   </button>
