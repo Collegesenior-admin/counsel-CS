@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Filter } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Filter, Loader2 } from 'lucide-react';
 import * as Icons from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import CourseDetailView from './CourseDetailView-redesigned';
 
 interface Course {
@@ -67,14 +67,26 @@ const CourseFeeTab: React.FC<CourseFeeTabProps> = ({
   faqs
 }) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [selectedStream, setSelectedStream] = useState<string>('All');
   const [selectedDegree, setSelectedDegree] = useState<string>('All');
+  const [loadingCourseId, setLoadingCourseId] = useState<number | null>(null);
 
-  const selectedCourse = highlightedCourseId
+  // Reset loading state when user navigates back (searchParams change)
+  useEffect(() => {
+    setLoadingCourseId(null);
+  }, [searchParams]);
+
+  const handleViewDetails = (courseId: number) => {
+    setLoadingCourseId(courseId);
+    router.push(`?courses&fees&courseId=${courseId}`);
+  };
+
+  const selectedCourse = highlightedCourseId && courseOfferings && courseOfferings.length > 0
     ? courseOfferings.find(offering => offering.course.id === highlightedCourseId)
     : null;
 
-  if (selectedCourse) {
+  if (selectedCourse && courseOfferings) {
     const otherCourses = courseOfferings.filter(offering => offering.course.id !== highlightedCourseId);
 
     return (
@@ -86,12 +98,20 @@ const CourseFeeTab: React.FC<CourseFeeTabProps> = ({
     );
   }
 
-  const streams = ['All', ...Array.from(new Set(courseOfferings.map(c => c.course.stream).filter(Boolean)))];
-  const degrees = ['All', ...Array.from(new Set(courseOfferings.map(c => c.course.level).filter(Boolean)))];
+  if (!courseOfferings || courseOfferings.length === 0) {
+    return (
+      <div className="py-20 text-center">
+        <p className="text-slate-400">No course data available at this time.</p>
+      </div>
+    );
+  }
 
-  const filteredCourses = courseOfferings.filter(offering => {
-    if (selectedStream !== 'All' && offering.course.stream !== selectedStream) return false;
-    if (selectedDegree !== 'All' && offering.course.level !== selectedDegree) return false;
+  const streams = ['All', ...Array.from(new Set((courseOfferings || []).map(c => c.course?.stream).filter(Boolean)))];
+  const degrees = ['All', ...Array.from(new Set((courseOfferings || []).map(c => c.course?.level).filter(Boolean)))];
+
+  const filteredCourses = (courseOfferings || []).filter(offering => {
+    if (selectedStream !== 'All' && offering.course?.stream !== selectedStream) return false;
+    if (selectedDegree !== 'All' && offering.course?.level !== selectedDegree) return false;
     return true;
   });
 
@@ -133,11 +153,11 @@ const CourseFeeTab: React.FC<CourseFeeTabProps> = ({
               </tr>
             </thead>
             <tbody>
-              {courseOfferings.slice(0, 10).map((offering) => (
+              {(courseOfferings || []).slice(0, 10).map((offering) => (
                 <tr key={offering.id} className="border-b border-gray-300 last:border-b-0 hover:bg-gray-50">
-                  <td className="p-3 font-medium text-gray-800"><p className='w-50'>{offering.course.name}</p></td>
-                  <td className="p-3 text-gray-600">{offering.course.duration}</td>
-                  <td className="p-3 text-gray-600 text-sm">{offering.course.course_type || 'N/A'}</td>
+                  <td className="p-3 font-medium text-gray-800"><p className='w-50'>{offering.course?.name || 'N/A'}</p></td>
+                  <td className="p-3 text-gray-600">{offering.course?.duration || 'N/A'}</td>
+                  <td className="p-3 text-gray-600 text-sm">{offering.course?.course_type || 'N/A'}</td>
                   <td className="p-3 text-right font-bold text-blue-600">{offering.total_fees || 'TBA'}</td>
                 </tr>
               ))}
@@ -219,15 +239,15 @@ const CourseFeeTab: React.FC<CourseFeeTabProps> = ({
         <div className="grid md:grid-cols-2 gap-4">
           {filteredCourses.map((offering) => (
             <div key={offering.id} className="border border-gray-200 rounded-xl p-2 lg:p-5 hover:border-blue-200 hover:shadow-sm transition">
-              <h4 className="font-bold text-sm lg:text-md text-gray-800 mb-3">{offering.course.name}</h4>
+              <h4 className="font-bold text-sm lg:text-md text-gray-800 mb-3">{offering.course?.name || 'N/A'}</h4>
               <div className="space-y-2 text-xs lg:text-sm mb-4">
                 <div className="flex justify-between">
                   <span className="text-gray-600">Duration:</span>
-                  <span className="font-medium text-gray-800">{offering.course.duration}</span>
+                  <span className="font-medium text-gray-800">{offering.course?.duration || 'N/A'}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Type:</span>
-                  <span className="font-medium text-gray-800">{offering.course.course_type || 'N/A'}</span>
+                  <span className="font-medium text-gray-800">{offering.course?.course_type || 'N/A'}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Fees:</span>
@@ -239,10 +259,15 @@ const CourseFeeTab: React.FC<CourseFeeTabProps> = ({
                 <p className="text-xs text-gray-700">{offering.eligibility || 'N/A'}</p>
               </div>
               <button
-                onClick={() => router.push(`?courses&fees&courseId=${offering.course.id}`)}
-                className="block w-full text-center py-1.5 lg:py-2.5 bg-blue-600 text-white rounded-lg text-sm font-bold hover:bg-blue-700 transition"
+                onClick={() => handleViewDetails(offering.course?.id)}
+                disabled={loadingCourseId === offering.course?.id}
+                className="flex items-center justify-center gap-2 w-full text-center py-1.5 lg:py-2.5 bg-blue-600 text-white rounded-lg text-sm font-bold hover:bg-blue-700 transition disabled:opacity-70"
               >
-                View Details
+                {loadingCourseId === offering.course?.id ? (
+                  <><Loader2 size={14} className="animate-spin" /> Loading...</>
+                ) : (
+                  'View Details'
+                )}
               </button>
             </div>
           ))}
@@ -250,7 +275,7 @@ const CourseFeeTab: React.FC<CourseFeeTabProps> = ({
       </section>
 
       {/* FAQs */}
-      {courseFAQs && courseFAQs.questions.length > 0 && (
+      {courseFAQs && courseFAQs.questions && courseFAQs.questions.length > 0 && (
         <section id="course-faqs" className="bg-white p-3 lg:p-8 rounded-2xl">
           <h3 className="text-md lg:text-xl font-bold mb-6">Frequently Asked Questions</h3>
           <div className="space-y-2">
