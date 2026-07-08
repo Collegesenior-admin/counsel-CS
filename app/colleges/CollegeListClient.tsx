@@ -554,7 +554,7 @@ export default function CollegeListClient({
                         <button className="flex-1 sm:flex-none border-2 border-[#2D5BFF] text-[#2D5BFF] font-bold px-4 md:px-6 py-2 rounded-lg hover:bg-blue-50 transition-colors text-xs md:text-sm">
                           Apply now
                         </button>  
-                          <a href={`/colleges/${college.slug}`} className="flex-1 sm:flex-none bg-[#155DFC] text-white font-bold px-4 md:px-6 py-2 rounded-lg shadow-md hover:bg-[#4338CA] transition-colors justify-center text-xs md:text-sm">View More</a>
+                          <a href={`/colleges/${college.slug}`} className="flex-1 sm:flex-none bg-[#155DFC] text-white font-bold px-4 md:px-6 py-2 rounded-lg shadow-md hover:bg-[#4338CA] transition-colors text-center justify-center text-xs md:text-sm">View More</a>
                       </div>
                     </div>
                   </div>
