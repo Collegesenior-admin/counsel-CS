@@ -30,7 +30,7 @@ const FredHeroBanner: React.FC = () => {
     <div className="mx-auto max-w-375 min-[575]:px-6">
       <section
         ref={bannerRef}
-        className="relative bg-[#FFD14B] min-[575]:rounded-2xl overflow-hidden w-full max-w-370 max-[424]:h-120 max-[575]:h-115 min-[575]:h-68 md:h-65 lg:h-60 mx-auto p-6 min-575:mx-6 md:p-8 lg:p-8"
+        className="relative bg-[#FFD14B] min-[575]:rounded-2xl overflow-hidden w-full max-w-370 max-[424]:h-116 max-[575]:h-113 min-[575]:h-68 md:h-65 lg:h-60 mx-auto p-6 min-575:mx-6 md:p-8 lg:p-8"
       >
         {/* Background Image */}
         <img
@@ -61,7 +61,7 @@ const FredHeroBanner: React.FC = () => {
           </div>
 
           {/* RIGHT MAP SECTION */}
-          <div className="absolute max-[424]:-right-18 max-[424]:top-43 max-[575]:-right-14 max-[575]:top-40 min-[575]:-right-5 min-[575]:-top-6 max-[640]:-top-15 max-[575]:w-[20%] lg:w-[40%] md:w-[20%] min-[575]:w-[20%] flex items-center justify-end overflow-visible z-10 md:mt-0">
+          <div className="absolute max-[424]:-right-18 max-[424]:top-46 max-[575]:-right-14 max-[575]:top-44 min-[575]:-right-5 min-[575]:-top-6 max-[640]:-top-15 max-[575]:w-[20%] lg:w-[40%] md:w-[20%] min-[575]:w-[20%] flex items-center justify-end overflow-visible z-10 md:mt-0">
             <div className="relative max-[575]:w-90 max-[575]:h-90 min-[575]:w-85 min-[575]:h-85 md:w-80 md:h-80 shrink-0 -mr-20">
 
               {/* Spinning Circle */}
