@@ -1,3 +1,4 @@
+import { link } from 'fs';
 import Link from 'next/link';
 
 export default function FredFooter() {
@@ -137,15 +138,19 @@ export default function FredFooter() {
             {[
               {
                 title: 'Quick Links',
-                links: ['About Us', 'Explore Colleges', 'View Courses'],
+                name: ['About Us', 'Explore Colleges', 'View Courses'],
+                links: ['about', 'colleges', 'courses'],
+
               },
               {
                 title: 'Support',
-                links: ['Updates', 'Cutoff Calculator', 'Contact Us'],
+                name: ['Updates', 'Cutoff Calculator', 'Contact Us'],
+                links: ['updates', 'calculator', 'contact'],
               },
               {
                 title: 'Legal',
-                links: ['Terms & Conditions', 'Privacy Policy'],
+                name: ['Terms & Conditions', 'Privacy Policy'],
+                links: ['terms', 'privacy'],
               },
             ].map((col, i) => (
               <div
@@ -166,13 +171,13 @@ export default function FredFooter() {
                 </h4>
 
                 <ul className="flex flex-col gap-3.5 max-[1168px]:gap-2.5">
-                  {col.links.map((link, idx) => (
+                  {col.name.map((name, idx) => (
                     <li key={idx}>
                       <Link
-                        href="#"
+                        href={`/${col.links?.[idx] || "#"}`}
                         className="text-[14px] max-[1168px]:text-[15px] text-[#999] hover:text-white transition-colors leading-normal"
                       >
-                        {link}
+                        {name}
                       </Link>
                     </li>
                   ))}
