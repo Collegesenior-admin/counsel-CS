@@ -289,7 +289,7 @@ export default async function HomePage() {
 
               {/* LEFT CONTENT */}
               <div className="max-w-full text-left pt-7 mb-4">
-                <h2 className="text-white text-sm font-medium sm:text-base flex items-center leading-5.5 mb-6">
+                <h2 className="text-white font-medium sm:text-base flex items-center leading-5.5 mb-6">
                   Apply to your preferred colleges across Tamil Nadu with just one application.
                   Our trusted unified platform lets you connect to multiple institutions quickly
                   and effortlessly via a single simple form, helping you confidently secure
@@ -314,14 +314,14 @@ export default async function HomePage() {
                   <img
                     src="/paperbg.svg"
                     alt="background paper"
-                    className="absolute top-9 left-15 sm:left-6 bottom-0 w-full h-full object-contain opacity-90"
+                    className="absolute top-9 left-15 sm:left-6 bottom-0 w-full h-full max-[769]:scale-120 object-contain opacity-90"
                   />
 
                   {/* Front Paper */}
                   <img
                     src="/paper.png"
                     alt="main paper"
-                    className="absolute top-4 left-12 sm:left-0 w-full h-full object-contain"
+                    className="absolute top-0 left-12 sm:left-0 md:top-4 w-full h-full max-[769]:scale-120 object-contain"
                   />
 
                 </div>
