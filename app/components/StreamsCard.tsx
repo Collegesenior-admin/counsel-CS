@@ -80,7 +80,7 @@ export default function StreamSection() {
                 </div>
 
                 {/* Stream Tabs */}
-                <div className="my-6 relative flex justify-center items-center h-13">
+                <div className="my-6 relative flex items-center h-13">
                     {/* Left Arrow */}
                     <button
                         onClick={scrollLeft}
@@ -92,7 +92,7 @@ export default function StreamSection() {
                     {/* Scrollable Tabs */}
                     <div
                         ref={scrollRef}
-                        className="flex w-[75%] md:w-[85%] lg:w-[90%] mx-auto text-center lg:justify-center items-center gap-6 overflow-x-auto whitespace-nowrap scroll-smooth scrollbar-hide h-10"
+                        className="flex w-[75%] md:w-[85%] lg:w-[90%] mx-auto text-left min-[1360]:justify-center items-center gap-6 overflow-x-auto whitespace-nowrap scroll-smooth scrollbar-hide h-10"
                     >
                         {STREAM_GROUPS.map((group, index) => {
                             const isActive = group.label === selectedGroup.label;
@@ -127,14 +127,14 @@ export default function StreamSection() {
                 </div>
 
                 {/* Highlight Banner */}
-                <div className="mt-6 flex flex-col md:block md:text-center md:w-full items-start justify-evenly gap-4 rounded-xl bg-white/13 px-5 py-5 backdrop-blur-md">
+                <div className="mt-6 flex flex-col md:block md:text-left md:w-full items-start justify-evenly gap-4 rounded-xl bg-white/13 px-5 py-5 backdrop-blur-md">
 
+                    <div className='flex flex-row md:block w-full gap-4 justify-between items-center'>
                     <p className="text-lg font-medium text-white md:text-xl lg:text-2xl leading-7">
                         Right Now You Are Seeing Top/Popular Courses Of {selectedGroup.label}
                     </p>
-                    <div className='flex flex-row md:block w-full justify-between items-center'>
 
-                        <p className="mt-2 text-sm text-white/80 md:text-base md:my-3">
+                        <p className="hidden md:block mt-2 text-sm text-white/80 md:text-base md:my-3">
                             To know more about other courses explore the whole catalog of courses
                         </p>
 
@@ -148,7 +148,7 @@ export default function StreamSection() {
                     </div>
                     <Link
                         href="/courses"
-                        className="hidden md:block w-50 mx-auto lg:mt-4 rounded-xl bg-white px-8 py-3 text-sm font-semibold text-[#0057ff] transition hover:scale-105 whitespace-nowrap"
+                        className="hidden md:block w-50 lg:mt-4 rounded-xl bg-white px-8 py-3 text-sm font-semibold text-[#0057ff] transition hover:scale-105 whitespace-nowrap"
                     >
                         Explore all courses
                     </Link>
@@ -156,7 +156,7 @@ export default function StreamSection() {
 
                 {/* Course Cards Grid */}
                 <div
-                    className="mt-10 grid grid-rows-2 grid-flow-col auto-cols-[85%] sm:auto-cols-[48%] md:auto-cols-[45%] xl:grid-rows-none xl:grid-flow-row xl:auto-cols-auto xl:grid-cols-3 gap-x-5 gap-y-5 overflow-x-auto xl:overflow-visible snap-x snap-mandatory " >
+                    className="mt-10 grid grid-rows-1 md:grid-rows-2 grid-flow-col auto-cols-[85%] sm:auto-cols-[58%] md:auto-cols-[55%] xl:grid-rows-none xl:grid-flow-row xl:auto-cols-auto xl:grid-cols-3 gap-x-5 gap-y-5 overflow-x-auto xl:overflow-visible snap-x snap-mandatory " >
                     {loading ? (
                         // Loading skeleton
                         Array.from({ length: 6 }).map((_, i) => (
