@@ -41,16 +41,16 @@ export default function FAQSection() {
       <div className="max-w-387 mx-auto flex flex-col lg:flex-row gap-6 items-start">
         {/* Left Side */}
         <div className="lg:w-1/2">
-          <p className="text-gray-500 text-center md:text-left font-medium text-sm md:text-lg mb-2 tracking-tight">
+          <p className="text-gray-500 text-center lg:text-left font-medium text-sm md:text-lg mb-2 tracking-tight">
             Some of the questions answered
           </p>
 
-          <h2 className="text-center md:text-left text-4xl font-semibold text-[#1A2B49] mb-3 md:mb-8">
+          <h2 className="text-center lg:text-left text-4xl font-semibold text-[#1A2B49] mb-3 md:mb-8">
             Frequently Asked Questions
           </h2>
 
           {/* Image */}
-          <div className="relative rounded-2xl overflow-hidden flex justify-left items-center">
+          <div className="relative rounded-2xl overflow-hidden flex justify-center items-center">
             <div className="md:w-140 h-full text-gray-600">
               <img src="/faq.webp" alt="FAQ Image" className='object-fit' />
             </div>
