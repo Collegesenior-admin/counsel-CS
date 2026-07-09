@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { ChevronDown, Search, ChevronLeft, ChevronRight } from 'lucide-react';
 import Header from './Header';
+import Footer from './Footer'
 
 interface ResultData {
   cutoff: number;
@@ -305,42 +306,8 @@ export default function TNEACalculator() {
                   </div>
                 </div>
               )}
-
-              {/* Search Colleges Section */}
-              <div className="mt-16">
-                <h3 className="text-xl font-bold mb-4">Search Colleges And Counseling Codes</h3>
-                <div className="flex items-center px-4 rounded-lg max-w-md mb-6 border border-gray-300">
-                  <Search className="text-gray-400 mr-3" />
-                  <input
-                    type="text"
-                    placeholder="search code or college name"
-                    className="w-full py-3 focus:outline-none"
-                  />
-                </div>
-
-                <div className="bg-white rounded-2xl overflow-hidden">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="border-b border-gray-400 bg-gray-50">
-                        <th className="text-left py-4 px-3 font-semibold">College Code</th>
-                        <th className="text-left py-4 px-3 font-semibold">College Name</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y">
-                      <tr className='border-b border-gray-400'>
-                        <td className="px-3 py-3">1013</td>
-                        <td className="px-3 py-3">University College Of Engineering Villupuram - Villupuram (Dist)</td>
-                      </tr>
-                      <tr className='border-b border-gray-400'>
-                        <td className="px-3 py-3">1026</td>
-                        <td className="px-3 py-3">University College Of Engineering - Kanchipuram</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
             </div>
-
+            
             {/* Right Results Sidebar */}
             <div className="lg:col-span-4">
               <div className="bg-[#1565f7] text-white rounded-xl p-6 mt-8 md:mt-20 sticky top-25">
@@ -366,8 +333,43 @@ export default function TNEACalculator() {
               </div>
             </div>
           </div>
+
+          {/* Search Colleges Section */}
+          <div className="mt-16">
+            <h3 className="text-xl font-bold mb-4">Search Colleges And Counseling Codes</h3>
+            <div className="flex items-center px-4 rounded-lg max-w-md mb-6 border border-gray-300">
+              <Search className="text-gray-400 mr-3" />
+              <input
+                type="text"
+                placeholder="search code or college name"
+                className="w-full py-3 focus:outline-none"
+              />
+            </div>
+
+            <div className="bg-white rounded-2xl overflow-hidden">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-gray-400 bg-gray-50">
+                    <th className="text-left py-4 px-3 font-semibold">College Code</th>
+                    <th className="text-left py-4 px-3 font-semibold">College Name</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y">
+                  <tr className='border-b border-gray-400'>
+                    <td className="px-3 py-3">1013</td>
+                    <td className="px-3 py-3">University College Of Engineering Villupuram - Villupuram (Dist)</td>
+                  </tr>
+                  <tr className='border-b border-gray-400'>
+                    <td className="px-3 py-3">1026</td>
+                    <td className="px-3 py-3">University College Of Engineering - Kanchipuram</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
