@@ -68,7 +68,7 @@ export default async function HomePage() {
         <Header />
         {/* Hero Section */}
         <section className="max-w-387 mx-auto relative bg-[#0d68f2] text-white flex flex-col md:flex-row md:items-center overflow-hidden">
-          <div className="relative md:w-1/2 p-4 pb-0 sm:p-4 sm:pb-0 md:pl-10 md:p-1">
+          <div className="relative md:w-1/2 p-4 pb-0 sm:p-4 sm:pb-0 md:pl-8 lg:pl-10 md:p-1">
             <div className="relative z-10">
               <span className="text-white font-medium px-4 md:px-4  py-2 md:py-2 rounded-3xl bg-blue-500 tracking-widest text-xs sm:text-xs md:text-xs inline-block min-[1400px]:mt-4">
                 Think, plan, and track all in one place </span>
@@ -87,7 +87,7 @@ export default async function HomePage() {
                 </button>
                 <input type="text" placeholder="Search for colleges or courses..." className="grow p-3 outline-none placeholder-blue-600" />
               </div>
-              <div className="mt-6 md:mt-10 flex-col md:flex-row items-start md:items-center space-y-2 md:space-y-0 md:space-x-6 grayscale opacity-70 max-[770px]:hidden min-[1400px]:mt-10 ">
+              <div className="mt-6 min-[884]:mt-9 flex-col md:flex-row items-start md:items-center space-y-2 md:space-y-0 md:space-x-6 grayscale opacity-70 max-[770px]:hidden min-[1400px]:mt-10 ">
                 <span className="text-sm md:text-base">Recognitions:</span>
                 <div className="flex flex-wrap space-x-2 md:space-x-4 font-bold italic text-sm md:text-xl">
                   <Image src="/Recognition.svg"
@@ -102,7 +102,7 @@ export default async function HomePage() {
               alt="Hero corner image"
               width={600}
               height={600}
-              className="absolute top-55 -left-45 border md:w-120 max-[765px]:hidden" />
+              className="absolute top-55 -left-45 border md:w-120 max-[768px]:hidden" />
           </div>
           <div className="md:w-1/2 3xl:justify-end flex tablet:justify-bottom md:content-end relative md:p-0">
             <Image src="/Hero.webp"
@@ -282,10 +282,10 @@ export default async function HomePage() {
         <TopPerformingColleges />
 
         {/* Paper  */}
-        <section className="max-w-387 mx-auto md:px-12 mb-4 md:mb-6 lg:px-8 overflow-hidden">
-          <div className="relative bg-primary md:rounded-3xl overflow-hidden">
+        <section className="max-w-387 mx-auto md:px-6 mb-4 md:mb-6 lg:px-8 overflow-hidden">
+          <div className="relative bg-primary md:rounded-xl overflow-hidden">
 
-            <div className="flex flex-col lg:flex-row items-center justify-between px-3 md:px-10">
+            <div className="flex flex-col lg:flex-row items-center justify-between px-3 md:px-8">
 
               {/* LEFT CONTENT */}
               <div className="max-w-full text-left pt-7 mb-4">
@@ -308,20 +308,20 @@ export default async function HomePage() {
                 <div className="absolute w-84 h-84 sm:w-84 sm:h-84 bg-white/40 rounded-full blur-3xl"></div>
 
                 {/* Papers Container */}
-                <div className="relative w-82 h-55 sm:h-68">
+                <div className="relative w-82 h-30 sm:h-58">
 
                   {/* Back Paper */}
                   <img
                     src="/paperbg.svg"
                     alt="background paper"
-                    className="absolute top-9 left-15 sm:left-6 bottom-0 w-full h-full max-[769]:scale-120 object-contain opacity-90"
+                    className="absolute top-9 left-15 sm:left-6 md:top-4 bottom-0 w-full h-full max-[769]:scale-120 object-contain opacity-90"
                   />
 
                   {/* Front Paper */}
                   <img
                     src="/paper.png"
                     alt="main paper"
-                    className="absolute top-0 left-12 sm:left-0 md:top-4 w-full h-full max-[769]:scale-120 object-contain"
+                    className="absolute top-0 left-12 sm:left-0 md:top-0 w-full h-full max-[769]:scale-120 object-contain"
                   />
 
                 </div>
