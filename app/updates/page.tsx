@@ -251,7 +251,7 @@ const ArticleListItem = ({
   previewText: string;
   slug: string;
 }) => (
-  <div className="bg-white p-3 rounded-2xl shadow-sm flex gap-6 border border-gray-100 hover:shadow-md transition">
+  <div className="bg-white p-5 rounded-2xl shadow-sm flex gap-6 border border-gray-100 hover:shadow-md transition">
     <div className="flex-1">
       <p className="text-xs text-blue-600 font-semibold uppercase tracking-wider mb-3">
         {category} — <span className="text-gray-400 font-normal normal-case">{date}</span>
@@ -267,7 +267,7 @@ const ArticleListItem = ({
 
       <Link
         href={`/updates/${slug}`}
-        className="bg-gray-100 text-gray-700 px-6 py-2 rounded-lg font-bold text-sm hover:bg-gray-200 transition"
+        className="bg-gray-100 text-gray-700 px-6 py-2 rounded-lg font-semibold text-sm hover:bg-blue-600 hover:text-white transition"
       >
         Read More
       </Link>
