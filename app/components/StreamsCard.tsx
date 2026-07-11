@@ -134,7 +134,7 @@ export default function StreamSection() {
               Right Now You Are Seeing Top/Popular Courses Of {selectedGroup.label}
             </p>
 
-            <p className="hidden md:block mt-2 text-sm text-white/80 md:text-base md:my-3">
+            <p className="hidden md:block mt-2 text-sm text-white/80 md:text-base">
               To know more about other courses explore the whole catalog of courses
             </p>
 
