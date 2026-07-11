@@ -80,14 +80,14 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="relative h-auto min-[1345]:h-160 md:p-5 lg:p-8 m-5 bg-primary rounded-xl text-white">
+        <section className="relative h-auto min-[1345]:h-145 md:p-5 lg:p-8 m-5 bg-primary rounded-xl text-white">
           <div className="p-5 max-w-350 mx-auto">
             <h2 className="text-md md:leading-9 md:tracking-tight lg:tracking-wide font-medium text-left w-full md:text-[24px] lg:text-[30px]">Empowering students to build the future they deserve at
               CollegeSenior, we are passionate about empowering
               students and parents to take confident control of the
               college admission journey and turn dreams into reality.</h2>
 
-            <p className="text-[10px] md:text-[12px] lg:text-[16px] text-[#f7f7f7] md:tracking-wide md:leading-5 text-justify w-full mt-6 md:mt-18">At CollegeSenior, we are passionate about empowering students and parents to take confident control of the college admission journey and
+            <p className="text-[10px] md:text-[12px] lg:text-[16px] text-[#f7f7f7] md:tracking-wide md:leading-5 text-justify w-full mt-6 md:mt-10">At CollegeSenior, we are passionate about empowering students and parents to take confident control of the college admission journey and
               turn dreams into reality. We are dedicated to revolutionizing the way families approach higher education in India, delivering clear,
               personalised guidance that opens doors to the very best colleges.</p>
 
@@ -228,14 +228,14 @@ export default function HomePage() {
 
           </div>
         </section >
-        <section className="bg-white py-3 md:py-16 w-full font-poppins">
-          <div className="max-w-355 ml-3 md:ml-21">
+        <section className="bg-white py-3 md:py-14 w-full font-poppins">
+          <div className="max-w-full ml-3 md:ml-21">
             <h2 className="text-2xl md:text-3xl font-bold text-[#1A1A1A] mb-8">
               What Our Happy Students Say...
             </h2>
 
             {/* Cards Container */}
-            <div className="flex gap-5 overflow-x-scroll pb-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+            <div className="flex gap-5 overflow-x-scroll pb-4 pr-3" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
               {/* Card 1 */}
               <div className="shrink-0 w-75 sm:w-87.5 md:w-100 min-h-95 rounded-xl p-5 md:p-8 bg-[#235EE7] text-white flex flex-col">
                 <div className="mb-5">
@@ -295,7 +295,7 @@ export default function HomePage() {
               </div>
 
               {/* Card 3 */}
-              <div className="shrink-0 w-75 md:w-100 min-h-95 rounded-xl p-5 md:p-8 bg-[#235EE7] text-white flex flex-col">
+              <div className="shrink-0 w-75 sm:w-87.5 md:w-100 min-h-95 rounded-xl p-5 md:p-8 bg-[#235EE7] text-white flex flex-col">
                 <div className="mb-5">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -421,9 +421,9 @@ const students = [
 ];
 
 const colleges = [
-  { title: "Digital Student Acquisition", desc: "Targeted digital enrollment strategies." },
-  { title: "Brand & Quality Enhancement", desc: "Improve institutional trust and reach." },
-  { title: "Strategic Growth Management", desc: "Optimize operations and performance." },
+  { title: "Digital Student Acquisition", desc: "Digital student acquisition refers to how universities and EdTechs use digital channels (social media, search engines, and email) to attract, nurture, and enroll prospective learners." },
+  { title: "Brand & Quality Enhancement", desc: "Brand and Quality Enhancement is the continuous process of refining your business identity and elevating product standards to exceed customer expectations." },
+  { title: "Strategic Growth Management", desc: "Strategic Growth Management is the ongoing process of aligning organizational resources with market opportunities to achieve sustainable, long-term expansion." },
 ];
 
 
