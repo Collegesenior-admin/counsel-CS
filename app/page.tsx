@@ -285,10 +285,10 @@ export default async function HomePage() {
         <section className="max-w-387 mx-auto md:px-6 mb-4 md:mb-6 lg:px-8 overflow-hidden">
           <div className="relative bg-primary md:rounded-xl overflow-hidden">
 
-            <div className="flex flex-col lg:flex-row items-center justify-between px-3 md:px-8">
+            <div className="flex flex-col min-[845]:flex-row items-center justify-between px-3 pt-3 max-[845]:pt-8 md:px-8 lg:pt-0">
 
               {/* LEFT CONTENT */}
-              <div className="max-w-full text-left pt-7 mb-4">
+              <div className="max-w-full text-left">
                 <h2 className="text-white font-medium sm:text-base flex items-center leading-5.5 mb-6">
                   Apply to your preferred colleges across Tamil Nadu with just one application.
                   Our trusted unified platform lets you connect to multiple institutions quickly
@@ -308,20 +308,20 @@ export default async function HomePage() {
                 <div className="absolute w-84 h-84 sm:w-84 sm:h-84 bg-white/40 rounded-full blur-3xl"></div>
 
                 {/* Papers Container */}
-                <div className="relative w-82 h-30 sm:h-58">
+                <div className="relative w-82 h-55">
 
                   {/* Back Paper */}
                   <img
                     src="/paperbg.svg"
                     alt="background paper"
-                    className="absolute top-9 left-15 sm:left-6 md:top-4 bottom-0 w-full h-full max-[769]:scale-120 object-contain opacity-90"
+                    className="absolute top-0 left-[35%] min-[845]:top-3 min-[845]:left-[20%] bottom-0 w-full h-full max-[845]:scale-120 object-contain opacity-90"
                   />
 
                   {/* Front Paper */}
                   <img
                     src="/paper.png"
                     alt="main paper"
-                    className="absolute top-0 left-12 sm:left-0 md:top-0 w-full h-full max-[769]:scale-120 object-contain"
+                    className="absolute top-0 left-[30%] min-[845]:top-1 min-[845]:left-[15%] w-full h-full max-[845]:scale-120 object-contain"
                   />
 
                 </div>
