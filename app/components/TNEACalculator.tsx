@@ -18,6 +18,7 @@ const banners = [
   "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1200&h=400&fit=crop",
 ];
 
+
 // Expanded with space for all 430 parsed data rows from the PDF link
 const ALL_COLLEGES = [{ "code": "1", "name": "University Departments of Anna University Chennai - CEG Campus Sardar Patel Road Guindy Chennai 600 025" },
 { "code": "2", "name": "University Departments of Anna University Chennai - ACT Campus Sardar Patel Road Guindy Chennai 600 025" },
@@ -777,7 +778,7 @@ export default function TNEACalculator() {
               />
             </div>
             <div className="bg-white rounded-2xl overflow-hidden">
-              <div className="overflow-x-auto min-h-260">
+              <div className="overflow-x-auto min-h-210">
                 <table className="w-[95%] ">
                   <thead>
                     <tr className="border-b-2 border-gray-500 bg-gray-50">
@@ -787,8 +788,8 @@ export default function TNEACalculator() {
                   </thead>
                   <tbody className="divide-y divide-gray-100">
                     {currentTableData.length > 0 ? (
-                      currentTableData.map((college) => (
-                        <tr key={college.code} className="border-b border-gray-300">
+                      currentTableData.map((college, index) => (
+                        <tr key={`${college.code}-${index}`} className="border-b border-gray-300">
                           <td className="px-3 py-3">{college.code}</td>
                           <td className="px-3 py-3">{college.name}</td>
                         </tr>
